@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DeptVO {
 	
-	private int DEPT_NO;
-	private String DEPT_NAME;
-	private String UPDATE_DATE;
+	private int DEPT_NO;				// 부서번호
+	private String DEPT_NAME;			// 부서명
 
 }
