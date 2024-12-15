@@ -139,19 +139,19 @@ public class EmpDAO {
 		// 5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, vo.getEMP_PW());
-			pstmt.setString(2, vo.getEMP_NAME());
-			pstmt.setString(3, vo.getEMP_IMAGE());
-			pstmt.setString(4, vo.getCMP_EMAIL());
-			pstmt.setString(5, vo.getEMP_EMAIL());
-			pstmt.setString(6, vo.getCELLPHONE());
-			pstmt.setString(7, vo.getHIREDATE());
-			pstmt.setString(8, vo.getQUITDATE());
-			pstmt.setString(9, vo.getBIRTHDATE());
-			pstmt.setInt(10, vo.getPOS_NO());
-			pstmt.setInt(11, vo.getDEPT_NO());
-			pstmt.setString(12, vo.getCREATE_DATE());
-			pstmt.setString(13, vo.getUPDATE_DATE());
+			pstmt.setString(1, vo.getEmpPw());
+			pstmt.setString(2, vo.getEmpName());
+			pstmt.setString(3, vo.getEmpImage());
+			pstmt.setString(4, vo.getCmpEmail());
+			pstmt.setString(5, vo.getEmpEmail());
+			pstmt.setString(6, vo.getCellphone());
+			pstmt.setString(7, vo.getHiredate());
+			pstmt.setString(8, vo.getQuitdate());
+			pstmt.setString(9, vo.getBirthdate());
+			pstmt.setInt(10, vo.getPosNo());
+			pstmt.setInt(11, vo.getDeptNo());
+			pstmt.setString(12, vo.getCreateDate());
+			pstmt.setString(13, vo.getUpdateDate());
 
 			// 6. 실행 (SELECT ==> ResultSet 객체 )
 			pstmt.executeUpdate();
@@ -174,19 +174,19 @@ public class EmpDAO {
 		// 5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, vo.getEMP_PW());
-			pstmt.setString(2, vo.getEMP_NAME());
-			pstmt.setString(3, vo.getEMP_IMAGE());
-			pstmt.setString(4, vo.getCMP_EMAIL());
-			pstmt.setString(5, vo.getEMP_EMAIL());
-			pstmt.setString(6, vo.getCELLPHONE());
-			pstmt.setString(7, vo.getHIREDATE());
-			pstmt.setString(8, vo.getQUITDATE());
-			pstmt.setString(9, vo.getBIRTHDATE());
-			pstmt.setInt(10, vo.getPOS_NO());
-			pstmt.setInt(11, vo.getDEPT_NO());
-			pstmt.setString(12, vo.getCREATE_DATE());
-			pstmt.setString(13, vo.getUPDATE_DATE());
+			pstmt.setString(1, vo.getEmpPw());
+			pstmt.setString(2, vo.getEmpName());
+			pstmt.setString(3, vo.getEmpImage());
+			pstmt.setString(4, vo.getCmpEmail());
+			pstmt.setString(5, vo.getEmpEmail());
+			pstmt.setString(6, vo.getCellphone());
+			pstmt.setString(7, vo.getHiredate());
+			pstmt.setString(8, vo.getQuitdate());
+			pstmt.setString(9, vo.getBirthdate());
+			pstmt.setInt(10, vo.getPosNo());
+			pstmt.setInt(11, vo.getDeptNo());
+			pstmt.setString(12, vo.getCreateDate());
+			pstmt.setString(13, vo.getUpdateDate());
 			// 6. 실행 (SELECT ==> ResultSet 객체 )
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

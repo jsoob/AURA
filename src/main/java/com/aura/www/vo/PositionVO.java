@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PositionVO {
 	
-	private int POS_NO;					// 직급번호
-	private String POS_NAME;			// 직급명
+	private int posNo;					// 직급번호
+	private String posName;			// 직급명
 
 }
