@@ -1,4 +1,4 @@
-package com.aura.www.action.dao;
+package com.aura.www.dao;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.aura.www.action.vo.EmpVO;
+import com.aura.www.vo.EmpVO;
 
 public class EmpDAO {
 	
