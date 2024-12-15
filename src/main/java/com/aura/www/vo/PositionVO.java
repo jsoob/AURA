@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class PositionVO {
 	
 	private int posNo;					// 직급번호
-	private String posName;			// 직급명
+	private String posName;				// 직급명
 
 }
