@@ -11,7 +11,7 @@ import com.aura.www.vo.freeboard.FreeBoardCommentVO;
 
 
 public class FreeBoardCommentDAO {
-	String driver = "com.mysql.jdbc.Driver";
+	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/aura";
 	String user = "aura";
 	String password = "tigertiger12$$";
@@ -34,7 +34,7 @@ public class FreeBoardCommentDAO {
 	}
 
 	// 특정 게시글의 모든 댓글 조회
-	public ArrayList<FreeBoardCommentVO> selectAll(int freeBNo) {
+	public ArrayList<FreeBoardCommentVO> selectCommentAll(int freeBNo) {
 		ArrayList<FreeBoardCommentVO> list = new ArrayList<FreeBoardCommentVO>();
 		sb.setLength(0);
 		sb.append("SELECT FBCMNT_NO, FBCMNT_CONTENT, CREATE_DATE, UPDATE_DATE, EMP_NO, FREEB_NO ");
@@ -64,7 +64,7 @@ public class FreeBoardCommentDAO {
 
 	// 댓글 작성
 	// 시퀀스 적용해야함
-	public void insertOne(FreeBoardCommentVO vo) {
+	public void insertComment(FreeBoardCommentVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBCOMMENT ");
 		sb.append("VALUES(NEXTVAL('FBCOMNTNO'), ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)");
@@ -78,14 +78,13 @@ public class FreeBoardCommentDAO {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	// 댓글 삭제
-	public void deleteOne(int fBCmntNo) {
+	public void deleteComment(int fBCmntNo) {
 		sb.setLength(0);
 		sb.append("DELETE FROM FREEBCOMMENT ");
 		sb.append("WHERE FBCMNT_NO = ? ");
@@ -96,13 +95,12 @@ public class FreeBoardCommentDAO {
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	// 댓글 수정
-	public void updateOne(FreeBoardCommentVO vo) {
+	public void updateComment(FreeBoardCommentVO vo) {
 
 		sb.setLength(0);
 		sb.append("UPDATE FREEBCOMMENT ");
@@ -116,7 +114,6 @@ public class FreeBoardCommentDAO {
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -131,7 +128,6 @@ public class FreeBoardCommentDAO {
 			if (conn != null)
 				conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

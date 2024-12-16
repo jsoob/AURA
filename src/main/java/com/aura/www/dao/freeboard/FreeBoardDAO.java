@@ -11,8 +11,9 @@ import com.aura.www.vo.freeboard.FreeBoardVO;
 
 
 
+
 public class FreeBoardDAO {
-	String driver = "com.mysql.jdbc.Driver";
+	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/aura";
 	String user = "aura";
 	String password = "tigertiger12$$";
@@ -59,6 +60,57 @@ public class FreeBoardDAO {
 				
 				FreeBoardVO vo = new FreeBoardVO(freeBNo, freeBTitle, freeBContent, freeBView, freeBNotice, freeBStatus, freeBPblc, freeBCrtr, createDate, updateDate);
 				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// 검색해서 게시글 찾기
+	// 제목, 내용, 작성자로 검색가능
+	public ArrayList<FreeBoardVO> searchFreeBoard( FreeBoardVO vo ){
+		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
+		sb.setLength(0);
+		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM FREEBOARD ");
+		sb.append("WHERE 1=1 ");
+		if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) sb.append("AND FREEB_TITLE LIKE ? ");
+		if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) sb.append("AND FREEB_CONTENT LIKE ? ");
+		if(vo.getFreeBCrtr() != 0 ) sb.append("AND FREEB_CRTR = ? ");
+		sb.append("ORDER BY CREATE_DATE DESC ");
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			int cnt = 0;
+			
+			if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) {
+				pstmt.setString(++cnt, "%"+vo.getFreeBTitle()+"%");
+			}
+			if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) {
+				pstmt.setString(++cnt, "%"+vo.getFreeBContent()+"%");
+			}
+			if(vo.getFreeBCrtr() != 0) {
+				pstmt.setInt(++cnt, vo.getFreeBCrtr());
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int freeBNo = rs.getInt("FREEB_NO");
+				String freeBTitle = rs.getString("FREEB_TITLE"); 
+				String freeBContent = rs.getString("FREEB_CONTENT");
+				int freeBView = rs.getInt("FREEB_VIEW");
+				int freeBNotice = rs.getInt("FREEB_NOTICE");
+				int freeBStatus = rs.getInt("FREEB_STATUS");
+				int freeBPblc = rs.getInt("FREEB_PBLC");
+				int freeBCrtr = rs.getInt("FREEB_CRTR");
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
+				
+				FreeBoardVO findvo = new FreeBoardVO(freeBNo, freeBTitle, freeBContent, freeBView, freeBNotice, freeBStatus, freeBPblc, freeBCrtr, createDate, updateDate);
+				list.add(findvo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -199,6 +251,13 @@ public class FreeBoardDAO {
 		}
 		return result;
 	}
+	
+	// 페이징 처리해야함
+//	SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE
+//	FROM FREEBOARD
+//	ORDER BY CREATE_DATE DESC
+//	LIMIT ? ,10
+//	1,STARTNO-1
 	
 	// 자원반납
 	public void close() {

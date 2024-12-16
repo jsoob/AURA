@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.aura.www.vo.freeboard.FreeBoardFileVO;
 
 public class FreeBoardFileDAO {
-	String driver = "com.mysql.jdbc.Driver";
+	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/aura";
 	String user = "aura";
 	String password = "tigertiger12$$";
@@ -33,7 +33,7 @@ public class FreeBoardFileDAO {
 	}
 	
 	// 특정 게시글에 첨부된 모든 파일 찾기
-	public ArrayList<FreeBoardFileVO> selectAll(int freeBNo){
+	public ArrayList<FreeBoardFileVO> selectFileList(int freeBNo){
 		ArrayList<FreeBoardFileVO> list = new ArrayList<FreeBoardFileVO>();
 		sb.setLength(0);
 		sb.append("SELECT FILE_NO, FILE_NAME, FILE_ROUTE, FREEB_NO ");
@@ -60,7 +60,7 @@ public class FreeBoardFileDAO {
 	}
 
 	// 첨부파일 DB에 저장
-	public void insertOne(FreeBoardFileVO vo) {
+	public void insertFile(FreeBoardFileVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FBFILE ");
 		sb.append("VALUES(NEXTVAL('FILENO'), ?, ?, ? )");
@@ -80,7 +80,7 @@ public class FreeBoardFileDAO {
 	}
 
 	// 특정 첨부파일만 삭제할 때
-	public void deleteOne(int fileNo) {
+	public void deleteFileOne(int fileNo) {
 		sb.setLength(0);
 		sb.append("DELETE FROM FBFILE ");
 		sb.append("WHERE FILE_NO = ? ");
@@ -97,7 +97,7 @@ public class FreeBoardFileDAO {
 	}
 	
 	// 게시글이 삭제될 때 첨부파일도 함께 삭제
-	public void deleteAll(int freeBNo) {
+	public void deleteFileAll(int freeBNo) {
 		sb.setLength(0);
 		sb.append("DELETE FROM FBFILE ");
 		sb.append("WHERE FREEB_NO = ? ");
