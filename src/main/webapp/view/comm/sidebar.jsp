@@ -5,8 +5,9 @@
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
-            <a href="index.html"><img class="main-logo" src="../../img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
-            <strong><a href="../main/main.jsp"><img src="../../img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
+        	<%-- ../main/main.jsp --%>
+            <a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="<%= request.getContextPath() %>/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
+            <strong><a href="${pageContext.request.contextPath}/main"><img src="<%= request.getContextPath() %>/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
         </div>
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
@@ -48,9 +49,9 @@
                         	<span class="mini-click-non">Mailbox</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li><a title="Inbox" href="mailbox.html"><span class="mini-sub-pro">Inbox</span></a></li>
-                            <li><a title="View Mail" href="mailbox-view.html"><span class="mini-sub-pro">View Mail</span></a></li>
-                            <li><a title="Compose Mail" href="mailbox-compose.html"><span class="mini-sub-pro">Compose Mail</span></a></li>
+                            <li><a title="Inbox" href="${pageContext.request.contextPath}/mail"><span class="mini-sub-pro">Inbox</span></a></li>
+                            <li><a title="View Mail" href="${pageContext.request.contextPath}/mail"><span class="mini-sub-pro">View Mail</span></a></li>
+                            <li><a title="Compose Mail" href="${pageContext.request.contextPath}/mail"><span class="mini-sub-pro">Compose Mail</span></a></li>
                         </ul>
                     </li>
                     

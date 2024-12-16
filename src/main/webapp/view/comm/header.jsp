@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="logo-pro">
-				<a href="index.html"><img class="main-logo" src="../../img/logo/logo.png" alt="" /></a>
+				<a href="index.html"><img class="main-logo" src="<%= request.getContextPath() %>/img/logo/logo.png" alt="" /></a>
 			</div>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/1.jpg" alt="">
+                                                                <img src="<%= request.getContextPath() %>/img/contact/1.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -79,7 +79,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/4.jpg" alt="">
+                                                                <img src="<%= request.getContextPath() %>/img/contact/4.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -91,7 +91,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/3.jpg" alt="">
+                                                                <img src="<%= request.getContextPath() %>/img/contact/3.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -103,7 +103,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/2.jpg" alt="">
+                                                                <img src="<%= request.getContextPath() %>/img/contact/2.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -184,7 +184,7 @@
                                         <!-- 사원 정보 표시 부분 -->
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-												<img src="../../img/product/pro4.jpg" alt="" />
+												<img src="<%= request.getContextPath() %>/img/product/pro4.jpg" alt="" />
 												<span class="admin-name">AURA 사용자명</span>
 												<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 											</a>
@@ -197,7 +197,7 @@
                                                 </li>
                                                 <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
                                                 </li>
-                                                <li><a href="#"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
+                                                <li><a href="${pageContext.request.contextPath}/login?cmd=logout"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -223,14 +223,14 @@
                     <div class="breadcome-list single-page-breadcome" style="margin-bottom: 20px;">
                         <div class="row">
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <span style="font-weight: 700; font-size: 2em;">페이지명</span>
+                                <span style="font-weight: 700; font-size: 2em;"><%= request.getAttribute("title") %></span>
                             </div>
                             
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <ul class="breadcome-menu">
-                                    <li><a href="#">페이지명</a> <span class="bread-slash">/</span>
+                                    <li><a href="#"><%= request.getAttribute("title") %></a> <span class="bread-slash">/</span>
                                     </li>
-                                    <li><span class="bread-blod">카테고리명</span>
+                                    <li><span class="bread-blod"><%= request.getAttribute("catecory") %></span>
                                     </li>
                                 </ul>
                             </div>

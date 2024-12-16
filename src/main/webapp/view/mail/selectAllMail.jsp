@@ -6,16 +6,16 @@
 <meta charset="UTF-8">
 <title>메일 조회</title>
 
-<!-- header 영역에서 첨부된 css 파일+js -->
+<%-- header 영역에서 첨부된 css 파일+js --%>
 <jsp:include page="../comm/headCss.jsp"></jsp:include>
 
 </head>
 <body>
-    <!-- Start Left menu area -->
+    <%-- Start Left menu area --%>
     <jsp:include page="../comm/sidebar.jsp"></jsp:include>
     
-    <!-- End Left menu area -->
-    <!-- Start Welcome area -->
+    <%-- End Left menu area --%>
+    <%-- Start Welcome area --%>
     <div class="all-content-wrapper">
         <jsp:include page="../comm/header.jsp"></jsp:include>
         

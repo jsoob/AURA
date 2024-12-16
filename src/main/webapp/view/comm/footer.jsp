@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="footer-copy-right">
-					<p>Copyright © 2024. All rights reserved. Template by <a href="../main/main.jsp">AURA</a></p>
+					<p>Copyright © 2024. All rights reserved. Template by <a href="${pageContext.request.contextPath}/main">AURA</a></p>
 				</div>
 			</div>
 		</div>

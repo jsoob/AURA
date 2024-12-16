@@ -4,9 +4,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title><%= request.getAttribute("title") %></title>
+<%-- header 영역에서 첨부된 css 파일+js --%>
+<jsp:include page="../comm/headCss.jsp"></jsp:include>
 </head>
 <body>
-<h2>안녕하세요</h2>
+	<%-- Start Left menu area --%>
+    <jsp:include page="../comm/sidebar.jsp"></jsp:include>
+    
+    <%-- End Left menu area --%>
+    <%-- Start Welcome area --%>
+	<div class="all-content-wrapper">
+        <jsp:include page="../comm/header.jsp"></jsp:include>
+        
+        <div class="mailbox-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                
+                	<h2>main</h2>
+                
+                </div>
+            </div>
+        </div>
+        
+        <jsp:include page="../comm/footer.jsp"></jsp:include>
+    </div>
+	
+	<jsp:include page="../comm/footerJs.jsp"></jsp:include>
+    
+
 </body>
 </html>
