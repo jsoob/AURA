@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="logo-pro">
-				<a href="index.html"><img class="main-logo" src="../../img/logo/logo.png" alt="" /></a>
+				<a href="index.html"><img class="main-logo" src="/aura/img/logo/logo.png" alt="" /></a>
 			</div>
 		</div>
 	</div>
@@ -67,7 +67,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/1.jpg" alt="">
+                                                                <img src="/aura/img/contact/1.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -79,7 +79,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/4.jpg" alt="">
+                                                                <img src="/aura/img/contact/4.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -91,7 +91,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/3.jpg" alt="">
+                                                                <img src="/aura/img/contact/3.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -103,7 +103,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="message-img">
-                                                                <img src="../../img/contact/2.jpg" alt="">
+                                                                <img src="/aura/img/contact/2.jpg" alt="">
                                                             </div>
                                                             <div class="message-content">
                                                                 <span class="message-date">16 Sept</span>
@@ -184,7 +184,7 @@
                                         <!-- 사원 정보 표시 부분 -->
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-												<img src="../../img/product/pro4.jpg" alt="" />
+												<img src="/aura/img/product/pro4.jpg" alt="" />
 												<span class="admin-name">AURA 사용자명</span>
 												<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 											</a>

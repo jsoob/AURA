@@ -5,8 +5,8 @@
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
-            <a href="index.html"><img class="main-logo" src="../../img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
-            <strong><a href="../main/main.jsp"><img src="../../img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
+            <a href="index.html"><img class="main-logo" src="/aura/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
+            <strong><a href="../main/main.jsp"><img src="/aura/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
         </div>
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
