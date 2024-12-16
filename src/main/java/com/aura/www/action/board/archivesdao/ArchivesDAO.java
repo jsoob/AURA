@@ -107,6 +107,52 @@ public class ArchivesDAO {
 		return vo;
 	} // selectOne() end
 	
+	
+	   ////////////////////////////////////	페이지번호 //////////////////////////////////////
+	
+	
+	public ArrayList<ArchivesVO> selectAll(int startNo, int endNo){
+		ArrayList<ArchivesVO> list = new ArrayList<ArchivesVO>();
+		
+		//		4. SQL문 작성
+		sb.setLength(0);
+		sb.append("SELECT 8");
+		sb.append("FROM ARCHIVES ");
+		sb.append("WHERE = ??????");
+		
+		//		5. 문장 객체 생성
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, endNo);
+			pstmt.setInt(2, startNo);
+			rs = pstmt.executeQuery();
+			//		6. 실행 (SELECT ==> ResultSet 객체 )
+			while(rs.next()) {
+				String arcTitle = rs.getString("ARC_TITLE");
+				String arcContent = rs.getString("ARC_CONTENT");
+				int arcView = rs.getInt("ARC_VIEW");
+				int arcNotice = rs.getInt("ARC_NOTICE");
+				int empNo = rs.getInt("EMP_NO");
+				String createDate = rs.getString("CREATE_DATE");
+				
+				ArchivesVO vo = ArchivesVO.builder();
+					.arcTitle(arcTitle);
+					.arcContent(arcContent);
+					.arcView(arcView);
+					.arcNotice(arcNotice);
+					.empNo(empNo);
+					.createDate(createDate);
+					
+					list.add(vo);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	
 	   ////////////////////////////////////	추가 //////////////////////////////////////
 	
 	public void addOne(ArchivesVO vo) {
