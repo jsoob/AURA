@@ -13,29 +13,30 @@ public class ArchivesFileDAO {
 
 	// 1. 환경변수 선언
 
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url = "jdbc:oracle:thin:@localhost:1521:aura";
-	String user = "aura";
-	String password = "tigertiger12$$";
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	StringBuffer sb = new StringBuffer();
+		String driver = "com.mysql.cj.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/aura";
+		String user = "aura";
+		String password = "tigertiger12$$";
 
-	public ArchivesFileDAO() {
-		// 2. 드라이버 로딩
-		try {
-			Class.forName(driver);
-			// 3. Connection
-			conn = DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("DB 연결 실패");
-			e.printStackTrace();
-		}
-	} // constructor end
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+
+		public ArchivesFileDAO() {
+			// 2. 드라이버 로딩
+			try {
+				Class.forName(driver);
+				// 3. Connection
+				conn = DriverManager.getConnection(url, user, password);
+			} catch (ClassNotFoundException e) {
+				System.out.println("MYSQL 드라이버 로딩 실패");
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("MYSQL DB 연결 실패");
+				e.printStackTrace();
+			}
+		} // constructor end
 
 	/////////////////////////////////// 전체조회 //////////////////////////////////////
 
