@@ -29,7 +29,7 @@
                         </ul>
                     </li>
                     
-                    <li id="board_category"><!-- active class 추가해주면 카테고리 안의 페이지 열림 -->
+                    <li id="board_category"><!-- class="active" 추가해주면 카테고리 안의 페이지 열림 -->
                         <a class="has-arrow" href="all-professors.html" aria-expanded="false">
                         	<!-- <span class="educate-icon educate-professor icon-wrap"></span> -->
                         	<span class="fa fa-commenting-o"></span> 

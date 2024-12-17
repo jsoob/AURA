@@ -17,7 +17,7 @@
 	<div class="all-content-wrapper">
         <jsp:include page="/view/comm/header.jsp"></jsp:include>
         
-        <div class="mailbox-area mg-b-15">
+        <div class="container-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                 

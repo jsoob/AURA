@@ -19,9 +19,9 @@
     <div class="all-content-wrapper">
         <jsp:include page="/view/comm/header.jsp"></jsp:include>
         
-        <div class="mg-b-15">
-            <div class="container-fluid" style="height: 650px;">
-            
+        <div class="container-area mg-b-15">
+            <div class="container-fluid">
+            	<!-- 여기부터 개별 -->
                 <div class="row">
                     <div class="col-md-3 col-md-3 col-sm-3 col-xs-12">
                         <div class="hpanel responsive-mg-b-30">

@@ -8,6 +8,18 @@
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
+<script type="text/javascript">
+	$(()=> {
+		
+		$("#freeBContent").summernote({
+			height: 150, 
+			// toolbar : true, 
+			placeholder : "입력해보시지"
+		});
+	});
+
+</script>
+
 </head>
 <body>
    <!-- Start Left menu area -->
@@ -36,7 +48,7 @@
                <input type="hidden" name="cmd" value="writeOk"/>
             </tr>
             <tr>
-               <td colspan="2"><textarea class="summernote6" name="freeBContent" id="" cols="50" rows="10"></textarea></td>
+               <td colspan="2"><textarea id="freeBContent" name="freeBContent" id="" cols="50" rows="10"></textarea></td>
             </tr>
             <tr>
                <td colspan="2">

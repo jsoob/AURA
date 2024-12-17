@@ -8,7 +8,7 @@ import com.aura.www.action.board.freeboard.DetailFreeBAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBOkAction;
 import com.aura.www.action.board.freeboard.SelectFreeBAction;
-import com.aura.www.action.board.freeboard.WriteFreeBAction;
+import com.aura.www.action.board.freeboard.WriteFreeBFormAction;
 import com.aura.www.action.board.freeboard.WriteFreeBOkAction;
 
 import jakarta.servlet.RequestDispatcher;
@@ -33,28 +33,32 @@ public class FreeBoardController extends HttpServlet {
 		String url = "";
 
 		// 3. page==null or SelectFreeB 라면
-		if (cmd == null || cmd.equals("SelectFreeB")) {
+		if (cmd == null || cmd.equals("selectFreeB")) {
 			Action action = new SelectFreeBAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("DetailFreeB")) {
+		} else if(cmd.equals("detailFreeB")) {
 			Action action = new DetailFreeBAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("WriteFreeB")) {
-			Action action = new WriteFreeBAction();
+		} else if(cmd.equals("writeFreeBForm")) {
+			Action action = new WriteFreeBFormAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("WriteFreeBOk")) {
+		} else if(cmd.equals("writeFreeBOk")) {
 			Action action = new WriteFreeBOkAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("ModifyFreeB")) {
+		} else if(cmd.equals("modifyFreeB")) {
 			Action action = new ModifyFreeBAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("ModifyFreeBOk")) {
+		} else if(cmd.equals("modifyFreeBOk")) {
 			Action action = new ModifyFreeBOkAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("DeleteFreeB")) {
+		} else if(cmd.equals("deleteFreeB")) {
 			Action action = new DeleteFreeBAction();
 			url = action.execute(req, resp);
 		}
+		
+		req.setAttribute("title", "AURA 자유게시판");
+	    req.setAttribute("catecory", "게시판");
+	      
 		
 		RequestDispatcher rd = req.getRequestDispatcher(url);
 		rd.forward(req, resp);

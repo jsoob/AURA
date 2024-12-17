@@ -22,7 +22,7 @@
 
 
 		<div class="container">
-			<a href="freeboard?cmd=WriteFreeB">
+			<a href="freeboard?cmd=writeFreeBForm">
 				<input type="button"class="btn btn-outline-primary" value="글쓰기" /></a>
 			<table class="table table-striped">
 				<tr>

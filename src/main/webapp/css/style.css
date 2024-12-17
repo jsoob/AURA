@@ -4732,3 +4732,7 @@ div#sparklinehome canvas {
 	color:#fff;
 	text-decoration:none;
 }
+
+.container-area .container-fluid {
+	height: 650px;
+}
