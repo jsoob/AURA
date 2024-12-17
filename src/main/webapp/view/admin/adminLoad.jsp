@@ -21,7 +21,7 @@
             <div class="container-fluid">
                 <div class="row">
                 
-                	<h2>main</h2>
+                	<h2>admin</h2>
                 
                 </div>
             </div>
