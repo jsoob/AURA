@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/admin")
-public class adminController extends HttpServlet {
+public class AdminController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 1. 한글처리
@@ -26,7 +26,7 @@ public class adminController extends HttpServlet {
 		String url = "";
 
 		// 3. page==null or SelectFreeB 라면
-		if (cmd == null || cmd.equals("SelectPos")) {
+		if (cmd == null || cmd.equals("selectPos")) {
 			Action action = new SelectPosAction();
 			url = action.execute(req, resp);
 		}

@@ -37,7 +37,7 @@
                             <li><a title="All Professors" href="all-professors.html"><span class="mini-sub-pro">전체 게시판</span></a></li>
                             <li><a title="Add Professor" href="add-professor.html"><span class="mini-sub-pro">공지 게시판</span></a></li>
                             <li><a title="Edit Professor" href="edit-professor.html"><span class="mini-sub-pro">부서 게시판</span></a></li>
-                            <li><a title="Professor Profile" href="professor-profile.html"><span class="mini-sub-pro">자유 게시판</span></a></li>
+                            <li><a title="Professor Profile" href="${pageContext.request.contextPath}/freeboard"><span class="mini-sub-pro">자유 게시판</span></a></li>
                         </ul>
                     </li>
                     

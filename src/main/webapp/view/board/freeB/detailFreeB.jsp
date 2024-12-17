@@ -43,11 +43,11 @@
 				</tr>
 
 				<tr>
-					<td colspan="6"><a href="freeboard?cmd=SelectFreeB"
+					<td colspan="6"><a href="freeboard?cmd=selectFreeB"
 						class="btn btn-outline-primary">목록</a> <a
-						href="freeboard?cmd=ModifyFreeB&freeBNo=${vo.freeBNo}"
+						href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}"
 						class="btn btn-outline-warning">수정</a> <a
-						href="freeboard?cmd=DeleteFreeB&freeBNo=${vo.freeBNo}"
+						href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}"
 						class="btn btn-outline-danger">삭제</a></td>
 				</tr>
 

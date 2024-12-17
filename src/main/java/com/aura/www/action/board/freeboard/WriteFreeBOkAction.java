@@ -7,7 +7,7 @@ import com.aura.www.vo.freeboard.FreeBoardVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class WriteFreeBAction implements Action {
+public class WriteFreeBOkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -33,7 +33,7 @@ public class WriteFreeBAction implements Action {
 		
 		dao.insertOne(vo);
 
-		return "freeboard?cmd=SelectFreeB";
+		return "freeboard?cmd=selectFreeB";
 	}
 
 }

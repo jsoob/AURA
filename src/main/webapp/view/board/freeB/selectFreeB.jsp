@@ -22,7 +22,7 @@
 
 
 		<div class="container-fluid">
-			<a href="freeboard?cmd=WriteFreeB">
+			<a href="freeboard?cmd=writeFreeBForm">
 				<input type="button"class="btn btn-outline-primary" value="글쓰기" /></a>
 			<table class="table table-striped">
 				<tr>
@@ -35,7 +35,7 @@
 				<c:forEach var="vo" items="${list}">
 					<tr>
 						<td>${vo.freeBNo}</td>
-						<td><a href="freeboard?cmd=DetailFreeB&freeBNo=${vo.freeBNo}"> ${vo.freeBTitle}</a></td>
+						<td><a href="freeboard?cmd=detailFreeB&freeBNo=${vo.freeBNo}"> ${vo.freeBTitle}</a></td>
 						<td>${vo.freeBCrtr}</td>
 						<td>${vo.createDate}</td>
 						<td>${vo.freeBView}</td>
