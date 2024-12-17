@@ -15,7 +15,7 @@ public class EmpDAO {
 
 	// 1. 환경변수 선언
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3307/aura";
+	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 3306 / 3307
 	String user = "aura";
 	String password = "tigertiger12$$";
 	Connection conn = null;

@@ -2,7 +2,7 @@ package com.aura.www.action.login;
 
 import com.aura.www.action.Action;
 import com.aura.www.dao.LoginDAO;
-import com.aura.www.vo.EmpVOJS;
+import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ public class LoginOkAction implements Action {
 		
 		try {
 			int empNo = Integer.parseInt(no);
-			EmpVOJS vo = dao.selectLogin(empNo, pw);
+			EmpVO vo = dao.selectLogin(empNo, pw);
 			
 			if(vo==null) {
 				url = "login";// "view/login/login.jsp";

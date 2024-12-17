@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.aura.www.vo.EmpVOJS;
+import com.aura.www.vo.EmpVO;
 
 public class LoginDAO {
 	// 1. 환경변수
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3307/aura";
+	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 3306 / 3307
 	String user = "aura";
 	String password = "tigertiger12$$";
 	Connection conn = null;
@@ -36,7 +36,7 @@ public class LoginDAO {
 		}
 	} // constructer end
 
-	public EmpVOJS selectLogin(int emp_no, String emp_pw) {
+	public EmpVO selectLogin(int emp_no, String emp_pw) {
 		sb.setLength(0);
 		sb.append("SELECT ");
 		sb.append("EMP_NO, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
@@ -46,7 +46,7 @@ public class LoginDAO {
 		sb.append("WHERE EMP_NO = ? ");
 		sb.append("AND EMP_PW = ? ");
 		// 2024000
-		EmpVOJS vo = null;
+		EmpVO vo = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -71,7 +71,7 @@ public class LoginDAO {
 				String create_date = rs.getString("CREATE_DATE");
 				String update_date = rs.getString("UPDATE_DATE");
 			
-				vo = new EmpVOJS();
+				vo = new EmpVO();
 				
 				vo.setEmpNo(emp_no);
 				vo.setEmpPw(emp_pw);

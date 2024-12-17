@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class EmpVO {
+//	EMP_NO, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, 
+//	CELLPHONE, HIREDATE, QUITDATE, BIRTHDATE, 
+//	POS_NO, DEPT_NO, CREATE_DATE, UPDATE_DATE
 	
 	private int empNo;					// 사원번호
 	private String empPw;				// 패스워드

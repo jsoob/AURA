@@ -17,10 +17,11 @@
 	<div class="all-content-wrapper">
         <jsp:include page="/view/comm/header.jsp"></jsp:include>
         
-        <div class="mailbox-area mg-b-15">
+        <div class="container-area mg-b-15">
             <div class="container-fluid">
+                <!-- 여기부터 개별 -->
                 <div class="row">
-                
+                	
                 	<h2>admin</h2>
                 
                 </div>

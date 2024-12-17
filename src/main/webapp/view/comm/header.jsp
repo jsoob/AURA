@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
     
 <div class="container-fluid">
 	<div class="row">
@@ -30,28 +31,29 @@
                             
                             <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
                                 <div class="header-top-menu tabl-d-n">
-                                   
-                                    <ul class="nav navbar-nav mai-top-nav">
-                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=adminLoad" class="nav-link">관리자 조회</a>
-                                        </li>
-                                        
-                                        <li class="nav-item"><a href="#" class="nav-link">부서관리</a>
-                                        </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">직급관리</a>
-                                        </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">사원관리</a>
-                                        </li>
-                                        <!-- <li class="nav-item dropdown res-dis-nn">
-                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
-                                            <div role="menu" class="dropdown-menu animated zoomIn">
-                                                <a href="#" class="dropdown-item">Documentation</a>
-                                                <a href="#" class="dropdown-item">Expert Backend</a>
-                                                <a href="#" class="dropdown-item">Expert FrontEnd</a>
-                                                <a href="#" class="dropdown-item">Contact Support</a>
-                                            </div>
-                                        </li> -->
-                                        
-                                    </ul>
+                                   <%-- 관리자에서만 보여주는 메뉴 --%>
+                                    <c:if test="${loginEmp.empNo eq '2024000' }">
+	                                    <ul class="nav navbar-nav mai-top-nav">
+	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=adminLoad" class="nav-link">관리자 조회</a>
+	                                        </li>
+	                                        
+	                                        <li class="nav-item"><a href="#" class="nav-link">부서관리</a>
+	                                        </li>
+	                                        <li class="nav-item"><a href="#" class="nav-link">직급관리</a>
+	                                        </li>
+	                                        <li class="nav-item"><a href="#" class="nav-link">사원관리</a>
+	                                        </li>
+	                                        <!-- <li class="nav-item dropdown res-dis-nn">
+	                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+	                                            <div role="menu" class="dropdown-menu animated zoomIn">
+	                                                <a href="#" class="dropdown-item">Documentation</a>
+	                                                <a href="#" class="dropdown-item">Expert Backend</a>
+	                                                <a href="#" class="dropdown-item">Expert FrontEnd</a>
+	                                                <a href="#" class="dropdown-item">Contact Support</a>
+	                                            </div>
+	                                        </li> -->
+	                                    </ul>
+                                    </c:if>
                                    
                                 </div>
                             </div>
@@ -231,7 +233,41 @@
                             
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <ul class="breadcome-menu">
+                                	<%-- /aura(OK)/admin?cmd=(OK) --%>
+                                	<%-- getRequestURL() : 프로토콜+도메인+포트번호+컨텍스트 경로+서블릿 경로 --%>
+                                	<%--
+                                		// 잠시 출력용
+                                		System.out.println("request.getRequestURI() = " + request.getRequestURI());   
+                                		System.out.println("request.getContextPath() = " + request.getContextPath());   
+                                		System.out.println("request.getRequestURL() = " + request.getRequestURL());   
+                                		System.out.println("request.getServletPath() = " + request.getServletPath());   
+                                		/* 
+                                		request.getRequestURI(); //프로젝트경로부터 파일까지의 경로값을 얻어옴 (/test/index.jsp)
+										request.getContextPath();  //프로젝트의 경로값만 가져옴(/test)
+										request.getRequestURL();   // 전체 경로를 가져옴 (http://localhost:8080/test/index.jsp)
+										request.getServletPath();  //파일명 (/index.jsp)
+										 */
+										 
+										 getURL = http://localhost:8080/aura/admin
+										request.getRequestURI() = /aura/view/admin/adminLoad.jsp
+										request.getContextPath() = /aura
+										request.getRequestURL() = http://localhost:8080/aura/view/admin/adminLoad.jsp
+										request.getServletPath() = /view/admin/adminLoad.jsp
+                                	--%>
+                                	
+                                	<%
+                                		System.out.println("request.getRequestURL() = " + request.getRequestURL());
+	                                	String tUrl = (request.getRequestURL()).toString();
+	                                	System.out.println("indexOf = " + tUrl.indexOf("/aura") );
+	                                	System.out.println("substring = " + tUrl.substring(tUrl.indexOf("/aura")));
+                                	%>
+                                	
                                     <li><a href="/">${ pages }</a> <span class="bread-slash">/</span>
+                                    
+                                    <%--
+                                    <li><a href="${pageContext.request.contextPath}/${cmd}">${ pages }</a> <span class="bread-slash">/</span>
+                                     --%>
+                                    
                                     </li>
                                     <li><span class="bread-blod">${ catecory }</span>
                                     </li>

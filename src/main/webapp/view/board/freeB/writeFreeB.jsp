@@ -12,7 +12,7 @@
 	$(()=> {
 		
 		$("#freeBContent").summernote({
-			height: 150, 
+			height: 300, 
 			// toolbar : true, 
 			placeholder : "입력해보시지"
 		});
@@ -48,7 +48,7 @@
                <input type="hidden" name="cmd" value="writeOk"/>
             </tr>
             <tr>
-               <td colspan="2"><textarea id="freeBContent" name="freeBContent" id="" cols="50" rows="10"></textarea></td>
+               <td colspan="2"><textarea id="freeBContent" name="freeBContent" id=""></textarea></td><!-- cols="50" rows="10" 영향 X -->
             </tr>
             <tr>
                <td colspan="2">

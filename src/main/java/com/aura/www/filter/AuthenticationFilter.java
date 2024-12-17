@@ -24,7 +24,7 @@ public class AuthenticationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		
 		String getURL = (httpRequest.getRequestURL()).toString();
-		 System.out.println("getURL = " + getURL);
+		// System.out.println("getURL = " + getURL);
 		
 		boolean rst = getURL.contains("/login");
 		// System.out.println("rst = " + rst);

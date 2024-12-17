@@ -50,7 +50,16 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
+    
+    <!-- 프로젝트용 css추가 -->
+    <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auraCss/여기서 각자 쓸 css파일 구현.css"> --%>
+    
     <!-- modernizr JS
 		============================================ -->
     <script src="${pageContext.request.contextPath}/js/vendor/modernizr-2.8.3.min.js"></script>
+    
+    <!-- jQuery CDN 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+
+  
     
