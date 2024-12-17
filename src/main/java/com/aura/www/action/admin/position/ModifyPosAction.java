@@ -1,5 +1,16 @@
 package com.aura.www.action.admin.position;
 
-public class ModifyPosAction {
+import com.aura.www.action.Action;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class ModifyPosAction implements Action{
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
