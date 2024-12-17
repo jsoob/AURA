@@ -9,7 +9,7 @@ public class DeletePosAction implements Action{
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

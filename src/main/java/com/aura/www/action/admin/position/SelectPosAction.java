@@ -18,6 +18,7 @@ public class SelectPosAction implements Action{
 		
 		req.setAttribute("list", list);
 		
+		
 		return "view/admin/selectPos.jsp";
 	}
 

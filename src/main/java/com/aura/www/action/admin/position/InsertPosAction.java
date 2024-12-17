@@ -24,6 +24,7 @@ public class InsertPosAction implements Action {
 
 		dao.insertPos(vo);
 
+		
 		return "admin?cmd=insertPos";
 	}
 
