@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginController extends HttpServlet {
    @Override
    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      String cmd = req.getParameter("cmd");
+	  String cmd = (String)req.getParameter("cmd");
       String url = "";
       
       if(cmd==null || cmd.equals("loginForm")) {
@@ -32,7 +32,13 @@ public class LoginController extends HttpServlet {
           url = bc.execute(req, resp);
       }
       
-      RequestDispatcher rd = req.getRequestDispatcher(url);
-      rd.forward(req, resp);
+      if(url=="login") {
+    	  resp.sendRedirect("login");
+      } else if(url=="main") {
+    	  resp.sendRedirect("main");
+      } else {
+        RequestDispatcher rd = req.getRequestDispatcher(url);
+        rd.forward(req, resp);
+      }
    }
 }

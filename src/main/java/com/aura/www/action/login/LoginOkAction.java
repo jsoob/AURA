@@ -2,7 +2,7 @@ package com.aura.www.action.login;
 
 import com.aura.www.action.Action;
 import com.aura.www.dao.LoginDAO;
-import com.aura.www.vo.EmpVO;
+import com.aura.www.vo.EmpVOJS;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,10 +21,10 @@ public class LoginOkAction implements Action {
 		
 		try {
 			int empNo = Integer.parseInt(no);
-			EmpVO vo = dao.selectLogin(empNo, pw);
+			EmpVOJS vo = dao.selectLogin(empNo, pw);
 			
 			if(vo==null) {
-				url = "view/login/login.jsp";
+				url = "login";// "view/login/login.jsp";
 			} else {
 				// req.setAttribute("loginEmp", vo);
 				HttpSession session = req.getSession();
@@ -44,10 +44,10 @@ public class LoginOkAction implements Action {
 				}else {
 					System.out.println("현재 로그인 상태입니다.");
 				}
-				url = "view/main/main.jsp";
+				url = "main"; // "view/main/main.jsp";
 			}
 		} catch (NumberFormatException e) {
-			url = "view/login/login.jsp";
+			url = "login"; // "view/login/login.jsp";
 		}
 		return url;
 	}

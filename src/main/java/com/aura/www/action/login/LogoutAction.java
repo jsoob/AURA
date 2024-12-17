@@ -1,5 +1,7 @@
 package com.aura.www.action.login;
 
+import java.io.IOException;
+
 import com.aura.www.action.Action;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +22,9 @@ public class LogoutAction implements Action {
 		}else {
 			System.out.print("현재 로그인 상태가 아닙니다.");
 		}
-	   url = "view/login/login.jsp";
+	   url = "login"; 
+	   // "view/login/login.jsp";
+
 	  
       return url;
    }

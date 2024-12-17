@@ -3,51 +3,51 @@
 
 <!-- Bootstrap CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <!-- Bootstrap CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
     <!-- owl.carousel CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/owl.carousel.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/owl.theme.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/owl.transitions.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.theme.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.transitions.css">
     <!-- animate CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/animate.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css">
     <!-- normalize CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/normalize.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/normalize.css">
     <!-- meanmenu icon CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/meanmenu.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/meanmenu.min.css">
     <!-- main CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
     <!-- educate icon CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/educate-custon-icon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/educate-custon-icon.css">
     <!-- morrisjs CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/morrisjs/morris.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/morrisjs/morris.css">
     <!-- mCustomScrollbar CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/scrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/scrollbar/jquery.mCustomScrollbar.min.css">
     <!-- metisMenu CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/metisMenu/metisMenu.min.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/metisMenu/metisMenu-vertical.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/metisMenu/metisMenu-vertical.css">
     <!-- calendar CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/calendar/fullcalendar.min.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/calendar/fullcalendar.print.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/calendar/fullcalendar.print.min.css">
     <!-- style CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <!-- responsive CSS
 		============================================ -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/responsive.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
     <!-- modernizr JS
 		============================================ -->
-    <script src="<%= request.getContextPath() %>/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/vendor/modernizr-2.8.3.min.js"></script>
     

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Animated Form Login</title>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/loginform/login.css">    
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginform/login.css">    
     
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
@@ -21,9 +21,9 @@
 			if(empno.length > 0 && psswd.length > 0 ) {
 				// location.href = "login?cmd=loginOk"; 
 	            let form = document.querySelector("form");
-			 	form.action="login?cmd=loginOk"; 
-				form.method ="POST";
-	            form.submit();
+			 	form.action="login";
+			 	form.method ="post";
+				form.submit();
 			} else {
 				swal({
 				  title: "미입력",
@@ -48,6 +48,7 @@
 	            <div class="logo"><img src="https://logowik.com/content/uploads/images/aura-digital-safety4284.logowik.com.webp" alt="" /></div>
 	            <form name="loginForm">
 	            	<div class="input-box">
+	            		<input type="hidden" name="cmd" value="loginOk" />
 		            	<input type="text" id="empno" name="empno" class="form-input" placeholder="사원번호" maxlength="10" > <!--  placeholder="사원번호" -->
 		            </div>
 		            <div class="input-box">

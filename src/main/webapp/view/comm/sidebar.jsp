@@ -6,8 +6,8 @@
     <nav id="sidebar" class="">
         <div class="sidebar-header">
         	<%-- ../main/main.jsp --%>
-            <a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="<%= request.getContextPath() %>/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
-            <strong><a href="${pageContext.request.contextPath}/main"><img src="<%= request.getContextPath() %>/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
+            <a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="${pageContext.request.contextPath}/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
+            <strong><a href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
         </div>
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">

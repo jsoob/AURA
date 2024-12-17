@@ -30,7 +30,7 @@ public class AuthenticationFilter implements Filter {
 		// System.out.println("rst = " + rst);
 		
 		// 로그인 페이지의 URL
-		String loginURI = httpRequest.getContextPath()+"/login?cmd=loginForm";
+		String loginURI = httpRequest.getContextPath()+"/login"; // ?cmd=loginForm
 		// System.out.println("loginURI = " + loginURI);
 		
 		// System.out.println("loginEmp = " + session.getAttribute("loginEmp"));

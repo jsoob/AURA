@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.aura.www.vo.EmpVO;
+import com.aura.www.vo.EmpVOJS;
 
 public class LoginDAO {
 	// 1. 환경변수
@@ -36,7 +36,7 @@ public class LoginDAO {
 		}
 	} // constructer end
 
-	public EmpVO selectLogin(int emp_no, String emp_pw) {
+	public EmpVOJS selectLogin(int emp_no, String emp_pw) {
 		sb.setLength(0);
 		sb.append("SELECT ");
 		sb.append("EMP_NO, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
@@ -46,7 +46,7 @@ public class LoginDAO {
 		sb.append("WHERE EMP_NO = ? ");
 		sb.append("AND EMP_PW = ? ");
 		// 2024000
-		EmpVO vo = null;
+		EmpVOJS vo = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -71,22 +71,22 @@ public class LoginDAO {
 				String create_date = rs.getString("CREATE_DATE");
 				String update_date = rs.getString("UPDATE_DATE");
 			
-				vo = new EmpVO();
+				vo = new EmpVOJS();
 				
-				vo.setEmp_no(emp_no);
-				vo.setEmp_pw(emp_pw);
-				vo.setEmp_name(emp_name);
-				vo.setEmp_image(emp_image);
-				vo.setCmp_email(cmp_email);
-				vo.setEmp_email(emp_email);
+				vo.setEmpNo(emp_no);
+				vo.setEmpPw(emp_pw);
+				vo.setEmpName(emp_name);
+				vo.setEmpImage(emp_image);
+				vo.setCmpEmail(cmp_email);
+				vo.setEmpEmail(emp_email);
 				vo.setCellphone(cellphone);
 				vo.setHiredate(hiredate);
 				vo.setQuitdate(quitdate);
 				vo.setBirthdate(birthdate);
-				vo.setPos_no(pos_no);
-				vo.setDept_no(dept_no);
-				vo.setCreate_date(create_date);
-				vo.setUpdate_date(update_date);
+				vo.setPosNo(pos_no);
+				vo.setDeptNo(dept_no);
+				vo.setCreateDate(create_date);
+				vo.setUpdateDate(update_date);
 			}
 		} catch (SQLException e) {
 		
