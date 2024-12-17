@@ -49,10 +49,10 @@
 	            <form name="loginForm">
 	            	<div class="input-box">
 	            		<input type="hidden" name="cmd" value="loginOk" />
-		            	<input type="text" id="empno" name="empno" class="form-input" placeholder="사원번호" maxlength="10" > <!--  placeholder="사원번호" -->
+		            	<input type="text" id="empno" name="empno" class="form-input" value="2024000" placeholder="사원번호" maxlength="10" > <!--  placeholder="사원번호" -->
 		            </div>
 		            <div class="input-box">
-		                <input type="password" id="psswd" name="psswd" class="form-input" placeholder="비밀번호" maxlength="15" > <!-- placeholder="비밀번호" -->
+		                <input type="password" id="psswd" name="psswd" class="form-input" value="2024000" placeholder="비밀번호" maxlength="15" > <!-- placeholder="비밀번호" -->
 		            </div>
 		            
 		            <div class="input-box">

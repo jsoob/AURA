@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>    
+<%
+	//String gb = (String)request.getAttribute("catecory");
+	
+	/* if(gb==null || gb.equals("")) {
+		
+	}  */
+%>
+
 <!-- Start Left menu area -->
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
-
         	<%-- ../main/main.jsp --%>
             <a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="${pageContext.request.contextPath}/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
             <strong><a href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
@@ -29,7 +36,13 @@
                         </ul>
                     </li>
                     
-                    <li id="board_category"><!-- class="active" 추가해주면 카테고리 안의 페이지 열림 -->
+                    <!-- <li id="board_category"> -->
+                   	<c:if test="${ catecory != null  && catecory == '게시판' }">
+                   		<li id="board_category" class="active">
+                   	</c:if>
+                   	<c:if test="${  catecory != '게시판' }">
+                   		<li id="board_category">
+                   	</c:if>
                         <a class="has-arrow" href="all-professors.html" aria-expanded="false">
                         	<!-- <span class="educate-icon educate-professor icon-wrap"></span> -->
                         	<span class="fa fa-commenting-o"></span> 
@@ -43,7 +56,13 @@
                         </ul>
                     </li>
                     
-                    <li id="mail_category" class="active">
+                    <!-- <li id="mail_category" class="active"> -->
+                    <c:if test="${ catecory != null  && catecory == 'Mail' }">
+                   		<li id="mail_category"  class="active">
+                   	</c:if>
+                   	<c:if test="${  catecory != 'Mail' }">
+                   		<li id="mail_category"  >
+                   	</c:if>
                         <a class="has-arrow" href="mailbox.html" aria-expanded="false">
                         	<!-- <span class="educate-icon educate-message icon-wrap"></span> -->
                         	<span class="fa fa-envelope-o"></span>

@@ -226,14 +226,14 @@
                     <div class="breadcome-list single-page-breadcome" style="margin-bottom: 20px;">
                         <div class="row">
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <span style="font-weight: 700; font-size: 2em;"><%= request.getAttribute("pages") %></span>
+                                <span style="font-weight: 700; font-size: 2em;">${ pages }</span>
                             </div>
                             
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <ul class="breadcome-menu">
-                                    <li><a href="/"><%= request.getAttribute("pages") %></a> <span class="bread-slash">/</span>
+                                    <li><a href="/">${ pages }</a> <span class="bread-slash">/</span>
                                     </li>
-                                    <li><span class="bread-blod"><%= request.getAttribute("catecory") %></span>
+                                    <li><span class="bread-blod">${ catecory }</span>
                                     </li>
                                 </ul>
                             </div>
