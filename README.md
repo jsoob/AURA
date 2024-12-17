@@ -14,6 +14,10 @@ What things you need to install the software and how to install them
 Give examples
 ```
 
+## Stats
+
+> These themes works with all five our cards: Stats Card, Repo Card, Gist Card, Top languages Card and WakaTime Card.
+
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
