@@ -22,23 +22,23 @@
 
 
 		<div class="container">
+			<a href="freeboard?cmd=WriteFreeB">
+				<input type="button"class="btn btn-outline-primary" value="글쓰기" /></a>
 			<table class="table table-striped">
 				<tr>
 					<th>게시판번호</th>
 					<th>제목</th>
-					<th>내용</th>
 					<th>작성자</th>
-					<th>조회수</th>
 					<th>등록일자</th>
+					<th>조회수</th>
 				</tr>
 				<c:forEach var="vo" items="${list}">
 					<tr>
 						<td>${vo.freeBNo}</td>
-						<td>${vo.freeBTitle}</td>
-						<td>${vo.freeBContent}</td>
+						<td><a href="freeboard?cmd=DetailFreeB&freeBNo=${vo.freeBNo}"> ${vo.freeBTitle}</a></td>
 						<td>${vo.freeBCrtr}</td>
-						<td>${vo.freeBView}</td>
 						<td>${vo.createDate}</td>
+						<td>${vo.freeBView}</td>
 					</tr>
 				</c:forEach>
 			</table>

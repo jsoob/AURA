@@ -1,5 +1,16 @@
 package com.aura.www.action.board.freeboard;
 
-public class DeleteFreeBAction {
+import com.aura.www.action.Action;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class DeleteFreeBAction implements Action {
+
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
