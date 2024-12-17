@@ -254,6 +254,6 @@
     </div>
 	
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
-    
+ 
 </body>
 </html>

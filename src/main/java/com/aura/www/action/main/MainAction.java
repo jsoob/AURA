@@ -1,13 +1,11 @@
 package com.aura.www.action.main;
 
 import com.aura.www.action.Action;
-import com.aura.www.vo.EmpVOJS;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 public class MainAction implements Action {
+	
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String url = "";
@@ -19,4 +17,5 @@ public class MainAction implements Action {
 		url = "view/main/main.jsp";
 		return url;
 	}
+	
 }

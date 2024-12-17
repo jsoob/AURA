@@ -5,6 +5,7 @@
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
+
         	<%-- ../main/main.jsp --%>
             <a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="${pageContext.request.contextPath}/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
             <strong><a href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/img/logo/AURAlogosn.png" alt="" style="width: 45px; height: 38px;" /></a></strong>
@@ -38,7 +39,7 @@
                             <li><a title="All Professors" href="all-professors.html"><span class="mini-sub-pro">전체 게시판</span></a></li>
                             <li><a title="Add Professor" href="add-professor.html"><span class="mini-sub-pro">공지 게시판</span></a></li>
                             <li><a title="Edit Professor" href="edit-professor.html"><span class="mini-sub-pro">부서 게시판</span></a></li>
-                            <li><a title="Professor Profile" href="professor-profile.html"><span class="mini-sub-pro">자유 게시판</span></a></li>
+                            <li><a title="Professor Profile" href="${pageContext.request.contextPath}/freeboard"><span class="mini-sub-pro">자유 게시판</span></a></li>
                         </ul>
                     </li>
                     
@@ -54,7 +55,6 @@
                             <li><a title="Compose Mail" href="${pageContext.request.contextPath}/mail"><span class="mini-sub-pro">Compose Mail</span></a></li>
                         </ul>
                     </li>
-                    
                 </ul>
             </nav>
         </div>
