@@ -41,6 +41,9 @@
 		============================================ -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/calendar/fullcalendar.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/calendar/fullcalendar.print.min.css">
+    <!-- summernote CSS
+		============================================ -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote.css">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">

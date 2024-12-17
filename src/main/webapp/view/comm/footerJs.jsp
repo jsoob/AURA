@@ -46,6 +46,11 @@
     <script src="/aura/js/calendar/fullcalendar.min.js"></script>
     <script src="/aura/js/calendar/fullcalendar-active.js"></script> -->
     
+    <!-- summernote JS
+		============================================ -->
+    <script src="${pageContext.request.contextPath}/js/summernote/summernote.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/summernote/summernote-active.js"></script>
+    
     <!-- 주로 main 같은 js 같음 건들면 안될듯 -->
     <!-- tab JS 
 		============================================ -->
