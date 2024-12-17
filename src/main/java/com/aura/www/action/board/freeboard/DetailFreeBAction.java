@@ -18,6 +18,7 @@ public class DetailFreeBAction implements Action {
 			FreeBoardDAO dao = new FreeBoardDAO();
 			FreeBoardVO vo = dao.selectOne(freeBNo);
 			req.setAttribute("vo", vo);
+			System.out.println(vo.toString());
 		}
 		
 		return "view/board/freeB/detailFreeB.jsp";

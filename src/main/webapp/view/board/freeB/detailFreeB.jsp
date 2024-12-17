@@ -19,17 +19,17 @@
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
 
-		<div class="container">
+		<div class="container-fluid">
 			<table class="table">
 				<tr>
 					<th>작성자</th>
 					<td>${vo.freeBCrtr}</td>
 
 					<th>작성일시</th>
-					<td ${vo.createDate}></td>
+					<td> ${vo.createDate}</td>
 					
 					<th>조회수</th>
-					<td ${vo.freeBView}></td>
+					<td> ${vo.freeBView}</td>
 				</tr>
 
 				<tr>
@@ -57,7 +57,7 @@
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="/view/comm/footerJS.jsp"></jsp:include>
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 </body>
 </html>

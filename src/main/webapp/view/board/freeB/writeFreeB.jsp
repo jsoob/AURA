@@ -27,7 +27,6 @@
 					<th>작성자</th>
 					<td><input type="text" name="writer" id="" /></td>
 					<input type="hidden" name="cmd" value="writeOk"/>
-					<!-- WriteAction ==> db insert 다시 목록으로 리다이렉트 -->
 				</tr>
 				<tr>
 					<th>제목</th>
@@ -43,7 +42,7 @@
 				</tr>
 				<tr>
 					<th>임시저장</th>
-					<td><input type="text" name="freeBStatus" id="" /></td>
+					<td><input type="radio" name="free" value="1"/></td>
 				</tr>
 				<tr>
 					<th>공개</th>
@@ -69,7 +68,7 @@
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="/view/comm/footerJS.jsp"></jsp:include>
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 </body>
 </html>

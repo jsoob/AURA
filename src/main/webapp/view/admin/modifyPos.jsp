@@ -26,7 +26,7 @@
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="/view/comm/footerJS.jsp"></jsp:include>
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 </body>
 </html>

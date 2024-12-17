@@ -21,7 +21,7 @@
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
 
-		<div class="container">
+		<div class="container-fluid">
 			<a href="freeboard?cmd=WriteFreeB">
 				<input type="button"class="btn btn-outline-primary" value="글쓰기" /></a>
 			<table class="table table-striped">
@@ -47,7 +47,7 @@
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="/view/comm/footerJS.jsp"></jsp:include>
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 
 

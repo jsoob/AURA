@@ -252,7 +252,7 @@
         <jsp:include page="../comm/footer.jsp"></jsp:include>
     </div>
 	
-	<jsp:include page="../comm/footerJS.jsp"></jsp:include>
+	<jsp:include page="../comm/footerJs.jsp"></jsp:include>
     
 </body>
 </html>
