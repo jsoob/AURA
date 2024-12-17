@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class EmpVO {
+public class EmpVO extends DeptVO {
 //	EMP_NO, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, 
 //	CELLPHONE, HIREDATE, QUITDATE, BIRTHDATE, 
 //	POS_NO, DEPT_NO, CREATE_DATE, UPDATE_DATE
