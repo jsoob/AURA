@@ -16,7 +16,6 @@ public class AdminLoadAction implements Action {
 		   
 			req.setAttribute("pages", "관리자 조회");
 			
-		   
 		   url = "view/admin/adminLoad.jsp";
 		  
 	      return url;
