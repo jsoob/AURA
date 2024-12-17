@@ -19,17 +19,19 @@
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-
-		<div class="container">
-			<table class="table">
+		
+		<div class="container-fluid">
+			<a href="admin?cmd=insertPos"><input type="button" class="btn btn-outline-primary" value="직급등록"/></a>
+			<table class="table" width="100px" height="100px">
 				<tr>
 					<th>직급번호</th>
 					<th>직급명</th>
 				</tr>
 				<c:forEach var="vo" items="${list}">
 					<tr>
-						<td>${vo.posNo}</td>
-						<td>${vo.posName}</td>
+					
+						<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posNo}</a></td>
+						<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posName}</a></td>
 					</tr>
 				</c:forEach>
 			</table>
