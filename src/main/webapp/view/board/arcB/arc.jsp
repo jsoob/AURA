@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>arc.jsp</title>
 </head>
 <body>
 	<h2>안녕하세요</h2>
