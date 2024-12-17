@@ -41,10 +41,7 @@ public class AdminController extends HttpServlet {
 		if(url=="main") {
 	    	resp.sendRedirect("main");
 	    } else {
-	    	req.setAttribute("title", "AURA 관리자 페이지");
-			req.setAttribute("catecory", "관리자 페이지");  
-	    
-			RequestDispatcher rd = req.getRequestDispatcher(url);
+	    	RequestDispatcher rd = req.getRequestDispatcher(url);
 	    	rd.forward(req, resp);
 	    }
 	}

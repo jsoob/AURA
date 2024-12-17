@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>    
-<%
-	//String gb = (String)request.getAttribute("catecory");
-	
-	/* if(gb==null || gb.equals("")) {
-		
-	}  */
-%>
 
 <!-- Start Left menu area -->
 <div class="left-sidebar-pro">
@@ -37,10 +30,10 @@
                     </li>
                     
                     <!-- <li id="board_category"> -->
-                   	<c:if test="${ catecory != null  && catecory == '게시판' }">
+                   	<c:if test="${ commAt['category'] != null  && commAt['category'] == 'board' }">
                    		<li id="board_category" class="active">
                    	</c:if>
-                   	<c:if test="${  catecory != '게시판' }">
+                   	<c:if test="${  category != 'board' }">
                    		<li id="board_category">
                    	</c:if>
                         <a class="has-arrow" href="all-professors.html" aria-expanded="false">
@@ -56,10 +49,10 @@
                     </li>
                     
                     <!-- <li id="mail_category" class="active"> -->
-                    <c:if test="${ catecory != null  && catecory == 'Mail' }">
+                    <c:if test="${ commAt['category'] != null  && commAt['category'] == 'mail' }">
                    		<li id="mail_category"  class="active">
                    	</c:if>
-                   	<c:if test="${  catecory != 'Mail' }">
+                   	<c:if test="${  commAt['category'] != 'mail' }">
                    		<li id="mail_category"  >
                    	</c:if>
                         <a class="has-arrow" href="mailbox.html" aria-expanded="false">

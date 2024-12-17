@@ -1,6 +1,7 @@
 package com.aura.www.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.aura.www.action.Action;
 import com.aura.www.action.board.freeboard.DeleteFreeBAction;
@@ -55,10 +56,6 @@ public class FreeBoardController extends HttpServlet {
 			Action action = new DeleteFreeBAction();
 			url = action.execute(req, resp);
 		}
-		
-		req.setAttribute("title", "AURA 자유게시판");
-	    req.setAttribute("catecory", "게시판");
-	      
 		
 		RequestDispatcher rd = req.getRequestDispatcher(url);
 		rd.forward(req, resp);

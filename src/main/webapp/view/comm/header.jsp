@@ -228,7 +228,8 @@
                     <div class="breadcome-list single-page-breadcome" style="margin-bottom: 20px;">
                         <div class="row">
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <span style="font-weight: 700; font-size: 2em;">${ pages }</span>
+                        														<%-- ${ pages } => ${commAt["pages"]} HashMap 타입 변경 --%>
+                                <span style="font-weight: 700; font-size: 2em;">${commAt["pagesName"]}</span>
                             </div>
                             
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -250,26 +251,32 @@
 										 
 										 getURL = http://localhost:8080/aura/admin
 										request.getRequestURI() = /aura/view/admin/adminLoad.jsp
-										request.getContextPath() = /aura
+										request.getContextPath() = /aura vb6f 
 										request.getRequestURL() = http://localhost:8080/aura/view/admin/adminLoad.jsp
 										request.getServletPath() = /view/admin/adminLoad.jsp
                                 	--%>
                                 	
                                 	<%
-                                		System.out.println("request.getRequestURL() = " + request.getRequestURL());
+	                                	System.out.println("request.getRequestURI() = " + request.getRequestURI());   
+	                            		System.out.println("request.getContextPath() = " + request.getContextPath());   
+	                            		System.out.println("request.getRequestURL() = " + request.getRequestURL());   
+	                            		System.out.println("request.getServletPath() = " + request.getServletPath());   
+                            			
 	                                	String tUrl = (request.getRequestURL()).toString();
 	                                	System.out.println("indexOf = " + tUrl.indexOf("/aura") );
 	                                	System.out.println("substring = " + tUrl.substring(tUrl.indexOf("/aura")));
                                 	%>
-                                	
-                                    <li><a href="/">${ pages }</a> <span class="bread-slash">/</span>
-                                    
+                                	<%-- 이전:${ pages }" / 현재 map --%>
+                                	<%-- 
+                                	<a href="${pageContext.request.contextPath}/${commAt['category']}/${cmd}">${commAt["pagesName"]}</a> 
+                                	 --%>
+                                    <li>${commAt["pagesName"]}<span class="bread-slash"> / </span>
                                     <%--
                                     <li><a href="${pageContext.request.contextPath}/${cmd}">${ pages }</a> <span class="bread-slash">/</span>
                                      --%>
                                     
                                     </li>
-                                    <li><span class="bread-blod">${ catecory }</span>
+                                    <li><span class="bread-blod">${commAt["categoryName"]}</span>
                                     </li>
                                 </ul>
                             </div>

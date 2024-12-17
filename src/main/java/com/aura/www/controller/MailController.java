@@ -25,9 +25,6 @@ public class MailController extends HttpServlet {
           url = bc.execute(req, resp);
       }
       
-      req.setAttribute("title", "AURA Mail");
-      req.setAttribute("catecory", "Mail");
-      
       RequestDispatcher rd = req.getRequestDispatcher(url);
       rd.forward(req, resp);
    }
