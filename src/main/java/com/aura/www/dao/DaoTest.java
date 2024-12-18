@@ -1,4 +1,4 @@
-package com.aura.www.dao.freeboard;
+package com.aura.www.dao;
 
 import java.util.ArrayList;
 

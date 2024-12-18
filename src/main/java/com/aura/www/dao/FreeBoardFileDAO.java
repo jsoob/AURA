@@ -1,4 +1,4 @@
-package com.aura.www.dao.freeboard;
+package com.aura.www.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,10 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.aura.www.vo.freeboard.FreeBoardCommentVO;
+import com.aura.www.vo.freeboard.FreeBoardFileVO;
 
-
-public class FreeBoardCommentDAO {
+public class FreeBoardFileDAO {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 3306 / 3307
 	String user = "aura";
@@ -21,7 +20,7 @@ public class FreeBoardCommentDAO {
 	ResultSet rs = null;
 	StringBuffer sb = new StringBuffer();
 
-	public FreeBoardCommentDAO() {
+	public FreeBoardFileDAO(){
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
@@ -32,28 +31,26 @@ public class FreeBoardCommentDAO {
 			e.printStackTrace();
 		}
 	}
-
-	// 특정 게시글의 모든 댓글 조회
-	public ArrayList<FreeBoardCommentVO> selectCommentAll(int freeBNo) {
-		ArrayList<FreeBoardCommentVO> list = new ArrayList<FreeBoardCommentVO>();
+	
+	// 특정 게시글에 첨부된 모든 파일 찾기
+	public ArrayList<FreeBoardFileVO> selectFileList(int freeBNo){
+		ArrayList<FreeBoardFileVO> list = new ArrayList<FreeBoardFileVO>();
 		sb.setLength(0);
-		sb.append("SELECT FBCMNT_NO, FBCMNT_CONTENT, CREATE_DATE, UPDATE_DATE, EMP_NO, FREEB_NO ");
-		sb.append("FROM FREEBCOMMENT ");
+		sb.append("SELECT FILE_NO, FILE_NAME, FILE_ROUTE, FREEB_NO ");
+		sb.append("FROM FBFILE ");
 		sb.append("WHERE FREEB_NO = ? ");
-
+		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, freeBNo);
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				int fBCmntNo = rs.getInt("FBCMNT_NO");
-				String fBCmntContent = rs.getString("FBCMNT_CONTENT");
-				String createDate = rs.getString("CREATE_DATE");
-				String updateDate = rs.getString("UPDATE_DATE");
-				int empNo = rs.getInt("EMP_NO");
-
-				FreeBoardCommentVO vo = new FreeBoardCommentVO(fBCmntNo, fBCmntContent, createDate, updateDate, empNo,
-						freeBNo);
+			
+			while(rs.next()) {
+				int fileNo = rs.getInt("FILE_NO");
+				String fileName = rs.getString("FILE_NAME");
+				String fileRoute = rs.getString("FILE_ROUTE");
+				
+				FreeBoardFileVO vo = new FreeBoardFileVO(fileNo, fileName, fileRoute, freeBNo);
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -62,62 +59,60 @@ public class FreeBoardCommentDAO {
 		return list;
 	}
 
-	// 댓글 작성
-	// 시퀀스 적용해야함
-	public void insertComment(FreeBoardCommentVO vo) {
+	// 첨부파일 DB에 저장
+	public void insertFile(FreeBoardFileVO vo) {
 		sb.setLength(0);
-		sb.append("INSERT INTO FREEBCOMMENT ");
-		sb.append("VALUES(NEXTVAL('FBCOMNTNO'), ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)");
+		sb.append("INSERT INTO FBFILE ");
+		sb.append("VALUES(NEXTVAL('FILENO'), ?, ?, ? )");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, vo.getFBCmntContent());
-			pstmt.setInt(2, vo.getEmpNo());
+			pstmt.setString(1, vo.getFileName());
+			pstmt.setString(2, vo.getFileRoute());
 			pstmt.setInt(3, vo.getFreeBNo());
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	// 댓글 삭제
-	public void deleteComment(int fBCmntNo) {
+	// 특정 첨부파일만 삭제할 때
+	public void deleteFileOne(int fileNo) {
 		sb.setLength(0);
-		sb.append("DELETE FROM FREEBCOMMENT ");
-		sb.append("WHERE FBCMNT_NO = ? ");
+		sb.append("DELETE FROM FBFILE ");
+		sb.append("WHERE FILE_NO = ? ");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, fBCmntNo);
+			pstmt.setInt(1, fileNo);
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	// 댓글 수정
-	public void updateComment(FreeBoardCommentVO vo) {
-
+	
+	// 게시글이 삭제될 때 첨부파일도 함께 삭제
+	public void deleteFileAll(int freeBNo) {
 		sb.setLength(0);
-		sb.append("UPDATE FREEBCOMMENT ");
-		sb.append("SET FBCMNT_CONTENT = ? , UPDATE_DATE = CURRENT_TIMESTAMP ");
-		sb.append("WHERE FBCMNT_NO = ? ");
+		sb.append("DELETE FROM FBFILE ");
+		sb.append("WHERE FREEB_NO = ? ");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, vo.getFBCmntContent());
-			pstmt.setInt(2, vo.getFBCmntNo());
+			pstmt.setInt(1, freeBNo);
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
 	// 자원반납
 	public void close() {
 		try {
@@ -128,6 +123,7 @@ public class FreeBoardCommentDAO {
 			if (conn != null)
 				conn.close();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

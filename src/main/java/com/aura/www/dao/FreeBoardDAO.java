@@ -1,4 +1,4 @@
-package com.aura.www.dao.freeboard;
+package com.aura.www.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
