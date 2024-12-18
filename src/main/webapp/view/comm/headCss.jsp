@@ -54,8 +54,6 @@
     <!-- 프로젝트용 css추가 -->
     <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auraCss/여기서 각자 쓸 css파일 구현.css"> --%>
     
-    <!-- w2ui css -->
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
     
     <!-- modernizr JS
 		============================================ -->
@@ -64,14 +62,9 @@
     <!-- jQuery CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     
-    <!-- w2ui js -->
-    <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
-    
-    <!-- <script src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js"></script> -->
-    <%--
-    <script type="module">
-		import { w2grid } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
-     --%>
+    <!-- toast grid css, js 추가 -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+	<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 
   
     

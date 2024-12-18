@@ -11,8 +11,8 @@ import com.aura.www.vo.EmpVO;
 public class LoginDAO {
 	// 1. 환경변수
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://192.168.90.65:3306/aura"; // 학원에서 사용시
-//	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 집에서 사용시
+//	String url = "jdbc:mysql://192.168.90.65:3306/aura"; // 학원에서 사용시
+	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 집에서 사용시
 	String user = "aura";
 	String password = "tigertiger12$$";
 	Connection conn = null;
