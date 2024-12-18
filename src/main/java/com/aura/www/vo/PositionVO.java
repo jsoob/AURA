@@ -1,4 +1,3 @@
-
 package com.aura.www.vo;
 
 import lombok.AllArgsConstructor;
@@ -9,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeptVO extends PositionVO {
+@Builder
+public class PositionVO {
 	
-	private int detpNo;					// 부서번호
-	private String deptName;			// 부서명
+	private int posNo;					// 직급번호
+	private String posName;				// 직급명
 
 }
-
