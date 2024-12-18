@@ -7,6 +7,7 @@
 <title>${commAt["title"]}</title>
 <%-- header 영역에서 첨부된 css 파일+js --%>
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+
 </head>
 <body>
 	<%-- Start Left menu area --%>
@@ -25,7 +26,7 @@
                 	<div class="" style="margin-bottom: 20px;">
                         <div class="row">
                         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        		
+                        		<div id="grid"></div>
                             </div>
                         </div>
                     </div>

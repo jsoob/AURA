@@ -62,9 +62,3 @@
     <!-- jQuery CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     
-    <!-- toast grid css, js 추가 -->
-    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-	<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-
-  
-    
