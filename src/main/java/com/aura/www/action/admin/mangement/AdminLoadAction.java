@@ -1,4 +1,4 @@
-package com.aura.www.action.admin;
+package com.aura.www.action.admin.mangement;
 
 import java.util.HashMap;
 
