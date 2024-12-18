@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.aura.www.action.Action;
-import com.aura.www.dao.freeboard.FreeBoardDAO;
+import com.aura.www.dao.FreeBoardDAO;
 import com.aura.www.vo.freeboard.FreeBoardVO;
 
 import jakarta.servlet.annotation.WebServlet;

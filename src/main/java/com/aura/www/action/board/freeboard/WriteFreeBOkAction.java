@@ -1,7 +1,7 @@
 package com.aura.www.action.board.freeboard;
 
 import com.aura.www.action.Action;
-import com.aura.www.dao.freeboard.FreeBoardDAO;
+import com.aura.www.dao.FreeBoardDAO;
 import com.aura.www.vo.freeboard.FreeBoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
