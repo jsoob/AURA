@@ -13,6 +13,7 @@ public class MainAction implements Action {
       String url = "view/main/main.jsp";
       
       return url;
+
    }
 
 }
