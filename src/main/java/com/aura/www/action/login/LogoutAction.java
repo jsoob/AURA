@@ -1,4 +1,4 @@
-package com.aura.www.action;
+package com.aura.www.action.login;
 
 import java.io.IOException;
 
