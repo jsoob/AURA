@@ -53,7 +53,7 @@
     
     <!-- 프로젝트용 css추가 -->
     <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auraCss/여기서 각자 쓸 css파일 구현.css"> --%>
-    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auraCss/auraCss.css">
     
     <!-- modernizr JS
 		============================================ -->
