@@ -19,7 +19,6 @@
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-		
 		<div class="container-fluid">
 			<a href="admin?cmd=insertPos"><input type="button" class="btn btn-outline-primary" value="직급등록"/></a>
 			<table class="table" width="100px" height="100px">

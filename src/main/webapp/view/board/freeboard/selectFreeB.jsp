@@ -20,7 +20,6 @@
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-
 		<div class="container-fluid">
 			<a href="freeboard?cmd=writeFreeBForm">
 				<input type="button"class="btn btn-outline-primary" value="글쓰기" /></a>

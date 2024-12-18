@@ -18,7 +18,6 @@
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-
 		<div class="container">
 			
 			<form action="freeboard">

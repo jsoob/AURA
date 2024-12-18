@@ -10,7 +10,7 @@ public class ModifyPosAction implements Action{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
-		return "/view/admin/modifyPos.jsp";
+		return "view/admin/modifyPos.jsp";
 	}
 
 }

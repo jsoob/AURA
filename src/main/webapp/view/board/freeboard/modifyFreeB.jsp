@@ -18,13 +18,13 @@
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-
 		<div class="container-fluid">
 			<!-- 여기에 추가 -->
 		</div>
 
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
+
 
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
