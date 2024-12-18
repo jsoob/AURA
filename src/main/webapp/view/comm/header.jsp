@@ -39,7 +39,7 @@
 	                                        
 	                                        <li class="nav-item"><a href="#" class="nav-link">부서관리</a>
 	                                        </li>
-	                                        <li class="nav-item"><a href="#" class="nav-link">직급관리</a>
+	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=selectPos" class="nav-link">직급관리</a>
 	                                        </li>
 	                                        <li class="nav-item"><a href="#" class="nav-link">사원관리</a>
 	                                        </li>
