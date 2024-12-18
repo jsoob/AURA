@@ -30,7 +30,7 @@ public class AdminController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
-		// 3. page==null or SelectFreeB 라면
+		// 3. page==null or SelectFreeB 라면z
 		if (cmd == null || cmd.equals("selectPos")) {
 			Action action = new SelectPosAction();
 			url = action.execute(req, resp);
