@@ -26,8 +26,6 @@ public class AdminLoadAction implements Action {
 			
 		   req.setAttribute("commAt", map);
 		   
-		   req.setAttribute("commAt", map);
-		   
 		   url = "view/admin/adminLoad.jsp";
 		  
 	      return url;
