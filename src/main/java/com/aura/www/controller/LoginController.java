@@ -24,10 +24,10 @@ public class LoginController extends HttpServlet {
     	  Action bc = new LoginFormAction();
           url = bc.execute(req, resp);
       } else if (cmd.equals("loginOk")) {
-    	  Action bc = new com.aura.www.action.LoginOkAction();
+    	  Action bc = new com.aura.www.action.login.LoginOkAction();
           url = bc.execute(req, resp);
       } else if (cmd.equals("logout")) {
-    	  Action bc = new com.aura.www.action.LogoutAction();
+    	  Action bc = new com.aura.www.action.login.LogoutAction();
           url = bc.execute(req, resp);
       }
       
