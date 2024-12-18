@@ -21,7 +21,7 @@ public class DetailFreeBAction implements Action {
 			System.out.println(vo.toString());
 		}
 		
-		return "view/board/freeB/detailFreeB.jsp";
+		return "view/board/freeboard/detailFreeB.jsp";
 	}
 
 }

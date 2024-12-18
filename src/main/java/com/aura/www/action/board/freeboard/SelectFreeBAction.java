@@ -20,7 +20,7 @@ public class SelectFreeBAction implements Action{
 		
 		req.setAttribute("list", list);
 		
-		return "view/board/freeB/selectFreeB.jsp";
+		return "view/board/freeboard/selectFreeB.jsp";
 	}
 
 }

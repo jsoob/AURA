@@ -13,7 +13,7 @@ public class WriteFreeBFormAction implements Action {
    public String execute(HttpServletRequest req, HttpServletResponse resp) {
       req.setAttribute("pages", "자유게시판 글쓰기");
       
-      return "view/board/freeB/writeFreeB.jsp";
+      return "view/board/freeboard/writeFreeB.jsp";
    }
 
 }
