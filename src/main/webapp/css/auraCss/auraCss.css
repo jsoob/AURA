@@ -48,10 +48,20 @@
 .pd-10 {
 	padding: 10px !important;
 }
+.pd-wd-10 {
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+.pd-ht-10 {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+}
 /* padding 전체 none */
 .pd-nn {
 	padding: none !important;	
 }
+
+
 /* margin 조절 10px */
 .mg-lt-10 {
 	margin-left: 10px !important;
@@ -67,6 +77,14 @@
 }
 .mg-10 {
 	margin: 10px !important;
+}
+.mg-wd-10 {
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+}
+.mg-ht-10 {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
 }
 /* padding 전체 none */
 .pd-nn {

@@ -27,14 +27,29 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap">
                             
+                            <%-- 검색 부분 --%>
                             <div class="text-right mg-bt-10">
-                            	<a href="admin?cmd=insertPos">
-									<input type="button" class="btn btn-primary" value="직급등록" />
-								</a>
+                            	<div class="form-inline">
+								  	<div class="form-group">
+									    <label for="exampleInputName2">Name</label>
+									    <input type="text" class="form-control mg-wd-10" id="exampleInputName2" placeholder="Jane Doe">
+									  </div>
+									  <div class="form-group">
+									    <label for="exampleInputEmail2">Email</label>
+									    <input type="email" class="form-control mg-wd-10" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+									  </div>
+								  
+								  	<span class="pd-lt-10">
+								  		<button type="button" class="btn pd-setting">사원 조회</button><!-- btn-primary -> pd-setting -->
+								  	</span>
+								  </div>
+								
                             </div>
                             
+                            <%-- 테이블 부분 --%>
                             <div class="asset-inner">
                                 <table>
+                                	<%-- 테이블 컬럼 --%>
                                     <tr>
                                         <th>부서명</th>
 										<th>사원번호</th>
@@ -42,94 +57,18 @@
 										<th>직급</th>
 										<th>외부이메일</th>
 										<th>입사일자</th>
-										<th>Setting</th>
                                     </tr>
+                                    <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
+                                	<%-- 테이블 값 --%>
                                     <tr>
                                         <td>1</td>
-                                        <td><img src="img/product/book-1.jpg" alt=""></td>
                                         <td>Web Development Book</td>
-                                        <td>
-                                            <button class="pd-setting">Active</button>
-                                        </td>
                                         <td>Html, Css</td>
                                         <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td><img src="img/product/book-2.jpg" alt=""></td>
-                                        <td>Quality Bol pen</td>
-                                        <td>
-                                            <button class="ps-setting">Paused</button>
-                                        </td>
-                                        <td>PHP</td>
-                                        <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td><img src="img/product/book-3.jpg" alt=""></td>
-                                        <td>Box of pendrive</td>
-                                        <td>
-                                            <button class="ds-setting">Disabled</button>
-                                        </td>
-                                        <td>Java</td>
-                                        <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td><img src="img/product/book-4.jpg" alt=""></td>
-                                        <td>Quality Bol pen</td>
-                                        <td>
-                                            <button class="pd-setting">Active</button>
-                                        </td>
-                                        <td>PHP</td>
-                                        <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td><img src="img/product/book-1.jpg" alt=""></td>
-                                        <td>Web Development Book</td>
-                                        <td>
-                                            <button class="pd-setting">Active</button>
-                                        </td>
-                                        <td>Wordpress</td>
-                                        <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td><img src="img/product/book-2.jpg" alt=""></td>
-                                        <td>Quality Bol pen</td>
-                                        <td>
-                                            <button class="ps-setting">Paused</button>
-                                        </td>
-                                        <td>Java</td>
-                                        <td>CSE</td>
-                                        <td>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                            <button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="Trash"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
                                     </tr>
                                 </table>
                             </div>
+                            <%-- 테이블 페이징 처리 --%>
                             <!-- 
                             <div class="custom-pagination">
 								<ul class="pagination">
