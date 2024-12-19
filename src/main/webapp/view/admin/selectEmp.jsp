@@ -50,7 +50,7 @@
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
 									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
 									+	"</button>"
-									+ "</a>"
+									+ "</a> "
 									
 									+ "<a onclick='deleteEmp("+ row.empNo +");'>" 
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='삭제'>"
@@ -197,37 +197,37 @@
                                 <table id="selectTable">
                                 	<%-- 테이블 컬럼 --%>
                                     <tr>
-                                        <th class="">부서명</th>
-										<th class="">사원번호</th>
-										<th class="">사원명</th>
-										<th class="">사원 이미지</th>
-										<th class="">직급</th>
-										<th class="">외부이메일</th>
-										<th class="">입사일자</th>
-										<th class="">퇴사일자</th>
+                                        <th>부서명</th>
+										<th>사원번호</th>
+										<th>사원명</th>
+										<th>사원 이미지</th>
+										<th>직급</th>
+										<th>외부이메일</th>
+										<th>입사일자</th>
+										<th>퇴사일자</th>
 										<th class="text-center">Setting</th>
                                     </tr>
                                     <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
                                 	<%-- 테이블 값 --%>
                                     <c:forEach var="vo" items="${empList}">
 										<tr name="empList">
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
+											<td><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
 											
 											<td class="text-center">
 												<a onclick="modifyEmp(${vo.empNo});"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
-													<button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="수정">
+													<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="수정">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
 												</a>
 												<a onclick="deleteEmp(${vo.empNo});"> <%-- href="admin?cmd=deleteEmp&empNo=${vo.empNo}" --%>
-													<button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="삭제">
+													<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="삭제">
 														<i class="fa fa-trash-o" aria-hidden="true"></i>
 													</button>
 												</a>
