@@ -11,6 +11,7 @@ import org.json.simple.parser.ParseException;
 
 import com.aura.www.action.Action;
 import com.aura.www.action.admin.emp.SelectEmpActionAsync;
+import com.aura.www.action.admin.position.SelectPosActionAsync;
 import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.ServletException;
@@ -33,8 +34,10 @@ public class AdminAsyncController extends HttpServlet {
 		// String -> JSON
 		JSONParser jsonParser = new JSONParser();
 		
+		if(cmd==null) {}
+		
 		// 사원 관리
-		if (cmd.equals("selectEmp")) {
+		else if (cmd.equals("selectEmp")) {
 			ArrayList<EmpVO> list = null;
 			Action action = new SelectEmpActionAsync();
 			String tArr = action.execute(req, resp);
@@ -46,6 +49,15 @@ public class AdminAsyncController extends HttpServlet {
 			}
 //			JSONObject jObj = new JSONObject();
 //	        jObj.put("dataList", list); // key, value
+		}  else if (cmd.equals("selectPos")) {
+			Action action = new SelectPosActionAsync();
+			String tArr = action.execute(req, resp);
+			try {
+				// JSON 변환
+				jArr = (JSONArray) jsonParser.parse(tArr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		 resp.setContentType("application/json; charset=UTF-8");

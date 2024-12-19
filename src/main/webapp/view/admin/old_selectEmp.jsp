@@ -11,6 +11,7 @@
 <script type="text/javascript">
 	$( ()=> {
 		
+		
 		$("#loadBtn").on("click", ()=> {
 			loadBtn();
 		});
@@ -20,6 +21,7 @@
 	});
 	
 	function loadBtn(){
+		console.log("loadBtn");
 		let sendData = $("form[name=empForm]").serialize();
 		
 		$.ajax({
@@ -34,25 +36,27 @@
 					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='empList'>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empEmail +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ 
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.deptName +"</a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.empNo +"</a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.empName +"</a></td>";
+					appendText +="<td><a href='admin?cmd=modifyEmp&empNo="+ row.empNo +"'> <img alt='사원이미지 없음' src='"+ row.empImage +"'></a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.posName +"</a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.empEmail +"</a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ row.hiredate +"</a></td>";
+					appendText +="<td><a href='admin?cmd=detailEmp&empNo="+ row.empNo +"'>"+ 
 								(row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined" ? "근무중" : row.quitdate) +"</a></td>";
 					
+								<a onclick="modifyEmp('2024001');">			
+								
 					// 이 부분 해야함			
 					appendText += "<td class='text-center'>"
 									+ "<a onclick='modifyEmp("+ row.empNo +");'>" 
+									+ "<a href='admin?cmd=modifyEmp&empNo="+ row.empNo +"'>"
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
 									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
 									+	"</button>"
 									+ "</a>"
-									
-									+ "<a onclick='deleteEmp("+ row.empNo +");'>" 
+									+ "<a href='admin?cmd=deleteEmp&empNo="+ row.empNo +"'>"
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='삭제'>"
 									+		"<i class='fa fa-trash-o' aria-hidden='true'></i>"
 									+	"</button>"
@@ -72,30 +76,13 @@
             }
             
         });
-		
-	} // end loadBtn
-	
-	function detailEmp(empNo) {
 		/* 
 		let form = document.querySelector("form");
-	    form.action = "admin?cmd=selectEmp";
-	    form.method ="post";
-	    form.submit();
-	     */
-		let form = document.createElement('form');
-	       
-	    let obj = document.createElement('input');
-	   	obj.setAttribute('type', 'hidden');
-	  	obj.setAttribute('name', 'empNo');
-	  	obj.setAttribute('value', empNo);
-	  	form.appendChild(obj);
-	  	
-	  	form.setAttribute('method', 'post');
-	  	form.setAttribute('action', 'admin?cmd=detailEmp');
-	    document.body.appendChild(form);
-	    form.submit();
+        form.action = "admin?cmd=selectEmp";
+        form.method ="post";
+        form.submit();
+         */
 	}
-	
 </script>
 
 <%--
@@ -137,7 +124,7 @@
                 <div class="row">
                     
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap aura_content">
+                        <div class="product-status-wrap">
                             
                             <%-- 검색 부분 --%>
                            <form name="empForm">
@@ -211,22 +198,22 @@
                                 	<%-- 테이블 값 --%>
                                     <c:forEach var="vo" items="${empList}">
 										<tr name="empList">
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
-											<td class=""><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.deptName}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.empNo}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.empName}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.posName}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.empEmail}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${vo.hiredate}</a></td>
+											<td class=""><a href="admin?cmd=detailEmp&empNo=${vo.empNo}">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
 											
 											<td class="text-center">
-												<a onclick="modifyEmp(${vo.empNo});"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
+												<a onclick="modifyEmp('${vo.empNo}');"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
 													<button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="수정">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
 												</a>
-												<a onclick="deleteEmp(${vo.empNo});"> <%-- href="admin?cmd=deleteEmp&empNo=${vo.empNo}" --%>
+												<a onclick="deleteEmp('${vo.empNo}');"> <%-- href="admin?cmd=deleteEmp&empNo=${vo.empNo}" --%>
 													<button data-toggle="tooltip" title="" class="pd-setting-ed" data-original-title="삭제">
 														<i class="fa fa-trash-o" aria-hidden="true"></i>
 													</button>

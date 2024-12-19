@@ -31,6 +31,10 @@
 }
 */
 
+/* aura content 높이 */
+.aura_content {
+	height: 650px !important;
+}
 
 /* padding 조절 10px */
 .pd-lt-10 {
@@ -121,3 +125,8 @@
 	width: 50px !important;
 }
 
+/* 중간사이즈 모달 css */
+.middleMoalWd {
+	width: 50% !important;
+    max-width: 600px !important;
+}
