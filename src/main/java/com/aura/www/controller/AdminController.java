@@ -9,6 +9,8 @@ import com.aura.www.action.admin.dept.InsertDeptOkAction;
 import com.aura.www.action.admin.dept.ModifyDeptAction;
 import com.aura.www.action.admin.dept.ModifyDeptOkAction;
 import com.aura.www.action.admin.dept.SelectDeptAction;
+import com.aura.www.action.admin.emp.InsertEmpAction;
+import com.aura.www.action.admin.emp.SelectEmpAction;
 import com.aura.www.action.admin.management.AdminLoadAction;
 import com.aura.www.action.admin.position.SelectPosAction;
 import com.aura.www.action.main.MainAction;
@@ -31,7 +33,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/admin")
 public class AdminController extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 1. 한글처리
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
@@ -92,6 +94,15 @@ public class AdminController extends HttpServlet {
             Action action = new DeleteDeptAction();
             url = action.execute(req, resp);
         }
+		
+		// 사원 관리
+		else if (cmd.equals("selectEmp")) {
+			Action action = new SelectEmpAction();
+			url = action.execute(req, resp);
+		} else if (cmd.equals("insertEmp")) {
+			Action action = new InsertEmpAction();
+			url = action.execute(req, resp);
+		}
 		
 		if(url=="main") {
 	    	resp.sendRedirect("main");

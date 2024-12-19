@@ -104,3 +104,20 @@
 	text-align: right !important;
 }
 
+/* 넓이 조절 */
+.wd-200 {
+	width: 200px !important;
+}
+.wd-150 {
+	width: 150px !important;
+}
+.wd-100 {
+	width: 100px !important;
+}
+.wd-80 {
+	width: 80px !important;
+}
+.wd-50 {
+	width: 50px !important;
+}
+
