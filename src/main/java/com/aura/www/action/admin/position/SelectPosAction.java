@@ -21,7 +21,7 @@ public class SelectPosAction implements Action{
 		   map.put("category", "position"); // 카테고리 찾는 key
 		   map.put("categoryName", "직급관리 페이지"); // 사용자에게 보여주는 카테고리명
 		   map.put("pages", "selectPos"); // 페이지명
-		   map.put("pagesName", "직급 조회"); // 사용자에게 보여주는 페이지명
+		   map.put("pagesName", "직급 관리"); // 사용자에게 보여주는 페이지명
 			
 		   req.setAttribute("commAt", map);
 		
