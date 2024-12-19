@@ -55,9 +55,6 @@ public class FreeBoardController extends HttpServlet {
 			url = action.execute(req, resp);
 		}
 
-		req.setAttribute("title", "AURA 자유게시판");
-		req.setAttribute("catecory", "게시판");
-
 		RequestDispatcher rd = req.getRequestDispatcher(url);
 		rd.forward(req, resp);
 

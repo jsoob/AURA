@@ -6,6 +6,7 @@ import com.aura.www.vo.FreeBoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class WriteFreeBOkAction implements Action {
 
@@ -18,7 +19,8 @@ public class WriteFreeBOkAction implements Action {
 		int freeBNotice = Integer.parseInt(req.getParameter("freeBNotice"));
 		int freeBStatus = Integer.parseInt(req.getParameter("freeBStatus"));
 		int freeBPblc = Integer.parseInt(req.getParameter("freeBPblc"));
-		int freeBCrtr = Integer.parseInt(req.getParameter("freeBCrtr"));
+		HttpSession session = req.getSession();
+		int freeBCrtr = (int)session.getAttribute("loginEmp");
 		
 		FreeBoardDAO dao = new FreeBoardDAO();
 
