@@ -25,11 +25,38 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap">
 
+
+
 							<div class="text-right mg-bt-10">
-								<a href="admin?cmd=insertPos"> <input type="button"
-									class="btn pd-setting" value="직급등록" />
-								</a>
+								<div class="form-inline">
+
+									<span class="pd-lt-10">
+										<a href="admin?cmd=insertPos"> <input type="button"
+											class="btn pd-setting" value="직급 등록" />
+										</a>
+									</span>
+									
+									<div class="form-group">
+										<label for="exampleInputName2">No</label> <input type="text"
+											class="form-control mg-wd-10" id="exampleInputName2"
+											placeholder="100">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputEmail2">Position</label> <input
+											type="email" class="form-control mg-wd-10"
+											id="exampleInputEmail2" placeholder="사원">
+									</div>
+
+									<span class="pd-lt-10">
+										<button type="button" class="btn pd-setting">직급 조회</button> <!-- btn-primary -> pd-setting -->
+									</span>
+								</div>
+
 							</div>
+
+
+
+
 
 							<div class="asset-inner">
 								<table>
@@ -44,18 +71,18 @@
 											<td class="text-center"><a
 												href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posNo}</a></td>
 											<td class="text-center">${vo.posName}</a></td>
-											<td class="text-center">
-												<a href="admin?cmd=modifyPos&posNo=${vo.posNo}">
-													<button data-toggle="tooltip" title="" class="pd-setting-ed"
-														data-original-title="Edit">
+											<td class="text-center"><a
+												href="admin?cmd=modifyPos&posNo=${vo.posNo}">
+													<button data-toggle="tooltip" title=""
+														class="pd-setting-ed" data-original-title="Edit">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-													</button></a>
-												<a href="admin?cmd=deletePos&posNo=${vo.posNo}">	
-												<button data-toggle="tooltip" title="" class="pd-setting-ed"
-													data-original-title="Trash">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</button></a>
-											</td>
+													</button>
+											</a> <a href="admin?cmd=deletePos&posNo=${vo.posNo}">
+													<button data-toggle="tooltip" title=""
+														class="pd-setting-ed" data-original-title="Trash">
+														<i class="fa fa-trash-o" aria-hidden="true"></i>
+													</button>
+											</a></td>
 										</tr>
 									</c:forEach>
 								</table>

@@ -18,7 +18,7 @@ public class InsertPosAction implements Action {
 		
 		   map.put("title", "AURA 직급등록 페이지"); // 웹 제목?
 		   map.put("category", "position"); // 카테고리 찾는 key
-		   map.put("categoryName", "직급등록 페이지"); // 사용자에게 보여주는 카테고리명
+		   map.put("categoryName", "직급관리 페이지"); // 사용자에게 보여주는 카테고리명
 		   map.put("pages", "insertPos"); // 페이지명
 		   map.put("pagesName", "직급 등록"); // 사용자에게 보여주는 페이지명
 			

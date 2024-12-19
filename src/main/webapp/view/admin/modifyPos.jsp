@@ -39,7 +39,7 @@
 
 							<tr>
 								<td colspan="2"><a href="admin?cmd=selectPos"
-									class="btn btn-outline-primary" />목록</a> <input type="submit"
+									class="btn btn-outline-primary" />취소</a> <input type="submit"
 									class="btn btn-outline-success" value="수정" /></td>
 							</tr>
 
