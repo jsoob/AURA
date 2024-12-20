@@ -41,29 +41,58 @@ public class AdminDeptDAO {
 		}
 	} // 생성자
 
-	// 부서 1 조회
-	public DeptVO selectOne(int deptno) {
+	// 전체 조회
+		public ArrayList<DeptVO> selectDeptAll() {
+			ArrayList<DeptVO> list = new ArrayList<DeptVO>();
+
+//			4. SQL문 작성
+			sb.setLength(0);
+			sb.append("SELECT DEPT_NO, DEPT_NAME ");
+			sb.append("FROM DEPT ");
+
+//			5. 문장 객체 생성
+			try {
+				pstmt = conn.prepareStatement(sb.toString());
+//			6. 실행 (SELECT ==> ResultSet 객체 )
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					int deptno = rs.getInt("DEPT_NO");
+					String dname = rs.getString("DEPT_NAME");
+					
+					DeptVO vo = new DeptVO(deptno, dname);
+					list.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return list;
+		} // selectAll() end
+	
+	
+	// 부서 번호로 부서 조회
+	public DeptVO selecDeptOne(int deptNo) {
 		// 4. sql문장
 		sb.setLength(0);
 		// 띄어쓰기 주의바람
-		sb.append("SELECT deptno, dname, loc ");
-		sb.append("FROM dept ");
-		sb.append("WHERE deptno = ?");
+		sb.append("SELECT DEPT_NO, DEPT_NAME ");
+		sb.append("FROM DEPT ");
+		sb.append("WHERE DEPT_NO = ?");
 
 		DeptVO vo = null;
 
 		// 5. 문장 객체
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, deptno);
+			pstmt.setInt(1, deptNo);
 			// 6. 실행 (select ==> ResultSet)
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				// 7. 레코드별 로직처리
-				String dname = rs.getString("dname");
+				String deptName = rs.getString("DEPT_NAME");
 				
 				
-				vo = new DeptVO(deptno, dname);
+				vo = new DeptVO(deptNo, deptName);
 				
 			}
 		} catch (SQLException e) {
@@ -74,62 +103,38 @@ public class AdminDeptDAO {
 		return vo;
 	} // selectOne end
 
-	// 전체조회
-	public ArrayList<DeptVO> selectAll() {
-		ArrayList<DeptVO> list = new ArrayList<DeptVO>();
+	
 
-//		4. SQL문 작성
-		sb.setLength(0);
-		sb.append("SELECT deptno, dname, loc ");
-		sb.append("FROM dept ");
-
-//		5. 문장 객체 생성
-		try {
-			pstmt = conn.prepareStatement(sb.toString());
-//		6. 실행 (SELECT ==> ResultSet 객체 )
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				int deptno = rs.getInt("deptno");
-				String dname = rs.getString("dname");
-				
-				DeptVO vo = new DeptVO(deptno, dname);
-				list.add(vo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	} // selectAll() end
-
-	// 추가
-	public void insertOne(DeptVO vo) {
+	// 부서 등록 
+	public void insertDept(DeptVO vo) {
 
 		// 4. SQL문 작성
 		sb.setLength(0);
-		sb.append("INSERT INTO DEPT (DEPTNO, DNAME, LOC)");
-		sb.append("VALUES (DEPT_DEPTNO.NEXTVAL, ?, ? ) ");
+		sb.append("INSERT INTO DEPT (DEPT_NO, DEPT_NAME) ");
+		sb.append("VALUES ( ?, ? ) ");
 
 //		5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setString(1, vo.getDeptName());
-//		6. 실행
+			pstmt.setInt(1, vo.getDeptNo());
+			pstmt.setString(2, vo.getDeptName());
+
 			pstmt.executeUpdate();
+	
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-	} // insertOne end
+	} // insertDept end
 
-	// 변경
+	// 부서 수정 
 	public void updateOne(DeptVO vo) {
 		// 부서명, 부서위치를 수정
 //		4. SQL문 작성
 		sb.setLength(0);
 		sb.append("UPDATE DEPT ");
-		sb.append("SET dname = ? , loc = ? ");
-		sb.append("WHERE deptno = ? ");
+		sb.append("SET DEPT_NAME = ? ");
+		sb.append("WHERE DEPT_NO = ? ");
 
 //		5. 문장 객체 생성
 		try {
@@ -147,15 +152,15 @@ public class AdminDeptDAO {
 	} // updateOne end
 
 	// 삭제
-	public void deleteOne(int deptno) {
+	public void deleteDept(int deptNo) {
 //		4. SQL문 작성
 		sb.setLength(0);
-		sb.append("DELETE FROM dept ");
-		sb.append("WHERE deptno = ? ");
+		sb.append("DELETE FROM DEPT ");
+		sb.append("WHERE DEPT_NO = ? ");
 //		5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, deptno);
+			pstmt.setInt(1, deptNo);
 //		6. 실행 (SELECT ==> ResultSet 객체 )
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -186,7 +191,6 @@ public class AdminDeptDAO {
 			while (rs.next()) {
 				int deptno = rs.getInt("deptno");
 				String dname = rs.getString("dname");
-				String loc = rs.getString("loc");
 
 				DeptVO vo = new DeptVO(deptno, dname);
 				list.add(vo);
