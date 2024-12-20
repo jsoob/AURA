@@ -9,6 +9,13 @@
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+	$("#status").on("click",()=>{
+		alert("임시저장 되었습니다.");
+		console.log("임시저장");
+		$('input[name="freeBStatus"]').value = "0";
+	})
+	</script>
 </head>
 <body>
 	<!-- Start Left menu area -->
@@ -35,8 +42,8 @@
 											id="" />
 									</div>
 								</td>
-								<input type="hidden" name="cmd" value="writeFreeB" />
-
+								<input type="hidden" name="cmd" value="writeFreeBOk" />
+								<input type="hidden" name="freeBStatus" value="1">
 
 							</tr>
 							<tr>
@@ -50,15 +57,15 @@
 							</tr>
 							<tr>
 								<td colpsan="2"><input type="radio" name="freeBPblc"
-									value="1"> 공개 <input type="radio" name="freeBPblc"
-									value="0"> 비공개</td>
+									value="1" required> 공개 <input type="radio"
+									name="freeBPblc" value="0"> 비공개</td>
 							</tr>
 
 							<tr>
-								<td colspan="2"><input type="button"
-									class="btn btn-outline-primary" value="목록" /> <input
-									type="button" class="btn btn-outline-success"
-									name="freeBStatus" value="임시저장"> <input type="submit"
+								<td colspan="2"><a href="freeboard?cmd=selectFreeB"> <input
+										type="button" class="btn btn-outline-primary" value="취소" /></a> <input
+									type="button" class="btn btn-outline-success" id="status"
+									name="status" value="임시저장"> <input type="submit"
 									class="btn btn-outline-success" value="등록" /> <input
 									type="button" class="btn btn-outline-danger" id="btn"
 									value="다시쓰기" /></td>

@@ -58,7 +58,19 @@ public class FreeBoardDAO {
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
 				
-				FreeBoardVO vo = new FreeBoardVO(freeBNo, freeBTitle, freeBContent, freeBView, freeBNotice, freeBStatus, freeBPblc, freeBCrtr, createDate, updateDate);
+				FreeBoardVO vo = new FreeBoardVO();
+				
+				vo.setFreeBNo(freeBNo);
+				vo.setFreeBTitle(freeBTitle);
+				vo.setFreeBContent(freeBContent);
+				vo.setFreeBView(freeBView);
+				vo.setFreeBNotice(freeBNotice);
+				vo.setFreeBStatus(freeBStatus);
+				vo.setFreeBPblc(freeBPblc);
+				vo.setFreeBCrtr(freeBCrtr);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -109,8 +121,20 @@ public class FreeBoardDAO {
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
 				
-				FreeBoardVO findvo = new FreeBoardVO(freeBNo, freeBTitle, freeBContent, freeBView, freeBNotice, freeBStatus, freeBPblc, freeBCrtr, createDate, updateDate);
-				list.add(findvo);
+				FreeBoardVO fbvo = new FreeBoardVO();
+				
+				fbvo.setFreeBNo(freeBNo);
+				fbvo.setFreeBTitle(freeBTitle);
+				fbvo.setFreeBContent(freeBContent);
+				fbvo.setFreeBView(freeBView);
+				fbvo.setFreeBNotice(freeBNotice);
+				fbvo.setFreeBStatus(freeBStatus);
+				fbvo.setFreeBPblc(freeBPblc);
+				fbvo.setFreeBCrtr(freeBCrtr);
+				fbvo.setCreateDate(createDate);
+				fbvo.setUpdateDate(updateDate);
+				
+				list.add(fbvo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,8 +166,19 @@ public class FreeBoardDAO {
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
 
-				vo = new FreeBoardVO(freeBNo, freeBTitle, freeBContent, freeBView, freeBNotice, freeBStatus, freeBPblc, freeBCrtr, createDate, updateDate);
+				vo = new FreeBoardVO();
 
+				vo.setFreeBNo(freeBNo);
+				vo.setFreeBTitle(freeBTitle);
+				vo.setFreeBContent(freeBContent);
+				vo.setFreeBView(freeBView);
+				vo.setFreeBNotice(freeBNotice);
+				vo.setFreeBStatus(freeBStatus);
+				vo.setFreeBPblc(freeBPblc);
+				vo.setFreeBCrtr(freeBCrtr);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				
 			}
 
 		} catch (SQLException e) {
@@ -157,8 +192,8 @@ public class FreeBoardDAO {
 	// 시퀀스 적용해야함
 	public void insertOne(FreeBoardVO vo) {
 		sb.setLength(0);
-		sb.append("INSERT INTO BOARD ");
-		sb.append("VALUES(NEXTVAL('FREEBNO'),?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+		sb.append("INSERT INTO FREEBOARD ");
+		sb.append("VALUES(1,?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"); // NEXTVAL('FREEBNO')
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -198,7 +233,7 @@ public class FreeBoardDAO {
 		sb.setLength(0);
 		sb.append("UPDATE FREEBOARD ");
 		sb.append("SET FREEB_TITLE = ?, FREEB_CONTENT = ?, FREEB_NOTICE = ?, FREEB_STATUS = ?, FREEB_PBLC = ?, UPDATE_DATE = CURRENT_TIMESTAMP ");
-		sb.append("WHERE BNO = ?");
+		sb.append("WHERE FREEB_NO = ?");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -207,6 +242,7 @@ public class FreeBoardDAO {
 			pstmt.setInt(3, vo.getFreeBNotice());
 			pstmt.setInt(4, vo.getFreeBStatus());
 			pstmt.setInt(5, vo.getFreeBPblc());
+			pstmt.setInt(6, vo.getFreeBNo());
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

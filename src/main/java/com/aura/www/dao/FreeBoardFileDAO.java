@@ -50,7 +50,13 @@ public class FreeBoardFileDAO {
 				String fileName = rs.getString("FILE_NAME");
 				String fileRoute = rs.getString("FILE_ROUTE");
 				
-				FreeBoardFileVO vo = new FreeBoardFileVO(fileNo, fileName, fileRoute, freeBNo);
+				FreeBoardFileVO vo = new FreeBoardFileVO();
+				
+				vo.setFileNo(fileNo);
+				vo.setFileName(fileName);
+				vo.setFileRoute(fileRoute);
+				vo.setFreeBNo(freeBNo);
+				
 				list.add(vo);
 			}
 		} catch (SQLException e) {

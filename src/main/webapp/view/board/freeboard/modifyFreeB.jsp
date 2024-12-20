@@ -20,8 +20,8 @@
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					
-					<table class="table">
+					<form action="freeboard">
+						<table class="table">
 							<tr>
 								<td colspan="2">
 									<div class="col-sm-1">
@@ -29,11 +29,12 @@
 									</div>
 									<div class="col-sm-11">
 										<input type="text" name="freeBTitle" class="form-control"
-											id="" value="${vo.freeBTitle}"/>
-											
+											id="" value="${vo.freeBTitle}" />
+
 									</div>
 								</td>
-								<input type="hidden" name="cmd" value="writeFreeB" />
+								<input type="hidden" name="freeBNo" value="${vo.freeBNo}" />
+								<input type="hidden" name="cmd" value="modifyFreeBOk" />
 
 
 							</tr>
@@ -53,18 +54,16 @@
 							</tr>
 
 							<tr>
-								<td colspan="2"><input type="button"
-									class="btn btn-outline-primary" value="목록" /> <input
-									type="button" class="btn btn-outline-success"
-									name="freeBStatus" value="임시저장"> <input type="submit"
-									class="btn btn-outline-success" value="등록" /> <input
+								<td colspan="2"><a href="freeboard?cmd=selectFreeB"> <input
+										type="button" class="btn btn-outline-primary" value="취소" /></a> <input
+									type="submit" class="btn btn-outline-success" value="등록" /> <input
 									type="button" class="btn btn-outline-danger" id="btn"
 									value="다시쓰기" /></td>
 							</tr>
 						</table>
 
 					</form>
-					
+
 				</div>
 			</div>
 		</div>

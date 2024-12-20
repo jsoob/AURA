@@ -2,6 +2,7 @@ package com.aura.www.action.board.freeboard;
 
 import com.aura.www.action.Action;
 import com.aura.www.dao.FreeBoardDAO;
+import com.aura.www.vo.EmpVO;
 import com.aura.www.vo.FreeBoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,27 +14,36 @@ public class WriteFreeBOkAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		// 파라미터값 가져와서 db에 저장
-		
+
 		String freeBTitle = req.getParameter("freeBTitle");
 		String freeBContent = req.getParameter("freeBContent");
-		int freeBNotice = Integer.parseInt(req.getParameter("freeBNotice"));
-		int freeBStatus = Integer.parseInt(req.getParameter("freeBStatus"));
-		int freeBPblc = Integer.parseInt(req.getParameter("freeBPblc"));
+		String fbn = req.getParameter("freeBNotice");
+		String fbp = req.getParameter("freeBPblc");
+		
 		HttpSession session = req.getSession();
-		int freeBCrtr = (int)session.getAttribute("loginEmp");
+		EmpVO loginEmp = (EmpVO)session.getAttribute("loginEmp");
+		int freeBCrtr = loginEmp.getEmpNo();
+		int freeBNotice=0;	// default값=0, 공지를 누르지 않았다면 fbn==null
+		int freeBStatus=1; // 등록하면 status = 1
 		
-		FreeBoardDAO dao = new FreeBoardDAO();
+		if(fbn != null) { // 공지가 눌렸다면
+			freeBNotice = Integer.parseInt(fbn);		 
+		}
+			int freeBPblc = Integer.parseInt(fbp);
 
-		FreeBoardVO vo = new FreeBoardVO();
+			FreeBoardDAO dao = new FreeBoardDAO();
 
-		vo.setFreeBTitle(freeBTitle);
-		vo.setFreeBContent(freeBContent);
-		vo.setFreeBNotice(freeBNotice);
-		vo.setFreeBStatus(freeBStatus);
-		vo.setFreeBPblc(freeBPblc);
-		vo.setFreeBCrtr(freeBCrtr);
+			FreeBoardVO vo = new FreeBoardVO();
+
+			vo.setFreeBTitle(freeBTitle);
+			vo.setFreeBContent(freeBContent);
+			vo.setFreeBNotice(freeBNotice);
+			vo.setFreeBStatus(freeBStatus);
+			vo.setFreeBPblc(freeBPblc);
+			vo.setFreeBCrtr(freeBCrtr);
+
+			dao.insertOne(vo);
 		
-		dao.insertOne(vo);
 
 		return "freeboard?cmd=selectFreeB";
 	}
