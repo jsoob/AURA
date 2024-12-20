@@ -21,37 +21,45 @@
 			<div class="container-fluid">
 				<div class="row">
 
-					<form action="admin">
-						<table class="table">
-							<tr>
-								<th>직급번호</th>
-								<td><input type="text" name="posNo" class="form-control"
-									value="${vo.posNo}" disabled />
-									<input type="hidden" name="posNo" value="${vo.posNo}" />
-									<input type="hidden" name="cmd" value="modifyPosOk" /></td>
-							</tr>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
+							<div class="col-lg-3 col-sm-3 col-xs-3"></div>
+							<div class="col-lg-6 col-sm-12 col-xs-12">
+								<form action="admin">
+									<table class="table">
+										<tr>
+											<th>직급번호</th>
+											<td><input type="text" name="posNo" class="form-control"
+												value="${vo.posNo}" disabled /> <input type="hidden"
+												name="posNo" value="${vo.posNo}" /> <input type="hidden"
+												name="cmd" value="modifyPosOk" /></td>
+										</tr>
 
-							<tr>
-								<th>직급명</th>
-								<td><input type="text" name="posName" class="form-control"
-									value="${vo.posName}" /></td>
-							</tr>
+										<tr>
+											<th>직급명</th>
+											<td><input type="text" name="posName"
+												class="form-control" value="${vo.posName}" /></td>
+										</tr>
 
-							<tr>
-								<td colspan="2"><a href="admin?cmd=selectPos"
-									class="btn btn-outline-primary" />취소</a> <input type="submit"
-									class="btn btn-outline-success" value="수정" /></td>
-							</tr>
+										<tr>
+											<td colspan="2"><a href="admin?cmd=selectPos"
+												class="btn btn-outline-primary" />취소</a> <input type="submit"
+												class="btn btn-outline-success" value="수정" /></td>
+										</tr>
 
-						</table>
+									</table>
 
-					</form>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 		</div>
 
-		<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
+		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+	</div>
+
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 </body>
 </html>

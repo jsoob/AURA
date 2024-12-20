@@ -40,6 +40,7 @@ public class PositionDAO {
 		sb.setLength(0);
 		sb.append("SELECT POS_NO, POS_NAME ");
 		sb.append("FROM POSITION ");
+		sb.append("ORDER BY POS_NO ");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());		

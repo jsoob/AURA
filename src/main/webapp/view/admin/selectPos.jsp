@@ -23,19 +23,26 @@
 				<div class="row">
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="product-status-wrap">
-
-
+						<div class="product-status-wrap aura_content">
 
 							<div class="text-right mg-bt-10">
 								<div class="form-inline">
 
 									<span class="pd-lt-10">
-										<a href="admin?cmd=insertPos"> <input type="button"
-											class="btn pd-setting" value="직급 등록" />
-										</a>
+										<div class="form-group-inner">
+											<div class="row">
+												<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12"></div>
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+
+													<button type="button" id="posAdd" class="btn pd-setting"
+														data-toggle="modal" data-target=".insert-pos-modal"
+														style="width: 14.5%; margin-left: 2%; line-height: 23px;">직급등록
+													</button>
+												</div>
+											</div>
+										</div>
 									</span>
-									
+
 									<div class="form-group">
 										<label for="exampleInputName2">No</label> <input type="text"
 											class="form-control mg-wd-10" id="exampleInputName2"
@@ -68,18 +75,17 @@
 
 									<c:forEach var="vo" items="${list}">
 										<tr>
-											<td class="text-center"><a
-												href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posNo}</a></td>
-											<td class="text-center">${vo.posName}</a></td>
+											<td class="text-center">${vo.posNo}</td>
+											<td class="text-center">${vo.posName}</td>
 											<td class="text-center"><a
 												href="admin?cmd=modifyPos&posNo=${vo.posNo}">
 													<button data-toggle="tooltip" title=""
-														class="pd-setting-ed" data-original-title="Edit">
+														class="pd-setting-ed" data-original-title="수정">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
 											</a> <a href="admin?cmd=deletePos&posNo=${vo.posNo}">
 													<button data-toggle="tooltip" title=""
-														class="pd-setting-ed" data-original-title="Trash">
+														class="pd-setting-ed" data-original-title="삭제">
 														<i class="fa fa-trash-o" aria-hidden="true"></i>
 													</button>
 											</a></td>
@@ -129,6 +135,53 @@
 
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
+
+	<!-- 직급 등록 모달 -->
+	<div class="modal fade insert-pos-modal" id="posModal" tabindex="-1"
+		role="dialog" aria-labelledby="posModalLabel">
+		<!-- aria-hidden="true" -->
+		<div class="modal-dialog modal-lg middleMoalWd">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="posModalLabel">직급 등록</h4>
+				</div>
+				<div class="modal-body">
+					<div class="product-status-wrap">
+						<div class="asset-inner">
+							<form action="admin">
+								<table id="insertPos">
+									<tr>
+										<th class="text-center col-sm-2">직급번호</th>
+										<td>
+										<input type="number" name="posNo" class="form-control" required />
+										<input type="hidden" name="cmd" value="insertPosOk" /></td>
+
+									</tr>
+									<tr>
+										<th class="text-center col-sm-4">직급명</th>
+										<td><input type="text" name="posName"
+											class="form-control" required /></td>
+									</tr>
+									<tr>
+
+										<td colspan="2" class="text-end"><input type="submit"
+											value="등록" class="btn btn-primary pd-setting" /></td>
+									</tr>
+
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 </body>
