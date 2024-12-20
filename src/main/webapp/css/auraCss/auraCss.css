@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+/* AURA 컨셉 색깔 설정 */
+/* header, sidebar menu, sidebar, footer */
+
+/* header 색깔 */
+/* 
+.header-top-area {
+	background: red;
+}
+*/
+
+/* sidebar 전체 공간(사이드바에 menu들이 있어서 걔 색깔도 따로 줘야해요~) */
+/* 
+#sidebar {
+	background: purple;
+}
+*/
+
+/* sidebar 사용되는 공간. ex: 전자결재, 게시판, Mailbox */
+/* 
+.sidebar-nav .metismenu {
+	background: yellow;
+}
+*/
+
+/* footer 색깔 */
+/* 
+.footer-copyright-area {
+	background: pink;
+}
+*/
+
+/* aura content 높이 */
+.aura_content {
+	height: 650px !important;
+}
+
+/* padding 조절 10px */
+.pd-lt-10 {
+	padding-left: 10px !important;
+}
+.pd-rt-10 {
+	padding-right: 10px !important;
+}
+.pd-tp-10 {
+	padding-top: 10px !important;
+}
+.pd-bt-10 {
+	padding-bottom: 10px !important;
+}
+.pd-10 {
+	padding: 10px !important;
+}
+.pd-wd-10 {
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+.pd-ht-10 {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+}
+/* padding 전체 none */
+.pd-nn {
+	padding: none !important;	
+}
+
+
+/* margin 조절 10px */
+.mg-lt-10 {
+	margin-left: 10px !important;
+}
+.mg-rt-10 {
+	margin-right: 10px !important;
+}
+.mg-tp-10 {
+	margin-top: 10px !important;
+}
+.mg-bt-10 {
+	margin-bottom: 10px !important;
+}
+.mg-10 {
+	margin: 10px !important;
+}
+.mg-wd-10 {
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+}
+.mg-ht-10 {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+/* padding 전체 none */
+.pd-nn {
+	margin: none !important;	
+}
+
+/* text 가운데 정렬 */
+.text-center {
+	text-align: center !important;
+}
+/* text 왼쪽 정렬 */
+.text-left {
+	text-align: left !important;
+}
+/* text 오른쪽 정렬 */
+.text-right {
+	text-align: right !important;
+}
+
+/* 넓이 조절 */
+.wd-200 {
+	width: 200px !important;
+}
+.wd-150 {
+	width: 150px !important;
+}
+.wd-100 {
+	width: 100px !important;
+}
+.wd-80 {
+	width: 80px !important;
+}
+.wd-50 {
+	width: 50px !important;
+}
+
+/* 중간사이즈 모달 css */
+.middleMoalWd {
+	width: 50% !important;
+    max-width: 600px !important;
+}
