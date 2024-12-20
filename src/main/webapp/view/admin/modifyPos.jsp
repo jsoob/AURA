@@ -57,6 +57,7 @@
 			</div>
 		</div>
 
+
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 

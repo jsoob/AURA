@@ -9,11 +9,12 @@ import com.aura.www.vo.PositionVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/////////////모달로 변경해서 필요없어짐/////////////
 public class InsertPosAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-	
+		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		   map.put("title", "AURA 직급등록 페이지"); // 웹 제목?
