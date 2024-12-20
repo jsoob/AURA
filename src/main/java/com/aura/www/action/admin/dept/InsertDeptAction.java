@@ -24,7 +24,7 @@ public class InsertDeptAction implements Action {
 			
 		   req.setAttribute("commAt", map);
 		
-		return "view/admin/insertDept.jsp";
+		return "view/admin/selectDept.jsp";
 		
 	}
 

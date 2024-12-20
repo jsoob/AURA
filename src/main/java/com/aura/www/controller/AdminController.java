@@ -41,7 +41,7 @@ public class AdminController extends HttpServlet {
 		// 2. page 파라미터 값 가져오기
 		String cmd = req.getParameter("cmd");
 		String url = "";
-//		System.out.println("cmd = " + cmd);
+		System.out.println("cmd = " + cmd);
 		
 		// 메인
 		if(cmd==null) {
@@ -106,9 +106,14 @@ public class AdminController extends HttpServlet {
 		
 		if(url=="main") {
 	    	resp.sendRedirect("main");
-	    } else {
+	    } else if (cmd=="insertDeptOk") {
+	    	resp.sendRedirect("admin/cmd=selectDept");
+	    }else {
+	    
 	    	RequestDispatcher rd = req.getRequestDispatcher(url);
 	    	rd.forward(req, resp);
 	    }
+		
+		
 	}
 }

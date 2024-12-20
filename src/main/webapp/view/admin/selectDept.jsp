@@ -8,18 +8,24 @@
 <title>${commAt["title"]}</title>
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+<style>
+.modal-body {
+	height: 100px;
+	width: center;
+}
+</style>
 </head>
 <body>
 
 	<!-- Start Left menu area -->
 	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
-
+	
 	<!-- End Left menu area -->
 	<!-- Start Welcome area -->
 	<div class="all-content-wrapper">
-		 <!--  header 가서 부서관리 부분 하이퍼링크 연결  -->
+		<!--  header 가서 부서관리 부분 하이퍼링크 연결  -->
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
-		
+
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
@@ -27,17 +33,25 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap">
 
-							<div class="text-right mg-bt-10">
+							<!-- <div class="text-right mg-bt-10">
 								<a href="admin?cmd=insertDept"> <input type="button"
 									class="btn pd-setting" value="부서등록 " />
 								</a>
-							</div>
+							</div> -->
+
+							<!--  부서 등록 모달 버튼  -->
+							<button type="button" id="deptAdd"
+								class="btn btn-custon-four btn-success" data-toggle="modal"
+								data-target=".search-dept-modal"
+								style="width: 18%; margin-left: 2%; line-height: 26px;">
+								<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i>부서
+							</button>
 
 							<div class="asset-inner">
 								<table>
 									<tr>
-										<th class="text-center col-sm-2">부서번호 </th>
-										<th class="text-center col-sm-4">부서명 </th>
+										<th class="text-center col-sm-2">부서번호</th>
+										<th class="text-center col-sm-4">부서명</th>
 										<th class="text-center col-sm-2">Setting</th>
 									</tr>
 
@@ -46,18 +60,18 @@
 											<td class="text-center"><a
 												href="admin?cmd=modifyDept&deptNo=${vo.deptNo}">${vo.deptNo}</a></td>
 											<td class="text-center">${vo.deptName}</a></td>
-											<td class="text-center">
-												<a href="admin?cmd=modifyDept&deptNo=${vo.deptNo}">
-													<button data-toggle="tooltip" title="" class="pd-setting-ed"
-														data-original-title="Edit">
+											<td class="text-center"><a
+												href="admin?cmd=modifyDept&deptNo=${vo.deptNo}">
+													<button data-toggle="tooltip" title=""
+														class="pd-setting-ed" data-original-title="Edit">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-													</button></a>
-												<a href="admin?cmd=deleteDept&deptNo=${vo.deptNo}">	
-												<button data-toggle="tooltip" title="" class="pd-setting-ed"
-													data-original-title="Trash">
-													<i class="fa fa-trash-o" aria-hidden="true"></i>
-												</button></a>
-											</td>
+													</button>
+											</a> <a href="admin?cmd=deleteDept&deptNo=${vo.deptNo}">
+													<button data-toggle="tooltip" title=""
+														class="pd-setting-ed" data-original-title="Trash">
+														<i class="fa fa-trash-o" aria-hidden="true"></i>
+													</button>
+											</a></td>
 										</tr>
 									</c:forEach>
 								</table>
@@ -103,6 +117,49 @@
 		</div>
 
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+	</div>
+
+	<!--  부서 모달 -->
+
+	<div class="modal fade search-dept-modal" id="deptModal" tabindex="-1"
+		role="dialog" aria-labelledby="deptModalLabel">
+		<!-- aria-hidden="true" -->
+		<div class="modal-dialog modal-lg middleMoalWd">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" 
+					 
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="deptModalLabel">부서 등록</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="asset-inner">
+						<form action="admin">
+							<table id="selectDept">
+								<tr>
+									<th class="text-center col-sm-4">부서명</th>
+									<td><input type="text" class="form-control" id="deptName" name="deptName"
+										style="width: 400px;"> 
+										<input type="hidden" name="cmd"
+										value="insertDeptOk"></td>
+
+								</tr>
+							</table>
+							<table>
+							<tr>
+								<td colspan="2"><input type="submit" class="btn pd-setting"
+									value="등록"></td>
+							</tr>
+							</table>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>

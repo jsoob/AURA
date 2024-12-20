@@ -110,14 +110,14 @@ public class AdminDeptDAO {
 
 		// 4. SQL문 작성
 		sb.setLength(0);
-		sb.append("INSERT INTO DEPT (DEPT_NO, DEPT_NAME) ");
-		sb.append("VALUES ( ?, ? ) ");
+		sb.append("INSERT INTO DEPT (DEPT_NAME) ");
+		sb.append("VALUES (?)");
 
 //		5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, vo.getDeptNo());
-			pstmt.setString(2, vo.getDeptName());
+			//pstmt.setInt(1, vo.getDeptNo());
+			pstmt.setString(1, vo.getDeptName());
 
 			pstmt.executeUpdate();
 	

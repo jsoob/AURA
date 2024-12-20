@@ -1,5 +1,6 @@
 package com.aura.www.action.admin.dept;
 
+
 import com.aura.www.action.Action;
 import com.aura.www.dao.AdminDeptDAO;
 import com.aura.www.vo.DeptVO;
@@ -11,24 +12,23 @@ public class InsertDeptOkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+	    String deptName = req.getParameter("deptName");
 
-		// 파라미터값 가져와서 db에 저장
-		String deptNo = req.getParameter("deptNo");
-		String deptName = req.getParameter("deptName");
+	    System.out.println(deptName);
+	    
+	    
+	    if (deptName != null && !deptName.isEmpty()) {
+	        AdminDeptDAO dao = new AdminDeptDAO();
+	        DeptVO vo = new DeptVO();
 
-		if (deptNo != null) {
-			int deptno = Integer.parseInt(deptNo);
-			AdminDeptDAO dao = new AdminDeptDAO();
+	        // 부서명 설정
+	        vo.setDeptName(deptName);
 
-			DeptVO vo = new DeptVO();
+	        // 부서 삽입
+	        dao.insertDept(vo);
+	    }
 
-			vo.setDeptNo(deptno);
-			vo.setDeptName(deptName);
-
-			dao.insertDept(vo);
-		}
-
-		return "admin?cmd=selectDept";
+	    // 처리 후 부서 조회 화면으로 이동
+	    return "admin?cmd=selectDept";
 	}
-
 }
