@@ -9,11 +9,8 @@
 
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
-<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script>
 $(()=>{
-	
 	
    $('#modifyPosModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -24,10 +21,8 @@ $(()=>{
         modal.find('#posNo').val(id);
         modal.find('#posName').val(name);
       });
-   
-   
+     
 })
-
 </script>
 
 </head>
@@ -48,11 +43,7 @@ $(()=>{
 						<div class="product-status-wrap aura_content">
 
 							<div class="text-right mg-bt-10">
-
-								<button type="button" id="insertPosAdd" class="btn pd-setting"
-									data-toggle="modal" data-target=".insert-pos-modal">직급등록
-								</button>
-
+								<button type="button" id="insertPosAdd" class="btn pd-setting" data-toggle="modal" data-target=".insert-pos-modal">직급등록</button>
 							</div>
 
 							<div class="asset-inner">
@@ -67,21 +58,18 @@ $(()=>{
 										<tr>
 											<td class="text-center">${vo.posNo}</td>
 											<td class="text-center">${vo.posName}</td>
-											<td class="text-center"><span class="tooltip-wrapper"
-												data-toggle="tooltip" title="수정">
-													<button type="button" class="btn pd-setting-ed modifyBtn"
-														data-original-title="수정" data-toggle="modal"
-														data-target="#modifyPosModal" data-id="${vo.posNo}"
-														data-name="${vo.posName}">
+											<td class="text-center">
+												<span class="tooltip-wrapper" data-toggle="tooltip" title="수정">
+													<button type="button" class="btn pd-setting-ed modifyBtn" data-original-title="수정" data-toggle="modal" data-target="#modifyPosModal" data-id="${vo.posNo}" data-name="${vo.posName}">
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
-											</span> <span class="tooltip-wrapper" data-toggle="tooltip"
-												title="삭제">
-														<button type="button" id="deleteBtn"
-															class="btn pd-setting-ed" onclick='window.location.href="admin?cmd=deletePos&posNo=${vo.posNo}"'>
+												</span>
+												<span class="tooltip-wrapper" data-toggle="tooltip" title="삭제">
+														<button type="button" id="deleteBtn" class="btn pd-setting-ed" onclick='window.location.href="admin?cmd=deletePos&posNo=${vo.posNo}"'>
 															<i class="fa fa-trash-o" aria-hidden="true"></i>
 														</button>
-											</span></td>
+												</span>
+											</td>
 										</tr>
 									</c:forEach>
 								</table>
@@ -100,37 +88,11 @@ $(()=>{
                              -->
 						</div>
 					</div>
-
 				</div>
-
-				<%-- 이전 코드 --%>
-				<%--
-            <div class="row">
-               <a href="admin?cmd=insertPos"><input type="button"
-                  class="btn btn-outline-primary" value="직급등록" /></a>
-               <table class="table" width="100px" height="100px">
-                  <tr>
-                     <th>직급번호</th>
-                     <th>직급명</th>
-                  </tr>
-                  <c:forEach var="vo" items="${list}">
-                     <tr>
-
-                        <td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posNo}</a></td>
-                        <td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posName}</a></td>
-                     </tr>
-                  </c:forEach>
-               </table>
-            </div>
-             --%>
 			</div>
 		</div>
-
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
-
-
-
 
 	<!-- 직급 등록 모달 -->
 	<div class="modal fade insert-pos-modal" id="insertPosModal"
@@ -138,13 +100,14 @@ $(()=>{
 		<!-- aria-hidden="true" -->
 		<div class="modal-dialog modal-lg middleMoalWd">
 			<div class="modal-content">
+			
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 					<h4 class="modal-title" id="insertPosModalLabel">직급 등록</h4>
 				</div>
+				
 				<div class="modal-body">
 					<div class="product-status-wrap">
 						<div class="asset-inner">
@@ -152,22 +115,21 @@ $(()=>{
 								<table id="insertPos">
 									<tr>
 										<th class="text-center col-sm-2">직급번호</th>
-										<td><input type="number" name="posNo"
-											class="form-control" required /> <input type="hidden"
-											name="cmd" value="insertPosOk" /></td>
-
+										<td>
+										<input type="number" name="posNo" class="form-control" required /> <input type="hidden" name="cmd" value="insertPosOk" />
+										</td>
 									</tr>
 									<tr>
 										<th class="text-center col-sm-4">직급명</th>
-										<td><input type="text" name="posName"
-											class="form-control" required /></td>
+										<td>
+											<input type="text" name="posName" class="form-control" required />
+										</td>
 									</tr>
 									<tr>
-
-										<td colspan="2" class="text-end"><input type="submit"
-											value="등록" class="btn btn-primary pd-setting" /></td>
+										<td colspan="2" class="text-end">
+										 	<input type="submit" value="등록" class="btn btn-primary pd-setting" />
+										 </td>
 									</tr>
-
 								</table>
 							</form>
 						</div>
@@ -182,40 +144,39 @@ $(()=>{
 		tabindex="-1" role="dialog" aria-labelledby="modifyPosModalLabel">
 		<div class="modal-dialog modal-lg middleMoalWd">
 			<div class="modal-content">
+			
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 					<h4 class="modal-title" id="modifyPosModalLabel">직급 수정</h4>
 				</div>
+				
 				<div class="modal-body">
-
 					<div class="product-status-wrap">
 						<div class="asset-inner">
-
 							<form action="admin">
 								<table id="modifyPos">
 									<tr>
 										<th class="text-center col-sm-2">직급번호</th>
-										<td><input type="number" name="posNo" id="posNo"
-											class="form-control" required /> <input type="hidden"
-											name="cmd" value="modifyPosOk" /></td>
-
+										<td>
+											<input type="number" name="posNo" id="posNo" class="form-control" required />
+											<input type="hidden" name="cmd" value="modifyPosOk" />
+										</td>
 									</tr>
 									<tr>
 										<th class="text-center col-sm-4">직급명</th>
-										<td><input type="text" name="posName" id="posName"
-											class="form-control" required /></td>
+										<td>
+											<input type="text" name="posName" id="posName" class="form-control" required />
+										</td>
 									</tr>
 									<tr>
-
-										<td colspan="2" class="text-end"><input type="submit"
-											value="저장" class="btn btn-primary pd-setting" /> <a
-											href="admin?cmd=selectPos"><input type="button"
-												value="취소" class="btn btn-primary pd-setting" /></a></td>
+										<td colspan="2" class="text-end"><input type="submit" value="저장" class="btn btn-primary pd-setting" />
+											<a href="admin?cmd=selectPos">
+												<input type="button" value="취소" class="btn btn-primary pd-setting" />
+											</a>
+										</td>
 									</tr>
-
 								</table>
 							</form>
 						</div>
