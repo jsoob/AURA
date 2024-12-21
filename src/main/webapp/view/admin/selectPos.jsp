@@ -28,8 +28,6 @@ $(()=>{
    
 })
 
-
-
 </script>
 
 </head>
@@ -83,7 +81,6 @@ $(()=>{
 															class="btn pd-setting-ed" onclick='window.location.href="admin?cmd=deletePos&posNo=${vo.posNo}"'>
 															<i class="fa fa-trash-o" aria-hidden="true"></i>
 														</button>
-												
 											</span></td>
 										</tr>
 									</c:forEach>
