@@ -193,7 +193,7 @@ public class FreeBoardDAO {
 	public void insertOne(FreeBoardVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBOARD ");
-		sb.append("VALUES(1,?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"); // NEXTVAL('FREEBNO')
+		sb.append("VALUES(2,?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"); // NEXTVAL('FREEBNO')
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());

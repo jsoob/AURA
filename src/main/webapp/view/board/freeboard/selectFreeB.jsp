@@ -23,28 +23,59 @@
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					<a href="freeboard?cmd=writeFreeBForm"> <input type="button"
-						class="btn btn-outline-primary" value="글쓰기" /></a>
-					<table class="table table-striped">
-						<tr>
-							<th>게시판번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일자</th>
-							<th>조회수</th>
-						</tr>
-						<c:forEach var="vo" items="${list}">
-							<tr>
-								<td>${vo.freeBNo}</td>
-								<td><a
-									href="freeboard?cmd=detailFreeB&freeBNo=${vo.freeBNo}">
-										${vo.freeBTitle}</a></td>
-								<td>${vo.freeBCrtr}</td>
-								<td>${vo.createDate}</td>
-								<td>${vo.freeBView}</td>
-							</tr>
-						</c:forEach>
-					</table>
+
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
+
+							<!-- 검색부분 -->
+							<div class="mg-bt-10">
+								<div class="form-inline">
+									<div class="pull-left">
+										<a href="freeboard?cmd=writeFreeBForm"> <input
+											type="button" class="btn btn-outline-primary" value="글쓰기" />
+										</a>
+									</div>
+									<div class="pull-right">
+										<div class="form-group">
+											<label for="exampleInputName2">Name</label> <input
+												type="text" class="form-control mg-wd-10"
+												id="exampleInputName2" placeholder="Jane Doe">
+										</div>
+										<div class="form-group">
+											<label for="exampleInputEmail2">Email</label> <input
+												type="email" class="form-control mg-wd-10"
+												id="exampleInputEmail2" placeholder="jane.doe@example.com">
+										</div>
+
+										<span class="pd-lt-10">
+											<button type="button" class="btn pd-setting">사원 조회</button>
+											<!-- btn-primary -> pd-setting -->
+										</span>
+									</div>
+								</div>
+							</div>
+							<table class="table table-striped">
+								<tr>
+									<th>게시판번호</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>등록일자</th>
+									<th>조회수</th>
+								</tr>
+								<c:forEach var="vo" items="${list}">
+									<tr>
+										<td>${vo.freeBNo}</td>
+										<td><a
+											href="freeboard?cmd=detailFreeB&freeBNo=${vo.freeBNo}">
+												${vo.freeBTitle}</a></td>
+										<td>${vo.freeBCrtr}</td>
+										<td>${vo.createDate}</td>
+										<td>${vo.freeBView}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
