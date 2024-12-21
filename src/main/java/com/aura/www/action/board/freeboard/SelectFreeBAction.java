@@ -18,7 +18,10 @@ public class SelectFreeBAction implements Action {
 		FreeBoardDAO dao = new FreeBoardDAO();
 		ArrayList<FreeBoardVO> list = dao.selectAll();
 
+		int totalCount = dao.getTotalCount();
+		
 		req.setAttribute("list", list);
+		req.setAttribute("totalCount", totalCount);
 
 		HashMap<String, String> map = new HashMap<String, String>();
 

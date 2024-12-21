@@ -29,7 +29,7 @@
 									</div>
 									<div class="col-sm-11">
 										<input type="text" name="freeBTitle" class="form-control"
-											id="" value="${vo.freeBTitle}" />
+											id="" value="${vo.freeBTitle}" required/>
 
 									</div>
 								</td>
@@ -49,7 +49,7 @@
 							</tr>
 							<tr>
 								<td colpsan="2"><input type="radio" name="freeBPblc"
-									value="1"> 공개 <input type="radio" name="freeBPblc"
+									value="1" checked="checked" required > 공개 <input type="radio" name="freeBPblc"
 									value="0"> 비공개</td>
 							</tr>
 

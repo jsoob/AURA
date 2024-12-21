@@ -14,10 +14,12 @@ public class DetailFreeBAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
+		
 		String fbno = req.getParameter("freeBNo");
 		if(fbno != null) {
 			int freeBNo = Integer.parseInt(fbno);
 			FreeBoardDAO dao = new FreeBoardDAO();
+			dao.raiseView(freeBNo);
 			FreeBoardVO vo = dao.selectOne(freeBNo);
 			req.setAttribute("vo", vo);
 			System.out.println(vo.toString());

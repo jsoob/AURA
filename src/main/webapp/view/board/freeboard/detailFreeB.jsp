@@ -21,42 +21,47 @@
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					<table class="table">
-						<tr>
-							<th>작성자</th>
-							<td>${vo.freeBCrtr}</td>
 
-							<th>작성일시</th>
-							<td>${vo.createDate}</td>
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
 
-							<th>조회수</th>
-							<td>${vo.freeBView}</td>
-						</tr>
+							<table class="table">
+								<tr>
+									<th>작성자</th>
+									<td>${vo.freeBCrtr}</td>
 
-						<tr>
-							<th>제목</th>
-							<td colspan="5">${vo.freeBTitle}</td>
-						</tr>
+									<th>작성일시</th>
+									<td>${vo.createDate}</td>
 
-						<tr>
-							<th>내용</th>
-							<td colspan="5">${vo.freeBContent}</td>
-						</tr>
+									<th>조회수</th>
+									<td>${vo.freeBView}</td>
+								</tr>
 
-						<tr>
-							<td colspan="6"><a href="freeboard?cmd=selectFreeB"
-								class="btn btn-outline-primary">목록</a> <a
-								href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}"
-								class="btn btn-outline-warning">수정</a> <a
-								href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}"
-								class="btn btn-outline-danger">삭제</a></td>
-						</tr>
+								<tr>
+									<th>제목</th>
+									<td colspan="5">${vo.freeBTitle}</td>
+								</tr>
 
-					</table>
+								<tr>
+									<th>내용</th>
+									<td colspan="5" rowspan="5">${vo.freeBContent}</td>
+								</tr>
+
+								<tr>
+									<td colspan="6"><a href="freeboard?cmd=selectFreeB"
+										class="btn btn-outline-primary">목록</a> <a
+										href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}"
+										class="btn btn-outline-warning">수정</a> <a
+										href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}"
+										class="btn btn-outline-danger">삭제</a></td>
+								</tr>
+
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 
