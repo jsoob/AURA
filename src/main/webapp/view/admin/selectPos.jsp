@@ -13,6 +13,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <script>
 $(()=>{
+	
+	
    $('#modifyPosModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var id = button.data('id');
@@ -29,6 +31,7 @@ $(()=>{
 
 
 </script>
+
 </head>
 <body>
 
@@ -66,19 +69,22 @@ $(()=>{
 										<tr>
 											<td class="text-center">${vo.posNo}</td>
 											<td class="text-center">${vo.posName}</td>
-											<td class="text-center">
-												<button type="button" class="btn pd-setting-ed modifyBtn"
-													data-original-title="수정" data-toggle="modal"
-													data-target="#modifyPosModal" data-id="${vo.posNo}"
-													data-name="${vo.posName}">
-													<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-												</button> <a href="admin?cmd=deletePos&posNo=${vo.posNo}">
-													<button data-toggle="tooltip" title=""
-														class="pd-setting-ed" data-original-title="삭제">
-														<i class="fa fa-trash-o" aria-hidden="true"></i>
+											<td class="text-center"><span class="tooltip-wrapper"
+												data-toggle="tooltip" title="수정">
+													<button type="button" class="btn pd-setting-ed modifyBtn"
+														data-original-title="수정" data-toggle="modal"
+														data-target="#modifyPosModal" data-id="${vo.posNo}"
+														data-name="${vo.posName}">
+														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
-											</a>
-											</td>
+											</span> <span class="tooltip-wrapper" data-toggle="tooltip"
+												title="삭제">
+														<button type="button" id="deleteBtn"
+															class="btn pd-setting-ed" onclick='window.location.href="admin?cmd=deletePos&posNo=${vo.posNo}"'>
+															<i class="fa fa-trash-o" aria-hidden="true"></i>
+														</button>
+												
+											</span></td>
 										</tr>
 									</c:forEach>
 								</table>
@@ -130,8 +136,8 @@ $(()=>{
 
 
 	<!-- 직급 등록 모달 -->
-	<div class="modal fade insert-pos-modal" id="insertPosModal" tabindex="-1"
-		role="dialog" aria-labelledby="insertPosModalLabel">
+	<div class="modal fade insert-pos-modal" id="insertPosModal"
+		tabindex="-1" role="dialog" aria-labelledby="insertPosModalLabel">
 		<!-- aria-hidden="true" -->
 		<div class="modal-dialog modal-lg middleMoalWd">
 			<div class="modal-content">
