@@ -133,7 +133,7 @@
 		}
 		
 		let form = document.querySelector("form");
-	 	form.action="admin";
+	 	form.action="admin?cmd=insertEmpOk";
 	 	form.method ="post";
 		form.submit();
 		
@@ -168,7 +168,7 @@
 		                                        </div>
 		                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		                                            <input type="text" name="empName" class="form-control">
-		                                            <input type="hidden" name="cmd" value="insertEmpOk">
+		                                            <!-- <input type="hidden" name="cmd" value="insertEmpOk"> -->
 		                                        </div>
 		                                    </div>
 		                                </div>

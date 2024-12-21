@@ -108,12 +108,14 @@ public class AdminController extends HttpServlet {
 			url = action.execute(req, resp);
 		}
 		
-		if(url=="main") {
+		if(url.equals("main")) {
 	    	resp.sendRedirect("main");
-	    } else if (cmd=="insertDeptOk") {
+	    } else if (cmd.equals("insertDeptOk")) {
 	    	resp.sendRedirect("admin/cmd=selectDept");
-	    }else {
-	    
+	    } else if (cmd.equals("insertEmpOk")) {
+	    	resp.sendRedirect(url);
+	    }  
+	    else {
 	    	RequestDispatcher rd = req.getRequestDispatcher(url);
 	    	rd.forward(req, resp);
 	    }

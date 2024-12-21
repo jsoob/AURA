@@ -238,7 +238,7 @@
                                 </table>
                             </div>
                             <%-- 테이블 페이징 처리 --%>
-                            <!-- 
+                            
                             <div class="custom-pagination">
 								<ul class="pagination">
 									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -248,7 +248,7 @@
 									<li class="page-item"><a class="page-link" href="#">Next</a></li>
 								</ul>
                             </div>
-                             -->
+                            
                         </div>
                     </div>
                     
