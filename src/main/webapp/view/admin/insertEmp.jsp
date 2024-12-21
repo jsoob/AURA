@@ -8,8 +8,9 @@
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 <!-- error msg -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 
 <script type="text/javascript">
 	$( ()=> {
@@ -105,7 +106,7 @@
 		let hiredate = ($("input[name='hiredate']").val());
 		console.log("hiredate = " + hiredate);
 		if(empName.length == 0 ) {
-			swal({
+			Swal.fire({
 			  title: "미입력",
 			  text: "사원명을 입력해 주세요.",
 			  icon: "warning", // "success",
@@ -114,7 +115,7 @@
 			return;
 		}
 		if(deptNo.length == 0 ) {
-			swal({
+			Swal.fire({
 			  title: "미입력",
 			  text: "부서를 선택해 주세요.",
 			  icon: "warning", 
@@ -123,7 +124,7 @@
 			return;
 		}
 		if(posNo.length == 0 ) {
-			swal({
+			Swal.fire({
 			  title: "미입력",
 			  text: "직읍을 선택해 주세요.",
 			  icon: "warning", 

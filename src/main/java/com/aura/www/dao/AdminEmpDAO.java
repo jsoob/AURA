@@ -670,6 +670,26 @@ public class AdminEmpDAO {
 		}
 		return rst;
 	}
+
+	public int deleteEmpOne(int empNo) {
+		int result = 0;
+		// 4. sql 문장
+		sb.setLength(0);
+		sb.append("DELETE FROM EMP " );
+		sb.append(" WHERE EMP_NO = ? " );
+		try {
+			// 5. 문장 객체
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			
+			// 6. 실행
+			result = pstmt.executeUpdate();
+			System.out.println("deleteOne result : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	public void close() {
 		try {
@@ -683,6 +703,4 @@ public class AdminEmpDAO {
 			e.printStackTrace();
 		}
 	}
-
-	
 }
