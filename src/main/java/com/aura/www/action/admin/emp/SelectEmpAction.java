@@ -29,29 +29,29 @@ public class SelectEmpAction implements Action{
 		EmpVO vo = new EmpVO();
 		
 		// select 조건문
-		String deptName = req.getParameter("deptName");
-		String empNo = req.getParameter("empNo");
-		String empName = req.getParameter("empName");
-		String hiredate_st = req.getParameter("hiredate_st");
-		String hiredate_ed = req.getParameter("hiredate_ed");
-		
-		if(deptName == null) { }
-		else if(!deptName.equals("")) { vo.setDeptName(deptName); };
-		
-		if(empNo == null) { }
-		else if(!empNo.equals("")) { vo.setEmpNo(Integer.parseInt(empNo)); };
-		
-		if(empName == null) { }
-		else if(!empName.equals("")) { vo.setEmpName(empName); };
-		
-		if(hiredate_st == null) { }
-		else if(!hiredate_st.equals("")) { vo.setHiredate_st(hiredate_st); };
-		
-		if(hiredate_ed == null) { }
-		else if(!hiredate_ed.equals("")) { vo.setHiredate_ed(hiredate_ed); };
+//		String deptName = req.getParameter("deptName");
+//		String empNo = req.getParameter("empNo");
+//		String empName = req.getParameter("empName");
+//		String hiredate_st = req.getParameter("hiredate_st");
+//		String hiredate_ed = req.getParameter("hiredate_ed");
+//		
+//		if(deptName == null) { }
+//		else if(!deptName.equals("")) { vo.setDeptName(deptName); };
+//		
+//		if(empNo == null) { }
+//		else if(!empNo.equals("")) { vo.setEmpNo(Integer.parseInt(empNo)); };
+//		
+//		if(empName == null) { }
+//		else if(!empName.equals("")) { vo.setEmpName(empName); };
+//		
+//		if(hiredate_st == null) { }
+//		else if(!hiredate_st.equals("")) { vo.setHiredate_st(hiredate_st); };
+//		
+//		if(hiredate_ed == null) { }
+//		else if(!hiredate_ed.equals("")) { vo.setHiredate_ed(hiredate_ed); };
 		
 		AdminEmpDAO dao = new AdminEmpDAO();
-		ArrayList<EmpVO> list = dao.selectEmp(vo);
+		ArrayList<EmpVO> list = dao.selectEmpAll(vo);
 		
 		req.setAttribute("empList", list);
 		

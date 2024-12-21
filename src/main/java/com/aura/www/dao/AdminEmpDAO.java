@@ -38,6 +38,94 @@ public class AdminEmpDAO {
 		}
 	} // constructer end
 
+	public ArrayList<EmpVO> selectEmpAll(EmpVO getVo) {
+		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); 
+		
+		sb.setLength(0);
+		sb.append("SELECT ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME, EMP_PW, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
+//		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+		
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
+		sb.append("CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM EMP E ");
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE 1=1 ");
+		
+		// 퇴사여부
+		if(getVo.getQdYN() == null || getVo.getQdYN().equals("ALL") ) {
+			
+		} else if(getVo.getQdYN().equals("N") ) {
+			sb.append("AND QUITDATE IS NULL ");
+		} else if(getVo.getQdYN().equals("Y") ) {
+			sb.append("AND QUITDATE IS NOT NULL ");
+		}
+		
+		try {
+			System.out.println("sb");
+			System.out.println(sb.toString());
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				EmpVO vo = null;
+				int empNo = rs.getInt("EMP_NO");
+				String empPw = rs.getString("EMP_PW");
+				
+				String empName = rs.getString("EMP_NAME");
+				String empImage = rs.getString("EMP_IMAGE");
+				String cmpEmail = rs.getString("CMP_EMAIL");
+				String empEmail = rs.getString("EMP_EMAIL");
+				String cellphone = rs.getString("CELLPHONE");
+				
+				String hiredate = rs.getString("HIREDATE");
+				String quitdate = rs.getString("QUITDATE");
+				String birthdate = rs.getString("BIRTHDATE");
+				
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
+				
+				vo = new EmpVO();
+				
+				vo.setEmpNo(empNo);
+				vo.setEmpPw(empPw);
+				vo.setEmpName(empName);
+				vo.setEmpImage(empImage);
+				vo.setCmpEmail(cmpEmail);
+				vo.setEmpEmail(empEmail);
+				vo.setCellphone(cellphone);
+				vo.setHiredate(hiredate);
+				vo.setQuitdate(quitdate);
+				vo.setBirthdate(birthdate);
+				vo.setPosNo(posNo);
+				vo.setPosName(posName);
+				vo.setDeptNo(deptNo);
+				vo.setDeptName(deptName);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	public ArrayList<EmpVO> selectEmp(EmpVO getVo) {
 		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); // 조회 결과값에 따라 size가 0 ~ 
 		
@@ -45,7 +133,13 @@ public class AdminEmpDAO {
 		sb.append("SELECT ");
 		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
 		sb.append("POS_NAME, DEPT_NAME, EMP_NAME, EMP_PW, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
-		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+//		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+		
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
 		sb.append("CREATE_DATE, UPDATE_DATE ");
 		sb.append("FROM EMP E ");
 		sb.append("INNER JOIN POSITION P ");
@@ -172,4 +266,57 @@ public class AdminEmpDAO {
 		}
 		return list;
 	}
+	
+	public String getEmpKey() {
+		sb.setLength(0);
+		sb.append("SELECT fn_seq_no('EMP', YEAR(NOW()) ) AS SEQ_NO ");
+		
+		String key = null;
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				key = rs.getString("SEQ_NO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+	
+	public int insertEmp(EmpVO vo) {
+		sb.setLength(0);
+		sb.append("INSERT INTO EMP ");
+		sb.append("(EMP_NO, EMP_PW, EMP_NAME, CMP_EMAIL, DEPT_NO, POS_NO ");
+		if(vo.getHiredate() != null && !vo.getHiredate().equals("") ) sb.append(", HIREDATE ");
+		sb.append(" ) ");
+		sb.append("VALUES( ?, ?, ?, ?, ?, ?");
+		if(vo.getHiredate() != null && !vo.getHiredate().equals("") ) sb.append(", STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s') ");
+		sb.append(")");
+		
+		int rst = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			pstmt.setInt(1, vo.getEmpNo());
+			pstmt.setString(2, vo.getEmpPw());
+			pstmt.setString(3, vo.getEmpName());
+			pstmt.setString(4, vo.getCmpEmail());
+			pstmt.setInt(5, vo.getDeptNo());
+			pstmt.setInt(6, vo.getPosNo());
+			
+			if(vo.getHiredate() != null && !vo.getHiredate().equals("") )
+				pstmt.setString(7, vo.getHiredate()+" 09");
+
+			rst = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
+	
+	
 }

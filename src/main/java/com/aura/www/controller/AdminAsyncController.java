@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.aura.www.action.Action;
+import com.aura.www.action.admin.dept.SelectDeptActionAsync;
 import com.aura.www.action.admin.emp.SelectEmpActionAsync;
 import com.aura.www.action.admin.position.SelectPosActionAsync;
 import com.aura.www.vo.EmpVO;
@@ -31,6 +32,8 @@ public class AdminAsyncController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		
 		JSONArray jArr = new JSONArray();
+		String tArr = "";
+		
 		// String -> JSON
 		JSONParser jsonParser = new JSONParser();
 		
@@ -40,18 +43,18 @@ public class AdminAsyncController extends HttpServlet {
 		else if (cmd.equals("selectEmp")) {
 			ArrayList<EmpVO> list = null;
 			Action action = new SelectEmpActionAsync();
-			String tArr = action.execute(req, resp);
-			try {
-				// JSON 변환
-				jArr = (JSONArray) jsonParser.parse(tArr);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			tArr = action.execute(req, resp);
 //			JSONObject jObj = new JSONObject();
 //	        jObj.put("dataList", list); // key, value
-		}  else if (cmd.equals("selectPos")) {
+		} else if (cmd.equals("selectDept")) {
+			Action action = new SelectDeptActionAsync();
+			tArr = action.execute(req, resp);
+		} else if (cmd.equals("selectPos")) {
 			Action action = new SelectPosActionAsync();
-			String tArr = action.execute(req, resp);
+			tArr = action.execute(req, resp);
+		}
+		
+		if(cmd!=null) {
 			try {
 				// JSON 변환
 				jArr = (JSONArray) jsonParser.parse(tArr);
@@ -60,7 +63,7 @@ public class AdminAsyncController extends HttpServlet {
 			}
 		}
 		
-		 resp.setContentType("application/json; charset=UTF-8");
+		resp.setContentType("application/json; charset=UTF-8");
 		// resp.setContentType("application/x-json; charset=utf-8");
 		// resp.setContentType("text/html; charset=UTF-8");
 		resp.getWriter().print(jArr.toJSONString());

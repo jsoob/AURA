@@ -9,8 +9,9 @@ import com.aura.www.action.admin.dept.InsertDeptOkAction;
 import com.aura.www.action.admin.dept.ModifyDeptAction;
 import com.aura.www.action.admin.dept.ModifyDeptOkAction;
 import com.aura.www.action.admin.dept.SelectDeptAction;
-import com.aura.www.action.admin.emp.InsertEmpAction;
 import com.aura.www.action.admin.emp.SelectEmpAction;
+import com.aura.www.action.admin.emp.InsertEmpAction;
+import com.aura.www.action.admin.emp.InsertEmpOkAction;
 import com.aura.www.action.admin.management.AdminLoadAction;
 import com.aura.www.action.admin.position.SelectPosAction;
 import com.aura.www.action.main.MainAction;
@@ -101,6 +102,9 @@ public class AdminController extends HttpServlet {
 			url = action.execute(req, resp);
 		} else if (cmd.equals("insertEmp")) {
 			Action action = new InsertEmpAction();
+			url = action.execute(req, resp);
+		} else if (cmd.equals("insertEmpOk")) {
+			Action action = new InsertEmpOkAction();
 			url = action.execute(req, resp);
 		}
 		
