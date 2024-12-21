@@ -8,10 +8,14 @@
 <title>Animated Form Login</title>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginform/login.css">    
-    
+<!-- 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
-	
+ -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 <script type="text/javascript">
 	$( ()=> {
 		$("#login").on("click", ()=> {
@@ -25,12 +29,20 @@
 			 	form.method ="post";
 				form.submit();
 			} else {
+				Swal.fire({
+					title : 'Error',         // Alert 제목
+					text : '사원번호 또는 비밀번호를 입력해 주세요.',  // Alert 내용
+					icon : 'error',                         // Alert 타입
+				});
+				
+				/* 
 				swal({
 				  title: "미입력",
 				  text: "사원번호 또는 비밀번호를 입력해 주세요.",
 				  icon: "warning", // "success",
 				  button: "확인",
 				});
+				 */
 			}
 		});
 	});
