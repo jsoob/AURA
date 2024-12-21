@@ -27,8 +27,6 @@ public class LoginDAO {
 			Class.forName(driver);
 			// 3. Connection
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("conn");
-			System.out.println(conn);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
 		} catch (SQLException e) {

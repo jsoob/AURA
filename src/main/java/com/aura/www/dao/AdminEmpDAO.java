@@ -28,8 +28,6 @@ public class AdminEmpDAO {
 			Class.forName(driver);
 			// 3. Connection
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("conn");
-			System.out.println(conn);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
 		} catch (SQLException e) {
@@ -37,7 +35,8 @@ public class AdminEmpDAO {
 			e.printStackTrace();
 		}
 	} // constructer end
-
+	
+	// 페이지없는 조회
 	public ArrayList<EmpVO> selectEmpAll(EmpVO getVo) {
 		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); 
 		
@@ -126,7 +125,361 @@ public class AdminEmpDAO {
 		return list;
 	}
 	
-	public ArrayList<EmpVO> selectEmp(EmpVO getVo) {
+	// 검색조건x 페이징 
+	public int getTotalCount(EmpVO getVo) {
+		int cnt = 0;
+		
+		sb.setLength(0);
+		sb.append("SELECT COUNT(*) cnt " );
+		sb.append("FROM EMP E " );
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE 1=1 ");
+		
+		// 퇴사여부
+		if(getVo.getQdYN() == null || getVo.getQdYN().equals("ALL") ) {
+			
+		} else if(getVo.getQdYN().equals("N") ) {
+			sb.append("AND QUITDATE IS NULL ");
+		} else if(getVo.getQdYN().equals("Y") ) {
+			sb.append("AND QUITDATE IS NOT NULL ");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	// 검색조건x 페이징 
+	public ArrayList<EmpVO> selectEmpAllPage(EmpVO getVo, int limitNo, int offsetNo) {
+		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); 
+		
+		sb.setLength(0);
+		sb.append("SELECT ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME, EMP_PW, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
+//		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+		
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
+		sb.append("CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM EMP E ");
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE 1=1 ");
+		
+		// 퇴사여부
+		if(getVo.getQdYN() == null || getVo.getQdYN().equals("ALL") ) {
+			
+		} else if(getVo.getQdYN().equals("N") ) {
+			sb.append("AND QUITDATE IS NULL ");
+		} else if(getVo.getQdYN().equals("Y") ) {
+			sb.append("AND QUITDATE IS NOT NULL ");
+		}
+		sb.append(" LIMIT ? OFFSET ? ");
+		
+		try {
+			System.out.println("sb");
+			System.out.println(sb.toString());
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			System.out.println("limitNo = " + limitNo); // 9
+			System.out.println("offsetNo = " + offsetNo); // 1, 9, 17
+			
+			pstmt.setInt(1, limitNo);
+			pstmt.setInt(2, offsetNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				EmpVO vo = null;
+				int empNo = rs.getInt("EMP_NO");
+				String empPw = rs.getString("EMP_PW");
+				
+				String empName = rs.getString("EMP_NAME");
+				String empImage = rs.getString("EMP_IMAGE");
+				String cmpEmail = rs.getString("CMP_EMAIL");
+				String empEmail = rs.getString("EMP_EMAIL");
+				String cellphone = rs.getString("CELLPHONE");
+				
+				String hiredate = rs.getString("HIREDATE");
+				String quitdate = rs.getString("QUITDATE");
+				String birthdate = rs.getString("BIRTHDATE");
+				
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
+				
+				vo = new EmpVO();
+				
+				vo.setEmpNo(empNo);
+				vo.setEmpPw(empPw);
+				vo.setEmpName(empName);
+				vo.setEmpImage(empImage);
+				vo.setCmpEmail(cmpEmail);
+				vo.setEmpEmail(empEmail);
+				vo.setCellphone(cellphone);
+				vo.setHiredate(hiredate);
+				vo.setQuitdate(quitdate);
+				vo.setBirthdate(birthdate);
+				vo.setPosNo(posNo);
+				vo.setPosName(posName);
+				vo.setDeptNo(deptNo);
+				vo.setDeptName(deptName);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// 검색 조건 있음 페이징
+	public int getTotalCountSearch(EmpVO getVo) {
+		int cnt = 0;
+		
+		sb.setLength(0);
+		sb.append("SELECT COUNT(*) cnt " );
+		
+		sb.append("FROM EMP E " );
+		
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE 1=1 ");
+		
+		// 부서명
+		if(getVo.getDeptName() != null && !getVo.getDeptName().equals("") ) sb.append("AND E.DEPT_NO IN (SELECT DEPT_NO FROM DEPT WHERE DEPT_NAME LIKE ? ) ");
+		// 사원번호
+		if(getVo.getEmpNo() != 0 ) sb.append("AND EMP_NO LIKE ? ");
+		// 사원명
+		if(getVo.getEmpName() != null && !getVo.getEmpName().equals("") ) sb.append("AND EMP_NAME LIKE ? ");
+		
+		int hd_gubun = 0; // 0 없음. 1 BETWEEN. 2 st >= / 3 ed >=
+		
+		// 입사일자
+		if( ( getVo.getHiredate_st() != null && !getVo.getHiredate_st().equals("") ) && (getVo.getHiredate_ed() != null && !getVo.getHiredate_ed().equals("")) ) {
+			hd_gubun = 1;
+			// 입사일이 12월17일부터 ~ 12월18일인 사원만 조회
+			sb.append("AND HIREDATE BETWEEN STR_TO_DATE( ?, '%Y-%m-%d' ) AND STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		} else if( getVo.getHiredate_st() != null && !getVo.getHiredate_st().equals("") ) {
+			hd_gubun = 2;
+			// 입사일이 12월17일부터~인 사원만 조회
+			sb.append("AND HIREDATE >= STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		} else if( getVo.getHiredate_ed() != null && !getVo.getHiredate_ed().equals("") ) {
+			hd_gubun = 3;
+			// 입사일이 ~12월18일부터인 사원만 조회
+			sb.append("AND HIREDATE <= STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		}
+		
+		// 퇴사여부
+		if(getVo.getQdYN() == null || getVo.getQdYN().equals("ALL") ) {
+			
+		} else if(getVo.getQdYN().equals("N") ) {
+			sb.append("AND QUITDATE IS NULL ");
+		} else if(getVo.getQdYN().equals("Y") ) {
+			sb.append("AND QUITDATE IS NOT NULL ");
+		}
+		
+		try {
+			System.out.println("getTotalCountSearch = " + sb.toString());
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			// where 문
+			// cnt = 0; // match idx
+			if(getVo.getDeptName() != null && !getVo.getDeptName().equals("") )
+				pstmt.setString(++cnt, "%"+getVo.getDeptName()+"%");
+			
+			if(getVo.getEmpNo() != 0 )
+				pstmt.setString(++cnt, "%"+getVo.getEmpNo()+"%");
+			
+			if(getVo.getEmpName() != null && !getVo.getEmpName().equals("") )
+				pstmt.setString(++cnt, "%"+getVo.getEmpName()+"%");
+			
+			if( hd_gubun == 1 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_st());
+				pstmt.setString(++cnt, getVo.getHiredate_ed());
+			} else if( hd_gubun == 2 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_st());
+			} else if( hd_gubun == 3 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_ed());
+			}
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	
+	// 검색 조건 있음 
+	public ArrayList<EmpVO> selectEmpSearchPage(EmpVO getVo, int limitNo, int offsetNo) {
+		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); // 조회 결과값에 따라 size가 0 ~ 
+		
+		sb.setLength(0);
+		sb.append("SELECT ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME, EMP_PW, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
+//		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+		
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
+		sb.append("CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM EMP E ");
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE 1=1 ");
+
+//		AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ); -- 퇴사일자가 없거나, 퇴사일자가 아직 안 지난 사람
+//		AND ( (QUITDATE IS NULL) OR ( QUITDATE <  STR_TO_DATE( '2024-12-16 23:26:09', '%Y,%m,%d %H:%i:%s' ) ) );
+		
+		// 사원관리 조회 조건
+		// 부서명, 사원번호, 사원명, 입사일자(모두 LIKE, RANGE DATE), 퇴사여부
+		
+		// 부서명
+		if(getVo.getDeptName() != null && !getVo.getDeptName().equals("") ) sb.append("AND E.DEPT_NO IN (SELECT DEPT_NO FROM DEPT WHERE DEPT_NAME LIKE ? ) ");
+		// 사원번호
+		if(getVo.getEmpNo() != 0 ) sb.append("AND EMP_NO LIKE ? ");
+		// 사원명
+		if(getVo.getEmpName() != null && !getVo.getEmpName().equals("") ) sb.append("AND EMP_NAME LIKE ? ");
+		
+		int hd_gubun = 0; // 0 없음. 1 BETWEEN. 2 st >= / 3 ed >=
+		
+		// 입사일자
+		if( ( getVo.getHiredate_st() != null && !getVo.getHiredate_st().equals("") ) && (getVo.getHiredate_ed() != null && !getVo.getHiredate_ed().equals("")) ) {
+			hd_gubun = 1;
+			// 입사일이 12월17일부터 ~ 12월18일인 사원만 조회
+			sb.append("AND HIREDATE BETWEEN STR_TO_DATE( ?, '%Y-%m-%d' ) AND STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		} else if( getVo.getHiredate_st() != null && !getVo.getHiredate_st().equals("") ) {
+			hd_gubun = 2;
+			// 입사일이 12월17일부터~인 사원만 조회
+			sb.append("AND HIREDATE >= STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		} else if( getVo.getHiredate_ed() != null && !getVo.getHiredate_ed().equals("") ) {
+			hd_gubun = 3;
+			// 입사일이 ~12월18일부터인 사원만 조회
+			sb.append("AND HIREDATE <= STR_TO_DATE( ?, '%Y-%m-%d' ) ");
+		}
+		
+		// 퇴사여부
+		if(getVo.getQdYN() == null || getVo.getQdYN().equals("ALL") ) {
+			
+		} else if(getVo.getQdYN().equals("N") ) {
+			sb.append("AND QUITDATE IS NULL ");
+		} else if(getVo.getQdYN().equals("Y") ) {
+			sb.append("AND QUITDATE IS NOT NULL ");
+		}
+		// sb.append("AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ) ");
+		sb.append(" LIMIT ? OFFSET ? ");
+		try {
+			System.out.println("sb");
+			System.out.println(sb.toString());
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			// where 문
+			int cnt = 0; // match idx
+			
+			if(getVo.getDeptName() != null && !getVo.getDeptName().equals("") )
+				pstmt.setString(++cnt, "%"+getVo.getDeptName()+"%");
+			
+			if(getVo.getEmpNo() != 0 )
+				pstmt.setString(++cnt, "%"+getVo.getEmpNo()+"%");
+			
+			if(getVo.getEmpName() != null && !getVo.getEmpName().equals("") )
+				pstmt.setString(++cnt, "%"+getVo.getEmpName()+"%");
+			
+			if( hd_gubun == 1 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_st());
+				pstmt.setString(++cnt, getVo.getHiredate_ed());
+			} else if( hd_gubun == 2 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_st());
+			} else if( hd_gubun == 3 ) {
+				pstmt.setString(++cnt, getVo.getHiredate_ed());
+			}
+			
+			pstmt.setInt(++cnt, limitNo);
+			pstmt.setInt(++cnt, offsetNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				EmpVO vo = null;
+				int empNo = rs.getInt("EMP_NO");
+				String empPw = rs.getString("EMP_PW");
+				
+				String empName = rs.getString("EMP_NAME");
+				String empImage = rs.getString("EMP_IMAGE");
+				String cmpEmail = rs.getString("CMP_EMAIL");
+				String empEmail = rs.getString("EMP_EMAIL");
+				String cellphone = rs.getString("CELLPHONE");
+				
+				String hiredate = rs.getString("HIREDATE");
+				String quitdate = rs.getString("QUITDATE");
+				String birthdate = rs.getString("BIRTHDATE");
+				
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
+			
+				vo = new EmpVO();
+				
+				vo.setEmpNo(empNo);
+				vo.setEmpPw(empPw);
+				vo.setEmpName(empName);
+				vo.setEmpImage(empImage);
+				vo.setCmpEmail(cmpEmail);
+				vo.setEmpEmail(empEmail);
+				vo.setCellphone(cellphone);
+				vo.setHiredate(hiredate);
+				vo.setQuitdate(quitdate);
+				vo.setBirthdate(birthdate);
+				vo.setPosNo(posNo);
+				vo.setPosName(posName);
+				vo.setDeptNo(deptNo);
+				vo.setDeptName(deptName);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				
+				list.add(vo);
+			}
+			
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ArrayList<EmpVO> selectEmpSearch(EmpVO getVo) {
 		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); // 조회 결과값에 따라 size가 0 ~ 
 		
 		sb.setLength(0);
@@ -330,5 +683,6 @@ public class AdminEmpDAO {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

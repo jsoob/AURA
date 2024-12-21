@@ -62,7 +62,7 @@
 }
 /* padding 전체 none */
 .pd-nn {
-	padding: none !important;	
+	padding:  0px !important;	
 }
 
 
@@ -91,8 +91,8 @@
 	margin-bottom: 10px !important;
 }
 /* padding 전체 none */
-.pd-nn {
-	margin: none !important;	
+.mg-nn {
+	margin: 0px !important;	
 }
 
 /* text 가운데 정렬 */

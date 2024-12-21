@@ -55,18 +55,29 @@ public class AdminAsyncController extends HttpServlet {
 		}
 		
 		if(cmd!=null) {
-			try {
-				// JSON 변환
-				jArr = (JSONArray) jsonParser.parse(tArr);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			if(cmd.equals("selectEmp")) {
+				try {
+					JSONObject jsonObj = (JSONObject) jsonParser.parse(tArr);
+
+					resp.getWriter().print(jsonObj.toJSONString());
+					resp.setContentType("application/json; charset=UTF-8");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					// JSON 변환
+					jArr = (JSONArray) jsonParser.parse(tArr);
+					
+					resp.getWriter().print(jArr.toJSONString());
+					resp.setContentType("application/json; charset=UTF-8");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		
-		resp.setContentType("application/json; charset=UTF-8");
 		// resp.setContentType("application/x-json; charset=utf-8");
 		// resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().print(jArr.toJSONString());
 		
 		
 		// String jsonInfo = jObj.toJSONString();

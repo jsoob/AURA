@@ -2,6 +2,7 @@ package com.aura.www.action.admin.emp;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -48,13 +49,27 @@ public class SelectEmpActionAsync implements Action {
 		else if(!qdYN.equals("")) { vo.setQdYN(qdYN); };
 		
 		AdminEmpDAO dao = new AdminEmpDAO();
-		ArrayList<EmpVO> list = dao.selectEmp(vo);
+		
+		int totalCount = dao.getTotalCountSearch(vo); // 전체수
+
+		HashMap<String, Object> page = getPage(totalCount, req);
+		
+		int limitNo = (int) page.get("limitNo");
+		int offsetNo = (int) page.get("offsetNo");
+		
+		ArrayList<EmpVO> list = dao.selectEmpSearchPage(vo, limitNo, offsetNo);
 		System.out.println("list 수 = " + list.size());
 		
 		// vo를 json으로
 		JSONArray jArr = listmap_to_json(list);
+		// 페이지 map jsonObject
+		JSONObject pageObject = new JSONObject(page);
 		
-		return jArr.toJSONString(); // JSON -> Array
+		JSONObject obj = new JSONObject();
+		obj.put("empList", jArr);
+		obj.put("pageObject", pageObject);
+		
+		return obj.toJSONString(); // jArr.toJSONString(); // JSON -> Array
 	}
 	
 	// vo key value 자동으로 찾아서 json array로 해줌.. 근데 상속으로 받았던 필드들은 찾지 못해서
@@ -91,4 +106,60 @@ public class SelectEmpActionAsync implements Action {
         }
         return json_arr;
     }
+	
+	public HashMap<String, Object> getPage(int totalCount, HttpServletRequest req) {
+		HashMap<String, Object> page = new HashMap<String, Object>();
+
+		int recordPerPage = 9; // 한 페이지당 게시물 8
+		// 총 페이지수 301/8 ==> 37 38
+		int totalPage = (totalCount%recordPerPage == 0) ? 
+				(totalCount/recordPerPage) : (totalCount/recordPerPage)+1;
+		// 현재 페이지 번호
+		int currentPage = -1;
+		// 현재 페이지 번호 가져오기
+		String cp = req.getParameter("cp");
+		
+		if(cp == null) {
+			currentPage = 1;
+		} else {
+			currentPage = Integer.parseInt(cp);
+		}
+		
+		// 이전 페이지
+		int prevCnt = (currentPage > 1) ? prevCnt=currentPage-1 : currentPage;
+		// 다음 페이지
+		int nextCnt = (currentPage < totalPage) ? currentPage+1 : currentPage;
+		
+		// 페이지 가져오는 갯수
+		int limitNo = recordPerPage;
+		// 페이지 가져오는 idx
+		int offsetNo = (currentPage-1)*recordPerPage;
+		
+		// 시작 페이지 번호
+		int startPage = 1;
+		// 끝 페이지 번호(맨 마지막 페이지 번호)
+		int endPage = totalPage;
+		
+		// 시작 페이지 미세조정
+		startPage = Math.max(1, currentPage - 4);
+		// 끝 페이지 미세 조정
+		endPage = Math.min(totalPage, startPage + 9);
+		
+		page.put("cp", cp);
+		page.put("totalCount", totalCount);
+		
+		page.put("recordPerPage", recordPerPage);
+		page.put("totalPage", totalPage);
+		
+		page.put("limitNo", limitNo);
+		page.put("offsetNo", offsetNo);
+		
+		page.put("startPage", startPage);
+		page.put("endPage", endPage);
+		
+		page.put("prevCnt", prevCnt);
+		page.put("nextCnt", nextCnt);
+		
+		return page;
+	}
 }

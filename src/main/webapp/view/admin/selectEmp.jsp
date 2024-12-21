@@ -19,7 +19,88 @@
 		});
 	});
 	
-	function loadBtn(){
+	function loadBtn(cp){
+		let sendData = $("form[name=empForm]").serialize();
+		
+		cp = typeof cp !== "undefined" ? cp : "";
+		if(cp != "" ) sendData += "&cp="+ cp;
+		
+		$.ajax({
+            url:"adminasync", // AAdminController.java로 접근
+            type: "post",
+			data: sendData, // json 방식으로 서블릿에 보낼 데이터
+			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
+            success: (data) => {
+            	let empList = data.empList;
+				$("tr[name='empList']").empty();
+				
+				$.each(empList, (idx, row) => {
+					// console.log(row);
+					let appendText = "";
+					appendText = "<tr name='empList'>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ ( (row.empEmail == null || row.empEmail == "null") ? "" : row.empEmail ) +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ 
+								(row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined" ? "근무중" : row.quitdate) +"</a></td>";
+					
+					// 이 부분 해야함			
+					appendText += "<td class='text-center'>"
+									+ "<a onclick='modifyEmp("+ row.empNo +");'>" 
+									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
+									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
+									+	"</button>"
+									+ "</a> "
+									
+									+ "<a onclick='deleteEmp("+ row.empNo +");'>" 
+									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='삭제'>"
+									+		"<i class='fa fa-trash-o' aria-hidden='true'></i>"
+									+	"</button>"
+									+ "</a>"
+								 +"</td>"
+								+"</tr>";
+					
+					$("#selectTable").append(appendText);
+				});
+				
+				let pageObject = data.pageObject;
+				$("tr[name='empPages']").empty();
+				
+				let appendText = "";
+				appendText = '<tr name="empPages">'
+							+ '<td colspan="9" class="text-center">'
+								+ '<ul class="pagination mg-nn">'
+								+ '<li class="page-item"><a class="page-link" onclick="loadBtn('+ pageObject.prevCnt +')">Previous</a></li>';
+								
+								
+					for(let i = pageObject.startPage; i <= pageObject.endPage; i++ ) {
+						appendText += '<li class="page-item">'
+									+ '<a class="page-link" onclick="loadBtn('+ i +')">'+i+'</a>' //  href="adminasync?cmd=selectEmp&cp='+i+'"
+								   + '</li>';
+					}	
+				appendText += '<li class="page-item"><a class="page-link" onclick="loadBtn('+ pageObject.nextCnt +')">Next</a></li>' // href="adminasync?cmd=selectEmp&cp='+ pageObject.nextCnt +'"
+							 	+"</ul>";
+							 +"</td>"
+						+"</tr>";
+						
+				$("#selectTable").append(appendText);
+            },
+            error:function(request, err) {
+            	console.log("error");
+            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            complete: function () {
+            }
+            
+        });
+		
+	} // end loadBtn
+	
+	function old_loadBtn(){
 		let sendData = $("form[name=empForm]").serialize();
 		
 		$.ajax({
@@ -197,15 +278,15 @@
                                 <table id="selectTable">
                                 	<%-- 테이블 컬럼 --%>
                                     <tr>
-                                        <th>부서명</th>
-										<th>사원번호</th>
-										<th>사원명</th>
-										<th>사원 이미지</th>
-										<th>직급</th>
-										<th>외부이메일</th>
-										<th>입사일자</th>
-										<th>퇴사일자</th>
-										<th class="text-center">Setting</th>
+                                        <th style="width: 7%; min-width: 65px;">부서명</th>
+										<th style="width: 5%; min-width: 65px;">사원번호</th>
+										<th style="width: 10%; min-width: 100px;">사원명</th>
+										<th style="width: 8%; min-width: 100px;">사원 이미지</th>
+										<th style="width: 5%; min-width: 65px;">직급</th>
+										<th style="width: 10%; min-width: 100px;">외부이메일</th>
+										<th style="width: 8%; min-width: 65px;">입사일자</th>
+										<th style="width: 8%; min-width: 65px;">퇴사일자</th>
+										<th style="width: 8%; min-width: 100px;" class="text-center">Setting</th>
                                     </tr>
                                     <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
                                 	<%-- 테이블 값 --%>
@@ -235,10 +316,27 @@
 											
 										</tr>
 									</c:forEach>
+									
+										<tr name="empPages">
+											<td colspan="9" class="text-center">
+												<ul class="pagination mg-nn">
+												    <li class="page-item"><a class="page-link" href="admin?cmd=selectEmp&cp=${page['prevCnt'] }">Previous</a></li>
+													<!-- currentPage-1 -->
+													<c:forEach var="i" begin="${page['startPage'] }" end="${page['endPage'] }" step="1">
+														<li class="page-item">
+															<a class="page-link" href="admin?cmd=selectEmp&cp=${i }">${i }</a>
+														</li>
+													</c:forEach>	
+													<li class="page-item"><a class="page-link" href="admin?cmd=selectEmp&cp=${page['nextCnt'] }">Next</a></li>
+													<!-- currentPage+1 -->
+												 </ul>
+											</td>
+										</tr>
                                 </table>
                             </div>
                             <%-- 테이블 페이징 처리 --%>
-                            
+                            <%-- 8개만 보이자 --%>
+                            <!-- 
                             <div class="custom-pagination">
 								<ul class="pagination">
 									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -248,7 +346,7 @@
 									<li class="page-item"><a class="page-link" href="#">Next</a></li>
 								</ul>
                             </div>
-                            
+                             -->
                         </div>
                     </div>
                     

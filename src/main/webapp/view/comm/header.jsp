@@ -257,14 +257,17 @@
                                 	--%>
                                 	
                                 	<%
+                                		/* 
 	                                	System.out.println("request.getRequestURI() = " + request.getRequestURI());   
 	                            		System.out.println("request.getContextPath() = " + request.getContextPath());   
 	                            		System.out.println("request.getRequestURL() = " + request.getRequestURL());   
 	                            		System.out.println("request.getServletPath() = " + request.getServletPath());   
-                            			
+                            			 */
 	                                	String tUrl = (request.getRequestURL()).toString();
+                            			/* 
 	                                	System.out.println("indexOf = " + tUrl.indexOf("/aura") );
 	                                	System.out.println("substring = " + tUrl.substring(tUrl.indexOf("/aura")));
+	                                	 */
                                 	%>
                                 	<%-- 이전:${ pages }" / 현재 map --%>
                                 	<%-- 
