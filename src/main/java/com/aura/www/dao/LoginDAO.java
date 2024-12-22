@@ -51,7 +51,6 @@ public class LoginDAO {
 		EmpVO vo = null;
 		
 		try {
-			System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, emp_no);
 			pstmt.setString(2, emp_pw);

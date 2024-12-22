@@ -74,7 +74,7 @@
 	            </form>
 	            
 	            <div class="links">
-	                <a href="getPass.jsp">Forgot Password?</a>
+	                <a href="login?cmd=getPass">Forgot Password?</a>
 	            </div>
 	        </div>
 	    </div>

@@ -3,8 +3,10 @@ package com.aura.www.controller;
 import java.io.IOException;
 
 import com.aura.www.action.Action;
+import com.aura.www.action.login.GetPassAction;
 import com.aura.www.action.login.LoginFormAction;
-
+import com.aura.www.action.login.LoginOkAction;
+import com.aura.www.action.login.LogoutAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -24,20 +26,26 @@ public class LoginController extends HttpServlet {
     	  Action bc = new LoginFormAction();
           url = bc.execute(req, resp);
       } else if (cmd.equals("loginOk")) {
-    	  Action bc = new com.aura.www.action.login.LoginOkAction();
+    	  Action bc = new LoginOkAction();
           url = bc.execute(req, resp);
       } else if (cmd.equals("logout")) {
-    	  Action bc = new com.aura.www.action.login.LogoutAction();
+    	  Action bc = new LogoutAction();
+          url = bc.execute(req, resp);
+      } else if (cmd.equals("getPass")) {
+    	  Action bc = new GetPassAction();
           url = bc.execute(req, resp);
       }
       
-      if(url=="login") {
+      if (url == null) {
+      
+      } else if(url.equals("login")) {
     	  resp.sendRedirect("login");
-      } else if(url=="main") {
+      } else if(url.equals("main")) {
     	  resp.sendRedirect("main");
       } else {
-        RequestDispatcher rd = req.getRequestDispatcher(url);
-        rd.forward(req, resp);
+          RequestDispatcher rd = req.getRequestDispatcher(url);
+          rd.forward(req, resp);
       }
+      
    }
 }
