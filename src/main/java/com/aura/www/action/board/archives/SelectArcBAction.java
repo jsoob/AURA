@@ -11,15 +11,15 @@ public class SelectArcBAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		
+
 		String b = req.getParameter("arcNo");
-		if(b != null) {
+		if (b != null) {
 			int arcNo = Integer.parseInt(b);
 			ArchivesDAO dao = new ArchivesDAO();
 			ArchivesVO vo = dao.selectOne(arcNo);
 			req.setAttribute("vo", vo);
 		}
 		return "view/board/arcB/selectArcB.jsp";
-		
+
 	}
 }

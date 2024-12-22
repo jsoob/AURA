@@ -12,26 +12,25 @@ public class ModifyArcOkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		
+
 		String b = req.getParameter("arcNo");
 		// String writer = req.getParameter("writer");
 		String title = req.getParameter("title");
 		String contents = req.getParameter("contents");
-		
-		if (b != null){
+
+		if (b != null) {
 			// 형변환
 			int arcNo = Integer.parseInt(b);
-			
+
 			ArchivesDAO dao = new ArchivesDAO();
 			ArchivesVO vo = new ArchivesVO();
-			
+
 			vo.setArcNo(arcNo);
 			// 일단 vo.로 가져올 거 생각해보기
-			
-		}		
-		
+
+		}
+
 		return "archives?cmd=list";
 	}
-	
 
 }
