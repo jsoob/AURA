@@ -63,7 +63,10 @@
                                         
                                         <!-- Message 알림창 dropdown -->
                                         <li class="nav-item dropdown">
-                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-message edu-chat-pro" aria-hidden="true"></i><span class="indicator-ms"></span></a>
+                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+	                                            <i class="fa fa-envelope-o" aria-hidden="true"></i> <%-- educate-icon educate-message edu-chat-pro --%>
+	                                            <span class="indicator-ms"></span>
+                                            </a>
                                             <div role="menu" class="author-message-top dropdown-menu animated zoomIn">
                                                 <div class="message-single-top">
                                                     <h1>Message</h1>
@@ -125,7 +128,11 @@
                                         </li>
                                         
                                         <!-- 사원정보 옆에 Notifications 알림창 부분 -->
-                                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-bell" aria-hidden="true"></i><span class="indicator-nt"></span></a>
+                                        <li class="nav-item">
+                                        	<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+	                                        	<i class="fa fa-bell-o" aria-hidden="true"></i> <%-- educate-icon educate-bell --%>
+	                                        	<span class="indicator-nt"></span>
+                                        	</a>
                                             <div role="menu" class="notification-author dropdown-menu animated zoomIn">
                                                 <div class="notification-single-top">
                                                     <h1>Notifications</h1>
