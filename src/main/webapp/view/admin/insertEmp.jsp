@@ -41,7 +41,7 @@
 					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='deptList'>";
-					appendText += "<td class='text-center'><a onclick='addDept("+row.deptNo+", \""+row.posName+"\")'>"+row.deptNo+"</td>'";
+					appendText += "<td class='text-center'><a onclick='addDept("+row.deptNo+", \""+row.deptName+"\")'>"+row.deptNo+"</td>'";
 					appendText += "<td class='text-center'><a onclick='addDept("+row.deptNo+", \""+row.deptName+"\")'>"+row.deptName+"</td>'";
 					appendText +="</tr>";
 					
@@ -156,25 +156,25 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap aura_content">
-	                            <div class="col-lg-2 col-lg-2 col-sm-2 col-xs-2">
+                        <div class="product-status-wrap aura_content" style="padding-top: 5%;">
+	                            <div class="col-lg-3 col-sm-2 col-xs-2">
 	                            </div>
 	                            <%-- 찐찐 개별 --%>
-	                            <div class="col-lg-8 col-lg-8 col-sm-12 col-xs-12">
+	                            <div class="col-lg-6 col-sm-8 col-xs-8">
 									<!-- 사원 이름 , 부서, 직급, 입사일자 -->
 		                            <form action="admin">
-		                                <div class="form-group-inner">
+		                                <div class="form-group-inner mg-bt-30">
 		                                    <div class="row">
 		                                        <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
 		                                            <label class="login2 pull-left pull-left-pro">사원명</label>
 		                                        </div>
 		                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		                                            <input type="text" name="empName" class="form-control">
+		                                            <input type="text" name="empName" class="form-control" maxlength="10">
 		                                            <!-- <input type="hidden" name="cmd" value="insertEmpOk"> -->
 		                                        </div>
 		                                    </div>
 		                                </div>
-		                                <div class="form-group-inner">
+		                                <div class="form-group-inner mg-bt-30">
 		                                    <div class="row">
 		                                        <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
 		                                            <label class="login2 pull-left pull-left-pro">부서</label>
@@ -182,17 +182,17 @@
 		                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		                                        	<input type="hidden" name="deptNo">
 		                                            <input type="text" name="deptName" class="form-control" 
-		                                            		disabled="disabled" placeholder="부서명" style="width: 80%; float: left;">
+		                                            		 readonly="readonly" placeholder="부서명" style="width: 80%; float: left;">
 		                                            		
 		                                            <button type="button" id="deptAdd" class="btn btn-custon-four btn-success" 
 	                                            		data-toggle="modal" data-target=".search-dept-modal" 
 	                                            		style="width: 18%; margin-left: 2%; line-height: 26px;">
-	                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i>부서
+	                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 부서
 		                                            </button>
 		                                        </div>
 		                                    </div>
 		                                </div>
-		                                <div class="form-group-inner">
+		                                <div class="form-group-inner mg-bt-30">
 		                                    <div class="row">
 		                                        <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
 		                                            <label class="login2 pull-left pull-left-pro">직급</label>
@@ -200,12 +200,12 @@
 		                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 		                                        	<input type="hidden" name="posNo">
 		                                            <input type="text" name="posName" class="form-control" 
-		                                            		disabled="disabled" placeholder="직급명" style="width: 80%; float: left;">
+		                                            		 readonly="readonly" placeholder="직급명" style="width: 80%; float: left;">
 		                                            		
 		                                            <button type="button" id="posAdd" class="btn btn-custon-four btn-success" 
 	                                            		data-toggle="modal" data-target=".search-pos-modal" 
 	                                            		style="width: 18%; margin-left: 2%; line-height: 26px;">
-	                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i>직급
+	                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 직급
 		                                            </button>
 		                                        </div>
 		                                    </div>
@@ -242,7 +242,7 @@
 		                                </div>
 		                                 -->
 		                                
-		                                <div class="form-group-inner mg-tp-10">
+		                                <div class="form-group-inner mg-tp-10 mg-bt-30">
 		                                    <div class="login-btn-inner">
 		                                        <div class="row">
 		                                            <div class="col-lg-12 text-center">

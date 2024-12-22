@@ -10,8 +10,12 @@ import com.aura.www.action.admin.dept.ModifyDeptAction;
 import com.aura.www.action.admin.dept.ModifyDeptOkAction;
 import com.aura.www.action.admin.dept.SelectDeptAction;
 import com.aura.www.action.admin.emp.SelectEmpAction;
+import com.aura.www.action.admin.emp.DetailEmpAction;
 import com.aura.www.action.admin.emp.InsertEmpAction;
 import com.aura.www.action.admin.emp.InsertEmpOkAction;
+import com.aura.www.action.admin.emp.ModifyEmpAction;
+import com.aura.www.action.admin.emp.ModifyEmpOkAction;
+import com.aura.www.action.admin.emp.ResetPwEmpAction;
 import com.aura.www.action.admin.management.AdminLoadAction;
 import com.aura.www.action.admin.position.SelectPosAction;
 import com.aura.www.action.main.MainAction;
@@ -106,7 +110,16 @@ public class AdminController extends HttpServlet {
 		} else if (cmd.equals("insertEmpOk")) { // cmd가 insertEmpOk곳으로 등록액션 이동
 			Action action = new InsertEmpOkAction();
 			url = action.execute(req, resp);
-		}
+		} else if (cmd.equals("detailEmp")) {
+			Action action = new DetailEmpAction();
+			url = action.execute(req, resp);
+		} else if (cmd.equals("modifyEmp")) {
+			Action action = new ModifyEmpAction();
+			url = action.execute(req, resp);
+		} else if (cmd.equals("modifyEmpOk")) {
+            Action action = new ModifyEmpOkAction();
+            url = action.execute(req, resp);
+        }
 		
 		if(url.equals("main")) {
 	    	resp.sendRedirect("main");

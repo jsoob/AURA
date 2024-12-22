@@ -14,6 +14,7 @@ import com.aura.www.action.admin.dept.SelectDeptActionAsync;
 import com.aura.www.action.admin.emp.SelectEmpActionAsync;
 import com.aura.www.action.admin.emp.DeleteEmpActionAsync;
 import com.aura.www.action.admin.emp.DisableEmpActionAsync;
+import com.aura.www.action.admin.emp.ResetPwEmpAction;
 import com.aura.www.action.admin.position.SelectPosActionAsync;
 import com.aura.www.vo.EmpVO;
 
@@ -55,6 +56,10 @@ public class AdminAsyncController extends HttpServlet {
 			Action action = new SelectPosActionAsync();
 			tArr = action.execute(req, resp);
 		}
+		else if (cmd.equals("resetPwEmp")) {
+			Action action = new ResetPwEmpAction();
+			tArr = action.execute(req, resp);
+		}
 		else if (cmd.equals("disableEmp")) {
 			Action action = new DisableEmpActionAsync();
 			tArr = action.execute(req, resp);
@@ -62,7 +67,7 @@ public class AdminAsyncController extends HttpServlet {
 		
 		if(cmd!=null) {
 			// 페이징 방식때문에 jsonObject로 받아한다.
-			if(cmd.equals("selectEmp") || cmd.equals("disableEmp")) {
+			if(cmd.equals("selectEmp") || cmd.equals("disableEmp") || cmd.equals("resetPwEmp")) {
 				try {
 					JSONObject jsonObj = (JSONObject) jsonParser.parse(tArr);
 

@@ -130,16 +130,16 @@ body {}
 	margin-bottom:30px;
 }
 .bg-green {
-    background: #006DF0;
-}
-.bg-red {
-    background: #933EC5;
-}
-.bg-blue {
     background: #65b12d;
 }
-.bg-purple {
+.bg-red {
     background: #D80027;
+}
+.bg-blue {
+    background: #006DF0;
+}
+.bg-purple {
+    background: #933EC5;
 }
 /*----------------------------------------*/
 /*  3. All Nested Class

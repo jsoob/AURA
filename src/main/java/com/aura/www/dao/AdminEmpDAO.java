@@ -620,6 +620,81 @@ public class AdminEmpDAO {
 		return list;
 	}
 	
+	// 사원 상세조회
+	public EmpVO selectEmpOne(int empNo) {
+		EmpVO vo = null;
+		
+		sb.setLength(0);
+		sb.append("SELECT ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME, EMP_PW, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
+		
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
+		sb.append("CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM EMP E ");
+		sb.append("INNER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("WHERE E.EMP_NO = ? ");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String empPw = rs.getString("EMP_PW");
+				
+				String empName = rs.getString("EMP_NAME");
+				String empImage = rs.getString("EMP_IMAGE");
+				String cmpEmail = rs.getString("CMP_EMAIL");
+				String empEmail = rs.getString("EMP_EMAIL");
+				String cellphone = rs.getString("CELLPHONE");
+				
+				String hiredate = rs.getString("HIREDATE");
+				String quitdate = rs.getString("QUITDATE");
+				String birthdate = rs.getString("BIRTHDATE");
+				
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
+				
+				vo = new EmpVO();
+				
+				vo.setEmpNo(empNo);
+				vo.setEmpPw(empPw);
+				vo.setEmpName(empName);
+				vo.setEmpImage(empImage);
+				vo.setCmpEmail(cmpEmail);
+				vo.setEmpEmail(empEmail);
+				vo.setCellphone(cellphone);
+				vo.setHiredate(hiredate);
+				vo.setQuitdate(quitdate);
+				vo.setBirthdate(birthdate);
+				vo.setPosNo(posNo);
+				vo.setPosName(posName);
+				vo.setDeptNo(deptNo);
+				vo.setDeptName(deptName);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
 	public String getEmpKey() {
 		sb.setLength(0);
 		sb.append("SELECT fn_seq_no('EMP', YEAR(NOW()) ) AS SEQ_NO ");
@@ -670,7 +745,76 @@ public class AdminEmpDAO {
 		}
 		return rst;
 	}
+	
+	public int updateEmpOne(EmpVO vo) {
+		sb.setLength(0);
+		sb.append("UPDATE EMP SET ");
+		sb.append("EMP_NAME = ? ");
+		sb.append(", DEPT_NO = ? ");
+		sb.append(", POS_NO = ? ");
+		
+		if( vo.getHiredate() == null ) {
+			sb.append(", HIREDATE  = CURRENT_TIMESTAMP() ");
+		} else if(vo.getHiredate() != null && !vo.getHiredate().equals("")) {
+			sb.append(", HIREDATE  = STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s') ");
+		}
+		
+		if(vo.getQuitdate() == null ) {
+			sb.append(", QUITDATE = NULL ");
+		} else if(vo.getQuitdate() != null && !vo.getQuitdate().equals("") ) {
+			sb.append(", QUITDATE = STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s') ");
+		}
+		
+		sb.append("WHERE EMP_NO = ? " );
+		
+		int rst = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			int cnt = 3;
+			
+			pstmt.setString(1, vo.getEmpName());
+			pstmt.setInt(2, vo.getDeptNo());
+			pstmt.setInt(3, vo.getPosNo());
+			
+			if(vo.getHiredate() != null && !vo.getHiredate().equals("") )
+				pstmt.setString(++cnt, vo.getHiredate()+" 09");
+			if(vo.getQuitdate() != null && !vo.getQuitdate().equals("") )
+				pstmt.setString(++cnt, vo.getQuitdate()+" 09");
+			
+			pstmt.setInt(++cnt, vo.getEmpNo());
+			
+			rst = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
+	}
 
+	public int resetEmpPwOne(int empNo) {
+		int result = 0;
+		
+		sb.setLength(0);
+		sb.append("UPDATE EMP " );
+		sb.append("SET EMP_PW = ? " );
+		sb.append("WHERE EMP_NO = ? " );
+		try {
+			// 5. 문장 객체
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			pstmt.setInt(2, empNo);
+			
+			// 6. 실행
+			result = pstmt.executeUpdate();
+			System.out.println("disableEmpOne result : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public int disableEmpOne(int empNo) {
 		int result = 0;
 		

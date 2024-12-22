@@ -44,11 +44,14 @@ public class LoginDAO {
 		sb.append("FROM EMP ");
 		sb.append("WHERE EMP_NO = ? ");
 		sb.append("AND EMP_PW = ? ");
-		sb.append("AND QUITDATE IS NULL "); // 퇴사처리 안된 사람만 로그인 가능
+//		sb.append("AND QUITDATE IS NULL "); 
+		sb.append("AND ( QUITDATE IS NULL OR QUITDATE > current_timestamp() ) "); 
+		// 퇴사처리 안된 사람만 로그인 가능 + 퇴사일자 남았으면 가능
 		// 2024000
 		EmpVO vo = null;
 		
 		try {
+			System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, emp_no);
 			pstmt.setString(2, emp_pw);

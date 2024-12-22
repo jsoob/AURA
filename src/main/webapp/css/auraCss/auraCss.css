@@ -79,6 +79,12 @@
 .mg-bt-10 {
 	margin-bottom: 10px !important;
 }
+.mg-bt-20 {
+	margin-bottom: 20px !important;
+}
+.mg-bt-30 {
+	margin-bottom: 30px !important;
+}
 .mg-10 {
 	margin: 10px !important;
 }
@@ -124,6 +130,16 @@
 .wd-50 {
 	width: 50px !important;
 }
+
+/* 사원이미지 */
+.viewImg {
+	width: 100% !important;
+}
+
+/* 배경색 레드 */
+/* .bg-red {
+	background-color: #c80600 !important;
+} */
 
 /* 중간사이즈 모달 css */
 .middleMoalWd {

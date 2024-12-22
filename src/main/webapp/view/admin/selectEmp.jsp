@@ -109,6 +109,21 @@
 		
 	} // end loadBtn
 	
+	function modifyEmp(empNo) {
+		let form = document.createElement('form');
+	       
+	    let obj = document.createElement('input');
+	   	obj.setAttribute('type', 'hidden');
+	  	obj.setAttribute('name', 'empNo');
+	  	obj.setAttribute('value', empNo);
+	  	form.appendChild(obj);
+	  	
+	  	form.setAttribute('method', 'post');
+	  	form.setAttribute('action', 'admin?cmd=modifyEmp');
+	    document.body.appendChild(form);
+	    form.submit();
+	}
+	
 	function detailEmp(empNo) {
 		/* 
 		let form = document.querySelector("form");
@@ -131,9 +146,6 @@
 	}
 	
 	function disableEmp(empNo, empName) {
-		console.log("empNo = ", empNo);
-		console.log("empName = ", empName);
-		
 		Swal.fire({
 			   title: empName+' 사원을 퇴사처리 하겠습니까?',
 			   text: '다시 되돌릴 수 없습니다. 신중하세요.',
