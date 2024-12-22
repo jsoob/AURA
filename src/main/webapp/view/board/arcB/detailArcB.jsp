@@ -6,20 +6,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원번호에 따른 제목을 불러오는 jsp파일</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+<title>detailArcB.jsp</title>
+
+<!-- header 영역에서 첨부된 css 파일+js -->
+<jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
 </head>
 <body>
-	<h3>테스트테스트 사원번호제목 원투쓰리뽀</h3>
+	<!-- Start Left menu area -->
+	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
 
+	<!-- End Left menu area -->
+	<!-- Start Welcome area -->
+	<div class="all-content-wrapper">
+		<jsp:include page="/view/comm/header.jsp"></jsp:include>
+
+
+	<!-- 여기에서부터 시작 -->
+	
 	<%
 	
 		// 1. 파라미터 값 가져오기
@@ -46,8 +50,9 @@
 			System.out.println("내용 : " + vo.getArcContent());
 
 	%>
-	
-	<div>
+
+
+<div>
 		<table>
 			<tr>
 				<th>작성자</th>
@@ -84,5 +89,10 @@
 		}
 	%>
 
+
+		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+	</div>
+
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 </body>
 </html>

@@ -1,8 +1,8 @@
-package com.aura.www.action.board.archivesdao;
+package com.aura.www.dao;
 
 import java.util.ArrayList;
 
-import com.aura.www.action.board.archivesvo.ArchivesVO;
+import com.aura.www.vo.ArchivesVO;
 
 public class Testmain {
 	public static void main(String[] args) {

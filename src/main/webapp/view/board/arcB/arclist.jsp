@@ -4,27 +4,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실list.jsp</title>
+<title>자료실 조회</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 	crossorigin="anonymous"></script>
+<!-- header 영역에서 첨부된 css 파일+js -->
+<jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
-<style>
-	th {
-	
-	}
-
-</style>
 
 </head>
 <body>
+
+  <!-- Start Left menu area -->
+    <jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
+    
+    <!-- End Left menu area -->
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
+        <jsp:include page="/view/comm/header.jsp"></jsp:include>
+    
 
 	<div>
 		<h3>아직 부트스트랩 훔쳐오기 안했는데욥</h3>
 		<h2>자료실입니당</h2>
 
-		<a href="board.do?cmd=arcwrite"> <input
-			type="button" class="btn btn-outline-primary" value="글쓰기" /></a>
+		<a href="board.do?cmd=arcwrite"> <input type="button" class="btn btn-outline-primary" value="글쓰기" /></a>
 
 		<table class="table table-striped">
 			<tr>
@@ -77,6 +79,15 @@
 			</tr>
 
 		</table>
+		  <!-- 읽지 않은 알림 표시 -->
+                            <div class="panel-footer ib-ml-ft">
+                                <i class="fa fa-eye"> </i> 6 unread
+                            </div>
 	</div>
+	   <jsp:include page="/view/comm/footer.jsp"></jsp:include>
+    </div>
+	
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
+	
 </body>
 </html>
