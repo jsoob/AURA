@@ -752,6 +752,7 @@ public class AdminEmpDAO {
 		sb.append("EMP_NAME = ? ");
 		sb.append(", DEPT_NO = ? ");
 		sb.append(", POS_NO = ? ");
+		sb.append(", UPDATE_DATE  = CURRENT_TIMESTAMP() "); // 수정
 		
 		if( vo.getHiredate() == null ) {
 			sb.append(", HIREDATE  = CURRENT_TIMESTAMP() ");
@@ -799,6 +800,8 @@ public class AdminEmpDAO {
 		sb.setLength(0);
 		sb.append("UPDATE EMP " );
 		sb.append("SET EMP_PW = ? " );
+		sb.append(", UPDATE_DATE  = CURRENT_TIMESTAMP() "); // 수정
+		
 		sb.append("WHERE EMP_NO = ? " );
 		try {
 			// 5. 문장 객체
@@ -821,6 +824,7 @@ public class AdminEmpDAO {
 		sb.setLength(0);
 		sb.append("UPDATE EMP " );
 		sb.append("SET QUITDATE = CURRENT_TIMESTAMP() " );
+		sb.append(", UPDATE_DATE  = CURRENT_TIMESTAMP() "); // 수정
 		sb.append("WHERE EMP_NO = ? " );
 		try {
 			// 5. 문장 객체

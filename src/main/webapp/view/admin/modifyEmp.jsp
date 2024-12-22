@@ -233,7 +233,7 @@
 			                                        </div>
 			                                        <div class="col-lg-4 col-md-3 col-sm-8 col-xs-12">
 			                                        	<button type="button" id="resetPw" class="btn btn-danger bg-red" style="line-height: 26px;">
-			                                        		<i class="fa fa-times edu-danger-error" aria-hidden="true"></i> 비밀번호 초기화</button>
+			                                        		<i class="fa fa-cog" aria-hidden="true"></i> 비밀번호 초기화</button>
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -314,8 +314,14 @@
 	                           		</div> 
 	                           
 	                           		<div class="col-lg-3 col-sm-3 col-xs-3" style="height: 420px;">
-	                           			<div class="col-lg-12 text-center" style="line-height: 400px;">
+	                           			<div class="col-lg-12 text-center" style="line-height: 350px;">
                                         	<img class="mg-ht-10 viewImg" alt="사원이미지 없음" src="/aura/img/product/pro4.jpg"></a><!-- ${vo.empImage} -->
+                                        </div>
+	                           			<div class="col-lg-12 text-center">
+                                        	<button type="button" id="resetPw" class="btn btn-success" style="line-height: 26px;">
+			                                	<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
+                                        	<button type="button" id="resetPw" class="btn btn-danger bg-red" style="line-height: 26px;">
+			                                	<i class="fa fa-times" aria-hidden="true"></i> 사진 삭제</button>
                                         </div>
 	                           		</div>
 	                           		
