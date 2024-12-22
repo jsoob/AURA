@@ -66,8 +66,8 @@ public class SelectEmpActionAsync implements Action {
 		JSONObject pageObject = new JSONObject(page);
 		
 		JSONObject obj = new JSONObject();
-		obj.put("empList", jArr);
-		obj.put("pageObject", pageObject);
+		obj.put("empList", jArr); // 리스트
+		obj.put("pageObject", pageObject); // 페이징처리
 		
 		return obj.toJSONString(); // jArr.toJSONString(); // JSON -> Array
 	}

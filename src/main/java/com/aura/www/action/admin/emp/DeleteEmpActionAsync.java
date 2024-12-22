@@ -7,7 +7,7 @@ import com.aura.www.vo.EmpVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class deleteEmpActionAsync implements Action {
+public class DeleteEmpActionAsync implements Action {
 
 	@SuppressWarnings("unchecked")
 	@Override

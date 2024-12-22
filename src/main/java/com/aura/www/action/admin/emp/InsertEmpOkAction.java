@@ -29,9 +29,9 @@ public class InsertEmpOkAction implements Action {
 		        int posNo = Integer.parseInt(pNo);
 		        
 		        vo.setEmpNo(empNo);
-		        vo.setEmpPw(getKey);
+		        vo.setEmpPw(getKey); // 비번 초기값 사원번호
 		        vo.setEmpName(empName);
-		        vo.setCmpEmail(getKey+"@aura.com");
+		        vo.setCmpEmail(getKey+"@aura.com"); // 사내이메일 사원번호@aura.com
 		        vo.setPosNo(posNo);
 		        vo.setDeptNo(deptNo);
 			    if (hiredate != null && !hiredate.isEmpty()) vo.setHiredate(hiredate);

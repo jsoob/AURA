@@ -671,6 +671,27 @@ public class AdminEmpDAO {
 		return rst;
 	}
 
+	public int disableEmpOne(int empNo) {
+		int result = 0;
+		
+		sb.setLength(0);
+		sb.append("UPDATE EMP " );
+		sb.append("SET QUITDATE = CURRENT_TIMESTAMP() " );
+		sb.append("WHERE EMP_NO = ? " );
+		try {
+			// 5. 문장 객체
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			
+			// 6. 실행
+			result = pstmt.executeUpdate();
+			System.out.println("disableEmpOne result : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	public int deleteEmpOne(int empNo) {
 		int result = 0;
 		// 4. sql 문장

@@ -103,7 +103,7 @@ public class AdminController extends HttpServlet {
 		} else if (cmd.equals("insertEmp")) {
 			Action action = new InsertEmpAction();
 			url = action.execute(req, resp);
-		} else if (cmd.equals("insertEmpOk")) {
+		} else if (cmd.equals("insertEmpOk")) { // cmd가 insertEmpOk곳으로 등록액션 이동
 			Action action = new InsertEmpOkAction();
 			url = action.execute(req, resp);
 		}

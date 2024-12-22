@@ -36,7 +36,7 @@
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
             success: (data) => {
             	let empList = data.empList;
-				$("tr[name='empList']").empty();
+				$("tr[name='empList']").remove(); // .empty();
 				
 				$.each(empList, (idx, row) => {
 					// console.log(row);
@@ -60,9 +60,9 @@
 									+	"</button>"
 									+ "</a> "
 									
-									+ "<a onclick='deleteEmp("+ row.empNo+", \""+row.empName+"\");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='삭제'>"
-									+		"<i class='fa fa-trash-o' aria-hidden='true'></i>"
+									+ "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>" 
+									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>"
+									+		"<i class='fa fa-user-circle' aria-hidden='true'></i>"
 									+	"</button>"
 									+ "</a>"
 								 +"</td>"
@@ -72,7 +72,7 @@
 				});
 				
 				let pageObject = data.pageObject;
-				$("tr[name='empPages']").empty();
+				$("tr[name='empPages']").remove(); // .empty();
 				
 				let appendText = "";
 				appendText = '<tr name="empPages">'
@@ -92,62 +92,6 @@
 						+"</tr>";
 						
 				$("#selectTable").append(appendText);
-            },
-            error:function(request, err) {
-            	console.log("error");
-            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            },
-            complete: function () {
-            }
-            
-        });
-		
-	} // end loadBtn
-	
-	function old_loadBtn(){
-		let sendData = $("form[name=empForm]").serialize();
-		
-		$.ajax({
-            url:"adminasync", // AAdminController.java로 접근
-            type: "post",
-			data: sendData, // json 방식으로 서블릿에 보낼 데이터
-			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
-            success: (data) => {
-            	let rows = data;
-				$("tr[name='empList']").empty();
-				$.each(rows, (idx, row) => {
-					// console.log(row);
-					let appendText = "";
-					appendText = "<tr name='empList'>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empEmail +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ 
-								(row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined" ? "근무중" : row.quitdate) +"</a></td>";
-					
-					// 이 부분 해야함			
-					appendText += "<td class='text-center'>"
-									+ "<a onclick='modifyEmp("+ row.empNo +");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
-									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
-									+	"</button>"
-									+ "</a> "
-									
-									+ "<a onclick='deleteEmp("+ row.empNo+", \""+row.empName+"\");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='삭제'>"
-									+		"<i class='fa fa-trash-o' aria-hidden='true'></i>"
-									+	"</button>"
-									+ "</a>"
-								 +"</td>";
-								
-					appendText +="</tr>";
-					
-					$("#selectTable").append(appendText);
-				});
             },
             error:function(request, err) {
             	console.log("error");
@@ -181,32 +125,51 @@
 	    form.submit();
 	}
 	
-	function deleteEmp(empNo, empName) {
+	function disableEmp(empNo, empName) {
 		console.log("empNo = ", empNo);
 		console.log("empName = ", empName);
 		
 		Swal.fire({
-			   title: empName+' 사원을 삭제하시겠습니까?',
+			   title: empName+' 사원을 퇴사처리 하겠습니까?',
 			   text: '다시 되돌릴 수 없습니다. 신중하세요.',
 			   icon: 'error',
 			   
 			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
 			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
 			   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
-			   confirmButtonText: '삭제', // confirm 버튼 텍스트 지정
+			   confirmButtonText: '처리', // confirm 버튼 텍스트 지정
 			   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
-			   
-			   reverseButtons: false, // 버튼 순서 거꾸로 
-			   
+			   reverseButtons: false, // 버튼 순서 거꾸로
 			}).then(result => {
 			   // 만약 Promise리턴을 받으면,
 			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
-				   // ajax 문제
+					$.ajax({
+			        	url:"adminasync", // AAdminController.java로 접근
+			            type: "post",
+						data: { 
+							"cmd" : "disableEmp", 
+							"empNo" : empNo
+						}, // json 방식으로 서블릿에 보낼 데이터
+						dataType: 'json', // json 타입으로 풀어줌
+			            success: (data) => {
+			            	let status = data.deleteStatus; // data에 deleteStatus json객체 꺼내기
+			            	if(status == 1) { // 1이면 퇴사완료
+				            	Swal.fire('퇴사처리 완료되었습니다.', '', 'success');
+			            	}
+			            },
+			            error:function(request, err) {
+			            	console.log("error");
+			            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			            },
+			            complete: function () { // 일단 완료되면 다시 조회
+							loadBtn();
+			            }
+			        });
 				   /* 
 				   $.ajax({
 			            url:"adminasync", 
 			            type: "post",
-						data: { "cmd", "deleteEmp", "empNo" : empNo }, // json 방식으로 서블릿에 보낼 데이터
+						data: { "cmd", "disableEmp", "empNo" : empNo }, // json 방식으로 서블릿에 보낼 데이터
 			            success: (data) => {
 			            	console.log("data = ", data);
 			            	Swal.fire('삭제가 완료되었습니다.', '', 'success');
@@ -216,8 +179,6 @@
 			    */
 			   }
 			});
-		
-		 
 		/* 
 		let form = document.createElement('form');
 	    
@@ -228,11 +189,67 @@
 	  	form.appendChild(obj);
 	  	
 	  	form.setAttribute('method', 'post');
-	  	form.setAttribute('action', 'admin?cmd=deleteEmp');
+	  	form.setAttribute('action', 'admin?cmd=disableEmp');
 	    document.body.appendChild(form);
 	    form.submit();
 	     */
 	}
+	
+	function old_loadBtn(){
+		let sendData = $("form[name=empForm]").serialize();
+		
+		$.ajax({
+            url:"adminasync", // AAdminController.java로 접근
+            type: "post",
+			data: sendData, // json 방식으로 서블릿에 보낼 데이터
+			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
+            success: (data) => {
+            	let rows = data;
+				$("tr[name='empList']").remove(); // .empty();
+				$.each(rows, (idx, row) => {
+					// console.log(row);
+					let appendText = "";
+					appendText = "<tr name='empList'>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empEmail +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ 
+								(row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined" ? "근무중" : row.quitdate) +"</a></td>";
+					
+					// 이 부분 해야함			
+					appendText += "<td class='text-center'>"
+									+ "<a onclick='modifyEmp("+ row.empNo +");'>" 
+									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
+									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
+									+	"</button>"
+									+ "</a> "
+									
+									+ "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>" 
+									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>"
+									+		"<i class='fa fa-user-circle' aria-hidden='true'></i>"
+									+	"</button>"
+									+ "</a>"
+								 +"</td>";
+								
+					appendText +="</tr>";
+					
+					$("#selectTable").append(appendText);
+				});
+            },
+            error:function(request, err) {
+            	console.log("error");
+            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            complete: function () {
+            }
+            
+        });
+		
+	} // end loadBtn
 	
 </script>
 
@@ -343,7 +360,7 @@
 										<th style="width: 10%; min-width: 100px;">외부이메일</th>
 										<th style="width: 8%; min-width: 65px;">입사일자</th>
 										<th style="width: 8%; min-width: 65px;">퇴사일자</th>
-										<th style="width: 8%; min-width: 100px;" class="text-center">Setting</th>
+										<th style="width: 8%; min-width: 100px;" class="text-center">수정/퇴사처리</th> <!-- Setting -->
                                     </tr>
                                     <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
                                 	<%-- 테이블 값 --%>
@@ -364,9 +381,25 @@
 														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 													</button>
 												</a>
-												<a onclick="deleteEmp(${vo.empNo}, '${vo.empName}');"> <%-- href="admin?cmd=deleteEmp&empNo=${vo.empNo}" --%>
-													<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="삭제">
-														<i class="fa fa-trash-o" aria-hidden="true"></i>
+												
+												
+												<%-- href="admin?cmd=disableEmp&empNo=${vo.empNo}" --%>
+											<%-- <c:choose>
+												<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
+												</c:when>
+												<c:otherwise>
+												</c:otherwise>
+											</c:choose> --%>
+												<a onclick="disableEmp(${vo.empNo}, '${vo.empName}');"> 
+													<c:choose>
+														<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
+															<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
+														</c:when>
+														<c:otherwise>
+															<button disabled="disabled" data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
+														</c:otherwise>
+												</c:choose>
+														<i class="fa fa-user-circle" aria-hidden="true"></i> <%-- fa fa-trash-o --%>
 													</button>
 												</a>
 											</td>

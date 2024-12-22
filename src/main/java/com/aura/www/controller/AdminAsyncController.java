@@ -12,7 +12,8 @@ import org.json.simple.parser.ParseException;
 import com.aura.www.action.Action;
 import com.aura.www.action.admin.dept.SelectDeptActionAsync;
 import com.aura.www.action.admin.emp.SelectEmpActionAsync;
-import com.aura.www.action.admin.emp.deleteEmpActionAsync;
+import com.aura.www.action.admin.emp.DeleteEmpActionAsync;
+import com.aura.www.action.admin.emp.DisableEmpActionAsync;
 import com.aura.www.action.admin.position.SelectPosActionAsync;
 import com.aura.www.vo.EmpVO;
 
@@ -54,18 +55,18 @@ public class AdminAsyncController extends HttpServlet {
 			Action action = new SelectPosActionAsync();
 			tArr = action.execute(req, resp);
 		}
-//		else if (cmd.equals("deleteEmp")) {
-//			Action action = new deleteEmpActionAsync();
-//			tArr = action.execute(req, resp);
-//		}
+		else if (cmd.equals("disableEmp")) {
+			Action action = new DisableEmpActionAsync();
+			tArr = action.execute(req, resp);
+		}
 		
 		if(cmd!=null) {
 			// 페이징 방식때문에 jsonObject로 받아한다.
-			if(cmd.equals("selectEmp")) {
+			if(cmd.equals("selectEmp") || cmd.equals("disableEmp")) {
 				try {
 					JSONObject jsonObj = (JSONObject) jsonParser.parse(tArr);
 
-					resp.getWriter().print(jsonObj.toJSONString());
+					resp.getWriter().print(jsonObj.toJSONString()); // 값 보내기
 					resp.setContentType("application/json; charset=UTF-8");
 				} catch (ParseException e) {
 					e.printStackTrace();

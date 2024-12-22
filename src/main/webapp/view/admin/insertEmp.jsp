@@ -86,6 +86,7 @@
 	    });
 	}
 	
+	// 여기서 모달값 선택시 모달 닫기 + value 넣어주기
 	function addDept(no, name) {
 		$("input[name='deptNo']").val(no);
 		$("input[name='deptName']").val(name);
@@ -126,7 +127,7 @@
 		if(posNo.length == 0 ) {
 			Swal.fire({
 			  title: "미입력",
-			  text: "직읍을 선택해 주세요.",
+			  text: "직급을 선택해 주세요.",
 			  icon: "warning", 
 			  button: "확인",
 			});

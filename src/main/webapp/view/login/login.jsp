@@ -24,6 +24,7 @@
 			
 			if(empno.length > 0 && psswd.length > 0 ) {
 				// location.href = "login?cmd=loginOk"; 
+				// 이렇게 보내고 있어요 성공하면 main 화면 / 실패시 다시 login 화면 이동
 	            let form = document.querySelector("form");
 			 	form.action="login";
 			 	form.method ="post";

@@ -44,6 +44,7 @@ public class LoginDAO {
 		sb.append("FROM EMP ");
 		sb.append("WHERE EMP_NO = ? ");
 		sb.append("AND EMP_PW = ? ");
+		sb.append("AND QUITDATE IS NULL "); // 퇴사처리 안된 사람만 로그인 가능
 		// 2024000
 		EmpVO vo = null;
 		
