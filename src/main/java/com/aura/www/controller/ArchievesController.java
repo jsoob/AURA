@@ -3,12 +3,12 @@ package com.aura.www.controller;
 import java.io.IOException;
 
 import com.aura.www.action.Action;
-import com.aura.www.action.board.archivesboard.DeleteArcBAction;
-import com.aura.www.action.board.archivesboard.DetailArcBAction;
-import com.aura.www.action.board.archivesboard.ModifyArcBAction;
-import com.aura.www.action.board.archivesboard.ModifyArcOkAction;
-import com.aura.www.action.board.archivesboard.SelectArcBAction;
-import com.aura.www.action.board.archivesboard.WriteArcBAction;
+import com.aura.www.action.board.archives.DeleteArcBAction;
+import com.aura.www.action.board.archives.DetailArcBAction;
+import com.aura.www.action.board.archives.ModifyArcBAction;
+import com.aura.www.action.board.archives.ModifyArcOkAction;
+import com.aura.www.action.board.archives.SelectArcBAction;
+import com.aura.www.action.board.archives.WriteArcBAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

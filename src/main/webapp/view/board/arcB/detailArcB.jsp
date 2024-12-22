@@ -1,5 +1,5 @@
-<%@page import="com.aura.www.vo.ArchivesVO"%>
-<%@page import="com.aura.www.dao.ArchivesDAO"%>
+<%@page import="com.aura.www.vo.archives.ArchivesVO"%>
+<%@page import="com.aura.www.dao.archives.ArchivesDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>

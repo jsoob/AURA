@@ -1,8 +1,8 @@
-package com.aura.www.action.board.archivesboard;
+package com.aura.www.action.board.archives;
 
 import com.aura.www.action.Action;
-import com.aura.www.dao.ArchivesDAO;
-import com.aura.www.vo.ArchivesVO;
+import com.aura.www.dao.archives.ArchivesDAO;
+import com.aura.www.vo.archives.ArchivesVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

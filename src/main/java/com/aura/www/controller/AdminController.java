@@ -3,7 +3,7 @@ package com.aura.www.controller;
 import java.io.IOException;
 
 import com.aura.www.action.Action;
-import com.aura.www.action.board.archivesboard.SelectArcBAction;
+import com.aura.www.action.board.archives.SelectArcBAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

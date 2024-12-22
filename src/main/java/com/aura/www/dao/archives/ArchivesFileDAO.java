@@ -1,4 +1,4 @@
-package com.aura.www.dao;
+package com.aura.www.dao.archives;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.aura.www.vo.ArchivesFileVO;
+import com.aura.www.vo.archives.ArchivesFileVO;
 
 public class ArchivesFileDAO {
 

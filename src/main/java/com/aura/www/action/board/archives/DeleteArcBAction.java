@@ -1,25 +1,24 @@
-package com.aura.www.action.board.archivesboard;
+package com.aura.www.action.board.archives;
 
 import com.aura.www.action.Action;
-import com.aura.www.dao.ArchivesDAO;
-import com.aura.www.vo.ArchivesVO;
+import com.aura.www.dao.archives.ArchivesDAO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class ModifyArcBAction implements Action {
+public class DeleteArcBAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		
+
 		String b = req.getParameter("arcNo");
-		if(b != null) {
-			// 형변환
+		// b가 null이 아니라면?
+		if (b != null) {
 			int arcNo = Integer.parseInt(b);
 			ArchivesDAO dao = new ArchivesDAO();
-			ArchivesVO vo = dao.selectOne(arcNo);
-			req.setAttribute("vo", vo);
-		}		
-		return "view/board/arcB/modifyArcB.jsp";
+			dao.deleteOne(arcNo);
+			
+		}
+		return "archives?cmd=list";
 	}
 }

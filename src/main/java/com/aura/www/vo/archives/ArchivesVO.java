@@ -1,4 +1,4 @@
-package com.aura.www.vo;
+package com.aura.www.vo.archives;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

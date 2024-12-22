@@ -1,6 +1,8 @@
 
 package com.aura.www.vo;
 
+import com.aura.www.vo.archives.ArchivesVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
