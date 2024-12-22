@@ -23,10 +23,26 @@
         box-sizing: border-box;
 
 }
+#comments {
+	width: 100%;
+        min-height: 50px;
+        max-height: 300px;
+        padding: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+        box-sizing: border-box;
+}
 </style>
 <script>
 
 $(()=>{
+	
+	window.setInterval(loadComment, 100);
+	
+	// 댓글달기 누르면 해당 내용이 디비에 저장되게 함
 	$("#submitComment").on("click",()=>{
 		const comment = $("#commentArea").val().trim(); 
 		const postId = '${vo.freeBNo}';
@@ -45,13 +61,34 @@ $(()=>{
 			success:function(data){
 				alert('댓글이 등록되었습니다!');
                 $('#commentArea').val(''); // 입력창 초기화
-               
+               	
+                // loadComment 잘되면 여기에 추가해야함
 			}
 			
 		});
 	})
 	
-	
+	// 댓글 불러오기
+	function loadComment(){
+		$.ajax({
+			type:"post",
+			url : "/aura/comment",
+			data:{
+				freeBNo:${vo.freeBNo},
+                cmd:"selectCmnt",
+            },
+			success:function(data){
+				// 댓글 리스트 초기화
+				$('.commentList').html('');
+
+				let commentList = data;
+				commentList.forEach((comment) => {
+					 let commentHtml = "<div id='comments'>"+"<label>"+"작성자 : " + comment.userId+"</label><br>"+comment.createDate+"<br>"+comment.content;
+					 $(".commentList").append(commentHtml);
+				});
+			}
+		});	
+	}
 })
 
 
@@ -98,11 +135,12 @@ $(()=>{
 
 								<tr>
 									<td colspan="6"><a href="freeboard?cmd=selectFreeB"
-										class="btn btn-outline-primary">목록</a> <a
-										href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}"
-										class="btn btn-outline-warning">수정</a> <a
-										href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}"
-										class="btn btn-outline-danger">삭제</a></td>
+										class="btn btn-outline-primary">목록</a>
+										<c:if test="${loginEmp.getEmpNo() == vo.freeBCrtr}">
+											<a href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}" class="btn btn-outline-warning">수정</a>
+											<a href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}" class="btn btn-outline-danger">삭제</a>
+										</c:if>
+									</td>
 								</tr>
 
 							</table>
@@ -114,15 +152,19 @@ $(()=>{
 							    <input type="button" class="btn" value="댓글달기" id="submitComment" />
 							</div>
 							
+							
 							<div class="commentList">
+							
 							<!-- 여기에 댓글이 추가되게 해야함 -->
 							
 						</div>
 					</div>
+					
+				</div>
 				</div>
 			</div>
-		</div>
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+		
 	</div>
 
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>

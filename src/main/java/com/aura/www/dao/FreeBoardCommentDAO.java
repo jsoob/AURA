@@ -44,6 +44,7 @@ public class FreeBoardCommentDAO {
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, freeBNo);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -63,12 +64,31 @@ public class FreeBoardCommentDAO {
 		return list;
 	}
 
+	// 총 댓글 수 구하는 메서드
+	public int getTotalCount() {
+		sb.setLength(0);
+		sb.append("SELECT COUNT(*) CNT ");
+		sb.append("FROM FREEBCOMMENT ");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			rs = pstmt.executeQuery();
+
+			rs.next();
+			result = rs.getInt("CNT");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	// 댓글 작성
 	// 시퀀스 적용해야함
 	public void insertComment(FreeBoardCommentVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBCOMMENT ");
-		sb.append("VALUES(6, ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)"); //VALUES(NEXTVAL('FBCOMNTNO')
+		sb.append("VALUES(7, ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)"); //VALUES(NEXTVAL('FBCOMNTNO')
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
