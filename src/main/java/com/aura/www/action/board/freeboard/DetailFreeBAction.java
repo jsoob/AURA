@@ -4,10 +4,12 @@ import java.util.HashMap;
 
 import com.aura.www.action.Action;
 import com.aura.www.dao.FreeBoardDAO;
+import com.aura.www.vo.EmpVO;
 import com.aura.www.vo.FreeBoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class DetailFreeBAction implements Action {
 
@@ -22,8 +24,10 @@ public class DetailFreeBAction implements Action {
 			dao.raiseView(freeBNo);
 			FreeBoardVO vo = dao.selectOne(freeBNo);
 			req.setAttribute("vo", vo);
-			System.out.println(vo.toString());
+			
 		}
+		
+		
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 

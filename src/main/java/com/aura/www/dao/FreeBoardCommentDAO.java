@@ -40,6 +40,7 @@ public class FreeBoardCommentDAO {
 		sb.append("SELECT FBCMNT_NO, FBCMNT_CONTENT, CREATE_DATE, UPDATE_DATE, EMP_NO, FREEB_NO ");
 		sb.append("FROM FREEBCOMMENT ");
 		sb.append("WHERE FREEB_NO = ? ");
+		sb.append("ORDER BY CREATE_DATE DESC");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -67,7 +68,7 @@ public class FreeBoardCommentDAO {
 	public void insertComment(FreeBoardCommentVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBCOMMENT ");
-		sb.append("VALUES(NEXTVAL('FBCOMNTNO'), ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)");
+		sb.append("VALUES(6, ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)"); //VALUES(NEXTVAL('FBCOMNTNO')
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());

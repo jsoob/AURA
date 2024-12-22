@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,54 @@
 <title>${commAt["title"]}</title>
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+<style>
+#commentArea {
+
+        width: 100%;
+        min-height: 50px;
+        max-height: 300px;
+        padding: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+        box-sizing: border-box;
+
+}
+</style>
+<script>
+
+$(()=>{
+	$("#submitComment").on("click",()=>{
+		const comment = $("#commentArea").val().trim(); 
+		const postId = '${vo.freeBNo}';
+		const userId = '${loginEmp.getEmpNo()}';
+
+		$.ajax({
+			type:"post", // GET, POST
+			async:true, // 비동기화 true, 동기화 false
+			url : "/aura/comment", // 찾아갈 url
+			data:{
+                postId: postId,
+                userId: userId,
+                comment: comment,
+                cmd:"insertCmnt",
+            },
+			success:function(data){
+				alert('댓글이 등록되었습니다!');
+                $('#commentArea').val(''); // 입력창 초기화
+               
+			}
+			
+		});
+	})
+	
+	
+})
+
+
+</script>
 
 </head>
 <body>
@@ -44,7 +93,7 @@
 
 								<tr>
 									<th>내용</th>
-									<td colspan="5" rowspan="5">${vo.freeBContent}</td>
+									<td colspan="5">${vo.freeBContent}</td>
 								</tr>
 
 								<tr>
@@ -57,6 +106,17 @@
 								</tr>
 
 							</table>
+							
+							<hr />
+							<label>작성자 : ${loginEmp.getEmpNo()}</label>
+							<textarea id="commentArea" placeholder="댓글을 입력하세요"></textarea>
+							<div class="text-right">
+							    <input type="button" class="btn" value="댓글달기" id="submitComment" />
+							</div>
+							
+							<div class="commentList">
+							<!-- 여기에 댓글이 추가되게 해야함 -->
+							
 						</div>
 					</div>
 				</div>
