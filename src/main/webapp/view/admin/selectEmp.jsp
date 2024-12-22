@@ -58,11 +58,16 @@
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
 									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
 									+	"</button>"
-									+ "</a> "
-									
-									+ "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>"
-									+		"<i class='fa fa-user-circle' aria-hidden='true'></i>"
+									+ "</a> ";
+								
+								appendText += "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>";
+							
+								if( (row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined") ) {
+									appendText += "<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
+								} else {
+									appendText += "<button disabled='disabled' data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
+								}
+								appendText += "<i class='fa fa-user-circle' aria-hidden='true'></i>"
 									+	"</button>"
 									+ "</a>"
 								 +"</td>"
@@ -95,7 +100,7 @@
             },
             error:function(request, err) {
             	console.log("error");
-            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
             complete: function () {
             }
@@ -159,7 +164,7 @@
 			            },
 			            error:function(request, err) {
 			            	console.log("error");
-			            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			            },
 			            complete: function () { // 일단 완료되면 다시 조회
 							loadBtn();
@@ -226,23 +231,27 @@
 									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
 									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
 									+	"</button>"
-									+ "</a> "
+									+ "</a> ";
 									
-									+ "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>"
-									+		"<i class='fa fa-user-circle' aria-hidden='true'></i>"
+								appendText += "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>";
+								
+								if( (row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined") ) {
+									appendText += "<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
+								} else {
+									appendText += "<button disabled='disabled' data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
+								}
+								appendText += "<i class='fa fa-user-circle' aria-hidden='true'></i>"
 									+	"</button>"
 									+ "</a>"
-								 +"</td>";
-								
-					appendText +="</tr>";
+								 +"</td>"
+								+"</tr>";
 					
 					$("#selectTable").append(appendText);
 				});
             },
             error:function(request, err) {
             	console.log("error");
-            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             },
             complete: function () {
             }
