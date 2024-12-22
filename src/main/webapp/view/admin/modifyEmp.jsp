@@ -56,16 +56,13 @@
 					}, // json 방식으로 서블릿에 보낼 데이터
 					dataType: 'json', // json 타입으로 풀어줌
 		            success: (data) => {
-		            	let status = data.deleteStatus; // data에 deleteStatus json객체 꺼내기
+		            	let status = data.resetPwStatus; // data에 resetPwStatus json객체 꺼내기
 		            	if(status == 1) { // 1이면 퇴사완료
 			            	Swal.fire('비밀번호 초기화가 완료되었습니다.', '', 'success');
 		            	}
 		            },
 		            error:function(request, err) {
 		            	console.log("error");
-		            },
-		            complete: function () { // 일단 완료되면 다시 조회
-						loadBtn();
 		            }
 		        });
 		   }
