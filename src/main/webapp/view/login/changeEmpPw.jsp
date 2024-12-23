@@ -12,8 +12,6 @@
 	$( ()=> {
 		let cnt = 0;
 		
-		$("#btnSend").data("authCode", ${authCode});
-		
 		$("#btnSend").on("click", ()=> {
 			let code = ($("#code").val()).trim();
 			cnt++;
@@ -67,21 +65,11 @@
 			            	}
 		            	}
 			        });
-				/* 
-				} else {
-					Swal.fire({
-          			  title: "Error",
-          			  text: "인증번호 양식이 맞지 않습니다. 메일을 다시 확인해 주세요.",
-          			  icon: "warning", 
-          			  button: "확인",
-          			});
-				}
-				 */
 			} else {
 				Swal.fire({
-					title : 'Error',         // Alert 제목
-					text : '인증번호를 입력해 주세요.',  // Alert 내용
-					icon : 'error',                         // Alert 타입
+					title : 'Error', 
+					text : '인증번호를 입력해 주세요.', 
+					icon : 'error', 
 				});
 			}
 		});
@@ -93,21 +81,23 @@
 	<div class="error-pagewrap">
 		<div class="error-page-int">
 			<div class="text-center ps-recovered">
-				<h3>사원 비밀번호 복구 인증번호 입력</h3>
-				<p>비밀번호를 복구하려면 양식을 작성해 주세요.</p>
+				<h3>사원 비밀번호 변경</h3>
+				<p>비밀번호를 변경하려면 양식을 작성해 주세요.</p>
 			</div>
 			<div class="content-error">
 				<div class="hpanel">
                     <div class="panel-body poss-recover">
                         <p>
-                            해당 이메일로 인증번호가 발송됐습니다. 이메일 인증번호를 입력하세요.
-                            <span id="msg" style="color: red;"></span>
+                            변경할 비밀번호를 입력하세요.
                         </p>
                         <div>
                             <div class="form-group">
-                                <label class="control-label" for="code">인증번호</label>
+                                <label class="control-label" for="code">비밀번호 변경</label>
                                 <input type="text" id="code" name="code" class="form-control">
-                                <span class="help-block small"> 메일 인증번호</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="code">비밀번호 재확인</label>
+                                <input type="text" id="code" name="code" class="form-control">
                             </div>
                             <button id="btnSend" class="btn btn-success btn-block">확인</button>
                         </div>

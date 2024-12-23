@@ -35,6 +35,13 @@
 		          			  icon: "warning", // "success",
 		          			  button: "확인",
 		          			});
+			            } else if(status == 2) {
+		            		Swal.fire({
+			          			  title: "이메일 조회 불가",
+			          			  text: "이메일 정보가 없습니다. 관리자에게 문의하세요.",
+			          			  icon: "warning", // "success",
+			          			  button: "확인",
+			          			});
 			            } else if(status == 3) {
 		            		Swal.fire({
 		          			  title: "Error",

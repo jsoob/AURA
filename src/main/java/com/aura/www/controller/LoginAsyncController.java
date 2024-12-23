@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import com.aura.www.action.Action;
 import com.aura.www.action.login.FindEmailEmpActionAsync;
+import com.aura.www.action.login.FindEmailEmpOkActionAsync;
 import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.ServletException;
@@ -38,8 +39,10 @@ public class LoginAsyncController extends HttpServlet {
 		
 		// 사원 관리
 		else if (cmd.equals("findEmailEmp")) {
-			ArrayList<EmpVO> list = null;
 			Action action = new FindEmailEmpActionAsync();
+			tArr = action.execute(req, resp);
+		} else if (cmd.equals("findEmailEmpOk")) {
+			Action action = new FindEmailEmpOkActionAsync();
 			tArr = action.execute(req, resp);
 		}
 		

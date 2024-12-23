@@ -2,6 +2,8 @@ package com.aura.www.filter;
 
 import java.io.IOException;
 
+import org.apache.tomcat.jakartaee.commons.lang3.StringUtils;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -26,29 +28,39 @@ public class AuthenticationFilter implements Filter {
 		String getURL = (httpRequest.getRequestURL()).toString();
 //		System.out.println("getURL = " + getURL);
 		
-		boolean rst = getURL.contains("/login");
-		boolean rst2 = getURL.contains("/aura/css/"); // auraCss/
-		boolean rst3 = getURL.contains("/aura/view/"); // auraCss/
+		boolean rst = getURL.contains("/aura/");
+		boolean rst2 = getURL.contains("/aura/login");
+		// getURL.contains("/aura/css/") || getURL.contains("/aura/js/") || getURL.contains("/aura/img/")
+		
 //		System.out.println("rst = " + rst);
 //		System.out.println("rst2 = " + rst2);
 		
-		// 로그인 페이지의 URL
-		String loginURI = httpRequest.getContextPath()+"/login"; // ?cmd=loginForm
-		// System.out.println("loginURI = " + loginURI);
-		
-		// System.out.println("loginEmp = " + session.getAttribute("loginEmp"));
-		
 		// css는 안타게
 		if(  session.isNew() || (session.getAttribute("loginEmp") == null)) {
-//			if ( rst2 ) {
-//				System.out.println("if ( rst2 )");
-//			} 
-			if ( !rst3 ) {
-			} 
-			else if(!rst) {
-				System.out.println("로그인창 이동");
-				httpResponse.sendRedirect(loginURI); // 로그인 창으로 새로 이동
-				return;
+			if ( !rst ) {
+			
+			} else if(!rst2) {
+				String[] urlArr = {
+						"/aura/css/", 
+						"/aura/fonts/", 
+						"/aura/img/", 
+						"/aura/js/", 
+						"/aura/comm/"
+//						, "/aura/loginasync"
+				};
+				boolean  rst3 = StringUtils.containsAny(getURL, urlArr);
+				if( rst3 ) {
+					
+				} else {
+					System.out.println("로그인창 이동");
+					// 로그인 페이지의 URL
+					String loginURI = httpRequest.getContextPath()+"/login"; // ?cmd=loginForm
+					// System.out.println("loginURI = " + loginURI);
+					
+					// System.out.println("loginEmp = " + session.getAttribute("loginEmp"));
+					httpResponse.sendRedirect(loginURI); // 로그인 창으로 새로 이동
+					return;
+				}
 			}
 		}
 		chain.doFilter(httpRequest, httpResponse);

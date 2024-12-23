@@ -21,6 +21,8 @@ public class FindEmailEmpActionAsync implements Action {
 		EmpVO vo = null;
 		int status = 0;
 		
+		JSONObject obj = new JSONObject();
+		
 		// select 조건문
 		String eNo = req.getParameter("empNo");
 		
@@ -34,15 +36,19 @@ public class FindEmailEmpActionAsync implements Action {
 				
 				vo = dao.getEmailEmp(empNo); // 전체수
 				if(vo != null) {
-					status = 1;
+					String email = vo.getEmpEmail();
+					// System.out.println("email = " + email);
+					if( email == null ) {
+						status = 2;
+					} else {
+						status = 1;
+						obj.put("getEmailEmp", vo_to_json(vo));
+					}
 				}
 			} catch (NumberFormatException e) {
 				status = 3;
 			}
 		}
-		
-		JSONObject obj = new JSONObject();
-		obj.put("getEmailEmp", vo_to_json(vo));
 		obj.put("status", status);
 		
 		return obj.toJSONString(); // jArr.toJSONString(); // JSON -> Array

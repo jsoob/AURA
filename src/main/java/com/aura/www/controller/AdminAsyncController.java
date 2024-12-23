@@ -44,7 +44,6 @@ public class AdminAsyncController extends HttpServlet {
 		
 		// 사원 관리
 		else if (cmd.equals("selectEmp")) {
-			ArrayList<EmpVO> list = null;
 			Action action = new SelectEmpActionAsync();
 			tArr = action.execute(req, resp);
 //			JSONObject jObj = new JSONObject();

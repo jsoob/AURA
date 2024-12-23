@@ -3,6 +3,7 @@ package com.aura.www.controller;
 import java.io.IOException;
 
 import com.aura.www.action.Action;
+import com.aura.www.action.login.ChangeEmpPwAction;
 import com.aura.www.action.login.GetPassAction;
 import com.aura.www.action.login.LoginFormAction;
 import com.aura.www.action.login.LoginOkAction;
@@ -37,6 +38,9 @@ public class LoginController extends HttpServlet {
           url = bc.execute(req, resp);
       } else if (cmd.equals("sendEmail")) {
     	  Action bc = new SendEmailAction();
+          url = bc.execute(req, resp);
+      } else if (cmd.equals("changeEmpPw")) {
+    	  Action bc = new ChangeEmpPwAction();
           url = bc.execute(req, resp);
       }
       
