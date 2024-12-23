@@ -66,28 +66,34 @@ public class AdminAsyncController extends HttpServlet {
 		}
 		
 		if(cmd!=null) {
-			// 페이징 방식때문에 jsonObject로 받아한다.
-			if(cmd.equals("selectEmp") || cmd.equals("disableEmp") || cmd.equals("resetPwEmp")) {
-				try {
-					JSONObject jsonObj = (JSONObject) jsonParser.parse(tArr);
-
-					resp.getWriter().print(jsonObj.toJSONString()); // 값 보내기
-					resp.setContentType("application/json; charset=UTF-8");
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					// JSON 변환
-					jArr = (JSONArray) jsonParser.parse(tArr);
-					
-					resp.getWriter().print(jArr.toJSONString());
-					resp.setContentType("application/json; charset=UTF-8");
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			}
+			resp.getWriter().print(tArr); // 값 보내기
+			resp.setContentType("application/json; charset=UTF-8");
 		}
+		
+//		if(cmd!=null) {
+//			// 페이징 방식때문에 jsonObject로 받아한다.
+//			if(cmd.equals("selectEmp") || cmd.equals("disableEmp") || cmd.equals("resetPwEmp")) {
+//				try {
+//					JSONObject jsonObj = (JSONObject) jsonParser.parse(tArr);
+//
+//					resp.getWriter().print(jsonObj.toJSONString()); // 값 보내기
+//					resp.setContentType("application/json; charset=UTF-8");
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+//			} else {
+//				try {
+//					// JSON 변환
+//					jArr = (JSONArray) jsonParser.parse(tArr);
+//					
+//					resp.getWriter().print(jArr.toJSONString());
+//					resp.setContentType("application/json; charset=UTF-8");
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+		
 		// resp.setContentType("application/x-json; charset=utf-8");
 		// resp.setContentType("text/html; charset=UTF-8");
 		

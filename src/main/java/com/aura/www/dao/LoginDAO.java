@@ -97,4 +97,35 @@ public class LoginDAO {
 		return vo;
 	}
 	
+	public EmpVO getEmailEmp(int empNo) {
+		EmpVO vo = null;
+		
+		sb.setLength(0);
+		sb.append("SELECT EMP_NO, EMP_NAME, EMP_EMAIL " );
+		sb.append("FROM EMP " );
+		sb.append("WHERE EMP_NO = ? ");
+		sb.append("AND ( QUITDATE IS NULL OR QUITDATE > current_timestamp() ) ");
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new EmpVO();
+				
+				String empName = rs.getString("EMP_NAME");
+				String empEmail = rs.getString("EMP_EMAIL");
+				
+				vo.setEmpNo(empNo);
+				vo.setEmpName(empName);
+				vo.setEmpEmail(empEmail);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
 }

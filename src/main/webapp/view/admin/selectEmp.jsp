@@ -8,12 +8,10 @@
 <title>${commAt["title"]}</title>
 <%-- header 영역에서 첨부된 css 파일+js --%>
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
-<!-- error msg -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script type="text/javascript">
 	$( ()=> {
+		loadBtn();
 		
 		$("#loadBtn").on("click", ()=> {
 			loadBtn();
@@ -372,62 +370,66 @@
                             <div class="asset-inner">
                                 <table id="selectTable">
                                 	<%-- 테이블 컬럼 --%>
-                                    <tr>
-                                        <th style="width: 7%; min-width: 65px;">부서명</th>
-										<th style="width: 5%; min-width: 65px;">사원번호</th>
-										<th style="width: 10%; min-width: 100px;">사원명</th>
-										<th style="width: 8%; min-width: 100px;">사원 이미지</th>
-										<th style="width: 5%; min-width: 65px;">직급</th>
-										<th style="width: 10%; min-width: 100px;">외부이메일</th>
-										<th style="width: 8%; min-width: 65px;">입사일자</th>
-										<th style="width: 8%; min-width: 65px;">퇴사일자</th>
-										<th style="width: 8%; min-width: 100px;" class="text-center">수정/퇴사처리</th> <!-- Setting -->
-                                    </tr>
+                                	<thead>
+	                                    <tr>
+	                                        <th style="width: 7%; min-width: 65px;">부서명</th>
+											<th style="width: 5%; min-width: 65px;">사원번호</th>
+											<th style="width: 10%; min-width: 100px;">사원명</th>
+											<th style="width: 8%; min-width: 100px;">사원 이미지</th>
+											<th style="width: 5%; min-width: 65px;">직급</th>
+											<th style="width: 10%; min-width: 100px;">외부이메일</th>
+											<th style="width: 8%; min-width: 65px;">입사일자</th>
+											<th style="width: 8%; min-width: 65px;">퇴사일자</th>
+											<th style="width: 8%; min-width: 100px;" class="text-center">수정/퇴사처리</th> <!-- Setting -->
+	                                    </tr>
+                                    </thead>
+                                    
+                                    <tbody>
                                     <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
                                 	<%-- 테이블 값 --%>
-                                    <c:forEach var="vo" items="${empList}">
-										<tr name="empList">
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
-											<td><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
-											<td><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
-											<td><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
-											
-											<td class="text-center">
-												<a onclick="modifyEmp(${vo.empNo});"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
-													<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="수정">
-														<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-													</button>
-												</a>
+	                                    <c:forEach var="vo" items="${empList}">
+											<tr name="empList">
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
+												<td><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
+												<td><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
+												<td><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
 												
+												<td class="text-center">
+													<a onclick="modifyEmp(${vo.empNo});"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
+														<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="수정">
+															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</button>
+													</a>
+													
+													
+													<%-- href="admin?cmd=disableEmp&empNo=${vo.empNo}" --%>
+												<%-- <c:choose>
+													<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
+													</c:when>
+													<c:otherwise>
+													</c:otherwise>
+												</c:choose> --%>
+													<a onclick="disableEmp(${vo.empNo}, '${vo.empName}');"> 
+														<c:choose>
+															<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
+																<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
+															</c:when>
+															<c:otherwise>
+																<button disabled="disabled" data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
+															</c:otherwise>
+													</c:choose>
+															<i class="fa fa-user-circle" aria-hidden="true"></i> <%-- fa fa-trash-o --%>
+														</button>
+													</a>
+												</td>
 												
-												<%-- href="admin?cmd=disableEmp&empNo=${vo.empNo}" --%>
-											<%-- <c:choose>
-												<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
-												</c:when>
-												<c:otherwise>
-												</c:otherwise>
-											</c:choose> --%>
-												<a onclick="disableEmp(${vo.empNo}, '${vo.empName}');"> 
-													<c:choose>
-														<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
-															<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
-														</c:when>
-														<c:otherwise>
-															<button disabled="disabled" data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
-														</c:otherwise>
-												</c:choose>
-														<i class="fa fa-user-circle" aria-hidden="true"></i> <%-- fa fa-trash-o --%>
-													</button>
-												</a>
-											</td>
-											
-										</tr>
-									</c:forEach>
-									
+											</tr>
+										</c:forEach>
+									</tbody>
 										<tr name="empPages">
 											<td colspan="9" class="text-center">
 												<ul class="pagination mg-nn">

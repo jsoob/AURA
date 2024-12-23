@@ -69,8 +69,8 @@ public class AdminEmpDAO {
 		}
 		
 		try {
-			System.out.println("sb");
-			System.out.println(sb.toString());
+			// System.out.println("sb");
+			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			rs = pstmt.executeQuery();
@@ -157,6 +157,7 @@ public class AdminEmpDAO {
 		}
 		return cnt;
 	}
+	
 	// 검색조건x 페이징 
 	public ArrayList<EmpVO> selectEmpAllPage(EmpVO getVo, int limitNo, int offsetNo) {
 		ArrayList<EmpVO> list = new ArrayList<EmpVO>(); 
@@ -191,12 +192,12 @@ public class AdminEmpDAO {
 		sb.append(" LIMIT ? OFFSET ? ");
 		
 		try {
-			System.out.println("sb");
-			System.out.println(sb.toString());
+			// System.out.println("sb");
+			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
-			System.out.println("limitNo = " + limitNo); // 9
-			System.out.println("offsetNo = " + offsetNo); // 1, 9, 17
+			// System.out.println("limitNo = " + limitNo); // 9
+			// System.out.println("offsetNo = " + offsetNo); // 1, 9, 17
 			
 			pstmt.setInt(1, limitNo);
 			pstmt.setInt(2, offsetNo);
@@ -302,7 +303,7 @@ public class AdminEmpDAO {
 		}
 		
 		try {
-			System.out.println("getTotalCountSearch = " + sb.toString());
+			// System.out.println("getTotalCountSearch = " + sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문
@@ -398,8 +399,8 @@ public class AdminEmpDAO {
 		// sb.append("AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ) ");
 		sb.append(" LIMIT ? OFFSET ? ");
 		try {
-			System.out.println("sb");
-			System.out.println(sb.toString());
+			// System.out.println("sb");
+			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문
@@ -542,8 +543,8 @@ public class AdminEmpDAO {
 		// sb.append("AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ) ");
 		
 		try {
-			System.out.println("sb");
-			System.out.println(sb.toString());
+			// System.out.println("sb");
+			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문

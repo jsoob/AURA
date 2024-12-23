@@ -18,7 +18,7 @@ public class EncodingFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		// 필터
-		System.out.println("필터 처리");
+//		System.out.println("필터 처리");
 		
 		// 요청 인코딩
 		request.setCharacterEncoding("UTF-8");
@@ -33,12 +33,12 @@ public class EncodingFilter implements Filter{
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 필터 초기화
-		System.out.println("필터 초기화");
+//		System.out.println("필터 초기화");
 	}
 
 	@Override
 	public void destroy() {
 		// 자원 정리
-		System.out.println("자원 정리");
+//		System.out.println("자원 정리");
 	}
 }

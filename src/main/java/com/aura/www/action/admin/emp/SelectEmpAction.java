@@ -26,22 +26,22 @@ public class SelectEmpAction implements Action{
 		
 		req.setAttribute("commAt", map);
 		
-		EmpVO vo = new EmpVO();
-		
-		AdminEmpDAO dao = new AdminEmpDAO();
-		
-		int totalCount = dao.getTotalCount(vo); // 전체수
-		
-		HashMap<String, Object> page = getPage(totalCount, req);
-		
-		int limitNo = (int) page.get("limitNo");
-		int offsetNo = (int) page.get("offsetNo");
-		
-		// 전달
-		ArrayList<EmpVO> list = dao.selectEmpAllPage(vo, limitNo, offsetNo);
-		req.setAttribute("empList", list);
-		
-		req.setAttribute("page", page);
+//		EmpVO vo = new EmpVO();
+//		
+//		AdminEmpDAO dao = new AdminEmpDAO();
+//		
+//		int totalCount = dao.getTotalCount(vo); // 전체수
+//		
+//		HashMap<String, Object> page = getPage(totalCount, req);
+//		
+//		int limitNo = (int) page.get("limitNo");
+//		int offsetNo = (int) page.get("offsetNo");
+//		
+//		// 전달
+//		ArrayList<EmpVO> list = dao.selectEmpAllPage(vo, limitNo, offsetNo);
+//		req.setAttribute("empList", list);
+//		
+// 		req.setAttribute("page", page);
 		
 		return "view/admin/selectEmp.jsp";
 	}

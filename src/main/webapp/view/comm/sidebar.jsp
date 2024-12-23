@@ -66,6 +66,25 @@
                             <li><a title="Compose Mail" href="${pageContext.request.contextPath}/mail"><span class="mini-sub-pro">Compose Mail</span></a></li>
                         </ul>
                     </li>
+                    
+                   	<%-- 근태관리 --%>
+                    <c:if test="${ commAt['category'] != null  && commAt['category'] == 'work' }">
+                   		<li id="work_category"  class="active">
+                   	</c:if>
+                   	<c:if test="${  commAt['category'] != 'work' }">
+                   		<li id="work_category"  >
+                   	</c:if>
+                        <a class="has-arrow" href="attendance.jsp" aria-expanded="false">
+                        	<!-- <span class="educate-icon educate-message icon-wrap"></span> -->
+                        	<span class="fa fa-calendar"></span>
+                        	<span class="mini-click-non">근태 관리</span>
+                        </a>
+                        <ul class="submenu-angle" aria-expanded="false">
+                            <li><a title="Inbox" href="${pageContext.request.contextPath}/work/selectWork"><span class="mini-sub-pro">근태이력조회</span></a></li>
+                            <%-- <li><a title="View Mail" href="${pageContext.request.contextPath}/work/selectWork"><span class="mini-sub-pro">근태이력</span></a></li> --%>
+                        </ul>
+                    </li>
+                    
                 </ul>
             </nav>
         </div>

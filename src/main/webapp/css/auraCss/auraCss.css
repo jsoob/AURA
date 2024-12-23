@@ -141,6 +141,12 @@
 	background-color: #c80600 !important;
 } */
 
+/* 패스워드 자물쇠 css */
+.fa-pwLock {
+	font-size: 60px;
+    color: #006DF0;
+}
+
 /* 중간사이즈 모달 css */
 .middleMoalWd {
 	width: 50% !important;

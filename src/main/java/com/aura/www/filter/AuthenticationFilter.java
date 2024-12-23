@@ -24,10 +24,13 @@ public class AuthenticationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		
 		String getURL = (httpRequest.getRequestURL()).toString();
-		// System.out.println("getURL = " + getURL);
+//		System.out.println("getURL = " + getURL);
 		
 		boolean rst = getURL.contains("/login");
-		// System.out.println("rst = " + rst);
+		boolean rst2 = getURL.contains("/aura/css/"); // auraCss/
+		boolean rst3 = getURL.contains("/aura/view/"); // auraCss/
+//		System.out.println("rst = " + rst);
+//		System.out.println("rst2 = " + rst2);
 		
 		// 로그인 페이지의 URL
 		String loginURI = httpRequest.getContextPath()+"/login"; // ?cmd=loginForm
@@ -35,9 +38,15 @@ public class AuthenticationFilter implements Filter {
 		
 		// System.out.println("loginEmp = " + session.getAttribute("loginEmp"));
 		
-		if(session.isNew() || (session.getAttribute("loginEmp") == null)) {
-			if(!rst) {
-				// System.out.println("로그인창 이동");
+		// css는 안타게
+		if(  session.isNew() || (session.getAttribute("loginEmp") == null)) {
+//			if ( rst2 ) {
+//				System.out.println("if ( rst2 )");
+//			} 
+			if ( !rst3 ) {
+			} 
+			else if(!rst) {
+				System.out.println("로그인창 이동");
 				httpResponse.sendRedirect(loginURI); // 로그인 창으로 새로 이동
 				return;
 			}

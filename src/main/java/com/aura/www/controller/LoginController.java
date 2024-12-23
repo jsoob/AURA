@@ -7,6 +7,7 @@ import com.aura.www.action.login.GetPassAction;
 import com.aura.www.action.login.LoginFormAction;
 import com.aura.www.action.login.LoginOkAction;
 import com.aura.www.action.login.LogoutAction;
+import com.aura.www.action.login.SendEmailAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -33,6 +34,9 @@ public class LoginController extends HttpServlet {
           url = bc.execute(req, resp);
       } else if (cmd.equals("getPass")) {
     	  Action bc = new GetPassAction();
+          url = bc.execute(req, resp);
+      } else if (cmd.equals("sendEmail")) {
+    	  Action bc = new SendEmailAction();
           url = bc.execute(req, resp);
       }
       

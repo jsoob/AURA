@@ -58,7 +58,7 @@ public class SelectEmpActionAsync implements Action {
 		int offsetNo = (int) page.get("offsetNo");
 		
 		ArrayList<EmpVO> list = dao.selectEmpSearchPage(vo, limitNo, offsetNo);
-		System.out.println("list 수 = " + list.size());
+		// System.out.println("list 수 = " + list.size());
 		
 		// vo를 json으로
 		JSONArray jArr = listmap_to_json(list);
