@@ -1,6 +1,7 @@
 package com.aura.www.action.attendance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.aura.www.action.Action;
 import com.aura.www.attendance.dao.AttendanceDAO;
@@ -14,13 +15,33 @@ public class SelectWorkAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
+		HashMap<String, String> map = new HashMap<>();
+		
+		map.put("attenDate", "날짜");				// 오늘 날짜
+		map.put("startWorkTime", "출근시간");		// 출근 시간
+		map.put("endWorkTime", "퇴근시간");		// 퇴근 시간
+		
+		req.setAttribute("commAt", map);
+		
+		/*
+		 * AttendanceDAO dao = new AttendanceDAO(); ArrayList<AttendanceVO> list =
+		 * dao.selectAll();
+		 */
+		
+		// DAO 호출 & 예외 처리
+		ArrayList<AttendanceVO> list = null;
+		
+		try {
 		AttendanceDAO dao = new AttendanceDAO();
-		ArrayList<AttendanceVO> vo = dao.selectAll();
+		list = dao.selectAll();
+		} catch(Exception e) {			// 예외처리
+			e.printStackTrace();
+			req.setAttribute("error", "데이터 조회 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+		}
+		req.setAttribute("list", list);
 		
-		req.setAttribute("vo", vo);
-		
+		// view의 경로 반환
 		return "view/attendance/SelectWork.jsp";
+		
 	}
-	
-
 }

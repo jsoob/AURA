@@ -1,5 +1,10 @@
 package com.aura.www.controller;
 
-public class AttendanceController {
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+
+@WebServlet("/work")
+public class AttendanceController extends HttpServlet {
+	
 
 }
