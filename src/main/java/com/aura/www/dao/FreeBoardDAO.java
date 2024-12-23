@@ -41,6 +41,7 @@ public class FreeBoardDAO {
 		sb.setLength(0);
 		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
 		sb.append("FROM FREEBOARD ");
+		sb.append("ORDER BY CREATE_DATE DESC ");
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());

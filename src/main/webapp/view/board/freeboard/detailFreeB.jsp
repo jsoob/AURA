@@ -40,14 +40,18 @@
 
 $(()=>{
 	
-	window.setInterval(loadComment, 100);
+	// 댓글목록 처음 실행
+	loadComment();
 	
 	// 댓글달기 누르면 해당 내용이 디비에 저장되게 함
 	$("#submitComment").on("click",()=>{
 		const comment = $("#commentArea").val().trim(); 
 		const postId = '${vo.freeBNo}';
 		const userId = '${loginEmp.getEmpNo()}';
-
+		if(comment == null){
+			alert("내용을 입력하세요");
+			
+		}else {
 		$.ajax({
 			type:"post", // GET, POST
 			async:true, // 비동기화 true, 동기화 false
@@ -61,35 +65,120 @@ $(()=>{
 			success:function(data){
 				alert('댓글이 등록되었습니다!');
                 $('#commentArea').val(''); // 입력창 초기화
-               	
-                // loadComment 잘되면 여기에 추가해야함
+                loadComment();
 			}
-			
 		});
-	})
+	}})
 	
-	// 댓글 불러오기
-	function loadComment(){
-		$.ajax({
-			type:"post",
-			url : "/aura/comment",
-			data:{
-				freeBNo:${vo.freeBNo},
-                cmd:"selectCmnt",
-            },
-			success:function(data){
-				// 댓글 리스트 초기화
-				$('.commentList').html('');
-
-				let commentList = data;
-				commentList.forEach((comment) => {
-					 let commentHtml = "<div id='comments'>"+"<label>"+"작성자 : " + comment.userId+"</label><br>"+comment.createDate+"<br>"+comment.content;
-					 $(".commentList").append(commentHtml);
-				});
-			}
-		});	
-	}
+	
+	
 })
+
+
+// 댓글 수정
+	$(document).on("click" , ".modifyBtn", function(){
+			//console.log("test");
+			//console.log($(this));
+			console.log($(this).parent().parent().parent().find(".comment-content").text());
+			//let commentContent = $(this).closest('.panel-body').find('.comment-content').text();
+			//console.log(commentContent);
+			let content = $(this).parent().parent().parent().find(".comment-content").text();
+			
+			console.log($(this).parent().parent().parent().parent().children().children().find("span.txt").text());
+			let no = $(this).parent().parent().parent().parent().children().children().find("span.txt").text();
+			
+			//console.log(data.dataset.commentCmntno);
+			
+		  /*   let cmntNo = $(this).data('cmntno');
+		    let content = $(this).data('commentContent');
+		    console.log(cmntNo);
+		    console.log(content); */
+			
+		    
+		    
+		  let addhtml = '<input type="hidden" name="no" value="'+no+'" /> <textarea class="form-control" id="cmntText" required>'+content+'</textarea><button class="saveBtn">저장</button>';
+			
+		  $(this).closest('.panel').find('.panel-body').first().html(addhtml);
+			
+	
+		})
+
+		// 댓글 수정후 저장시
+	$(document).on("click" , ".saveBtn", function(){
+		let cmntNo = $(this).closest('.panel').find('input[name="no"]').val();
+
+	    // textarea에서 수정된 내용 가져오기
+	    let content = $(this).closest('.panel').find('#cmntText').val();
+
+	    console.log("저장할 댓글 번호:", cmntNo);
+	    console.log("수정된 내용:", content);
+	    
+	$.ajax({
+		type:"post",
+		url:"/aura/comment",
+		data:{
+			cmntNo: cmntNo,
+			content: content,
+			cmd: "modifyCmnt",
+		},
+		success: function(data){
+			alert("댓글이 수정되었습니다.");
+			loadComment();
+		}
+	})
+})
+	
+	// 댓글 삭제
+	$(document).on("click" , ".deleteBtn", function(){
+		
+		
+		let cmntNo = $(this).parent().parent().parent().parent().children().children().find("span.txt").text();
+		
+		 if (confirm("정말 삭제하시겠습니까?")) {
+ 	$.ajax({
+		type:"post",
+		url:"/aura/comment",
+		data:{
+			cmntNo: cmntNo,
+			cmd: "deleteCmnt",
+		},
+		success: function(data){
+			alert("댓글이 삭제되었습니다.");
+			loadComment();
+		}
+	}) }
+})
+	
+	// 댓글 목록 출력
+		function loadComment(){
+		    $.ajax({
+		        type: "post",
+		        url: "/aura/comment",
+		        data: {
+		            freeBNo: ${vo.freeBNo},
+		            cmd: "selectCmnt",
+		        },
+		        success: function(data){
+		            // 댓글 리스트 초기화
+		            $('.commentList').html('');
+	
+		            let commentList = data;
+		            
+		            $('#totalCmnt').html("총 댓글 : " + commentList.length);
+		            
+		            commentList.forEach((comment) => {
+		                let commentHtml = 
+		                    '<div class="panel panel-default"> <div class="panel-heading"> <strong> NO\. <span class="txt">'+comment.cmntNo+'</span> / 작성자 : '+ comment.userId+'</strong> <span class="text-muted pull-right">'+comment.createDate+'</span></div><div class="panel-body"><span class="comment-content">'+comment.content+'</span><div class="panel-body"><span class="text-muted pull-right">';
+		                    
+		                    if(${loginEmp.getEmpNo()} == comment.userId){
+		                    commentHtml += '<button class="modifyBtn"  > 수정 </button> <button class="deleteBtn"> 삭제 </button>';
+		                    commentHtml += '</span></div></div></div>';
+		                    }
+		                $('.commentList').append(commentHtml);
+		            });
+		        }
+		    }); 
+		}
 
 
 </script>
@@ -145,19 +234,26 @@ $(()=>{
 
 							</table>
 							
+							<span id="totalCmnt"></span>
+							<button onclick="loadComment()" class="btn"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 							<hr />
+							
+							
+							
 							<label>작성자 : ${loginEmp.getEmpNo()}</label>
-							<textarea id="commentArea" placeholder="댓글을 입력하세요"></textarea>
+							<textarea id="commentArea" placeholder="댓글을 입력하세요" required></textarea>
 							<div class="text-right">
 							    <input type="button" class="btn" value="댓글달기" id="submitComment" />
 							</div>
-							
+							<hr>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
 							
 							<div class="commentList">
 							
 							<!-- 여기에 댓글이 추가되게 해야함 -->
 							
 						</div>
+						
 					</div>
 					
 				</div>
