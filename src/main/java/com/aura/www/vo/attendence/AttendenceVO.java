@@ -1,4 +1,4 @@
-package com.aura.www.action.attendencevo;
+package com.aura.www.vo.attendence;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

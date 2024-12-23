@@ -1,4 +1,4 @@
-package com.aura.www.action.attendencedao;
+package com.aura.www.dao.attendence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.aura.www.action.attendencevo.AttendenceVO;
 
 public class AttendenceDAO {
 
@@ -40,7 +38,7 @@ public class AttendenceDAO {
 	
 	///////////////////////////////////////////// 전체조회 /////////////////////////////////////////////
 	
-	public ArrayList<AttendenceVO> vo
+	public ArrayList<AttendenceVO> 
 		//	4. SQL문 작성
 		//	5. 문장 객체 생성
 		//	6. 실행 (SELECT ==> ResultSet 객체 )
