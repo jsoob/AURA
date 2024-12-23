@@ -1,5 +1,7 @@
 package com.aura.www.action.attendance;
 
+import java.util.HashMap;
+
 import com.aura.www.action.Action;
 import com.aura.www.attendance.dao.AttendanceDAO;
 import com.aura.www.attendance.vo.AttendanceVO;
@@ -11,15 +13,23 @@ public class ModifyWorkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String b = req.getParameter("empNo");
 		
-		if(b != null) {
-			int empNo = Integer.parseInt(b);
+		String num = req.getParameter("empNo");
+		if (num != null) {
+			int empNo = Integer.parseInt(num);
 			AttendanceDAO dao = new AttendanceDAO();
 			AttendanceVO vo = dao.selectOne(empNo);
 			req.setAttribute("vo", vo);
 		}
 		
+		HashMap<String, String> map = new HashMap<>();
+		
+		map.put("attenDate", "날짜");				// 오늘 날짜
+		map.put("startWorkTime", "출근시간");		// 출근 시간
+		map.put("endWorkTime", "퇴근시간");		// 퇴근 시간
+		
+		req.setAttribute("commAt", map);
+
 		return "view/attendance/ModifyWork.jsp";
 	}
 	

@@ -11,29 +11,28 @@ public class ModifyWorkOkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-
-		String attenDate = req.getParameter("attenDate");
+		
 		String num = req.getParameter("empNo");
-		String startWorkTime = req.getParameter("startWorkTime");
-		String endWorkTime = req.getParameter("endWorkTime");
-
+		
 		if (num != null) {
 			int empNo = Integer.parseInt(num);
-
+			String attenDate = req.getParameter("attenDate");
+			String startWorkTime = req.getParameter("startWorkDate");
+			String endWorkTime = req.getParameter("endWorkDate");
+			
 			AttendanceDAO dao = new AttendanceDAO();
-			AttendanceVO vo = new AttendanceVO();
-
+			AttendanceVO vo = dao.selectOne(empNo);
+			
 			vo.setAttenDate(attenDate);
-			vo.setEmpNo(empNo);
 			vo.setStartworkTime(startWorkTime);
 			vo.setEndworkTime(endWorkTime);
-
+			
 			dao.updateOne(vo);
+			
+			}
 
-		}
-
-		// jsp 파일 위치
-		return "view/modifyWorkOk.jsp";
+			// jsp 파일 위치
+			return "work?cmd=selectWork";
 	}
 
 }
