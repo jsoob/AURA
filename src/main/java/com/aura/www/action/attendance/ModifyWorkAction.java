@@ -7,7 +7,7 @@ import com.aura.www.attendance.vo.AttendanceVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class ModifyAttenAction implements Action {
+public class ModifyWorkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -20,7 +20,7 @@ public class ModifyAttenAction implements Action {
 			req.setAttribute("vo", vo);
 		}
 		
-		return "view/attendance/ModifyAttendance.jsp";
+		return "view/attendance/ModifyWork.jsp";
 	}
 	
 

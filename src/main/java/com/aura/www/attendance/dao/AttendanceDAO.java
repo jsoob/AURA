@@ -104,7 +104,7 @@ public class AttendanceDAO {
 	}
 		
 	
-	//////////////////////////////////// 특정 검색을 조건 (날짜 범위 및 직원 번호 검색) ////////////////////////////////////
+	//////////////////////////////////// 특정 조건을 검색 (날짜 범위 및 직원 번호 검색) ////////////////////////////////////
 	
 	public ArrayList<AttendanceVO> AttendanceSearch (String startDate, String endDate, Integer empNo){
 		ArrayList<AttendanceVO> list = new ArrayList<AttendanceVO>();

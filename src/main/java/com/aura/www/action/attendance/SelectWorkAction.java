@@ -9,7 +9,7 @@ import com.aura.www.attendance.vo.AttendanceVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class SelectAttenAction implements Action {
+public class SelectWorkAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -19,8 +19,7 @@ public class SelectAttenAction implements Action {
 		
 		req.setAttribute("vo", vo);
 		
-		
-		return "view/attendance/SelectAttendance.jsp";
+		return "view/attendance/SelectWork.jsp";
 	}
 	
 
