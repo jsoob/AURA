@@ -26,8 +26,8 @@
 		            success: (data) => {
 		            	let getEmailEmp = data.getEmailEmp;
 		            	let status = data.status;
-		            	console.log("status = " + status);
-		            	console.log("getEmailEmp = " + getEmailEmp);
+		            	console.log("status = ", status);
+		            	console.log("getEmailEmp = ", getEmailEmp);
 		            	if(status == 0) { 
 		            		Swal.fire({
 		          			  title: "Error",
@@ -49,11 +49,19 @@
 		    			   	obj.setAttribute('type', 'hidden');
 		    			  	obj.setAttribute('name', 'empNo');
 		    			  	obj.setAttribute('value', empNo);
+		    			  	form.appendChild(obj);
 		    			  	
 		    			    let obj2 = document.createElement('input');
 		    			   	obj2.setAttribute('type', 'hidden');
-		    			  	obj2.setAttribute('name', 'empEmail');
-		    			  	obj2.setAttribute('value', empEmail);
+		    			  	obj2.setAttribute('name', 'empName');
+		    			  	obj2.setAttribute('value', getEmailEmp.empName);
+		    			  	form.appendChild(obj2);
+		    			  	
+		    			    let obj3 = document.createElement('input');
+		    			   	obj3.setAttribute('type', 'hidden');
+		    			  	obj3.setAttribute('name', 'empEmail');
+		    			  	obj3.setAttribute('value', getEmailEmp.empEmail);
+		    			  	form.appendChild(obj3);
 		            		
 		    			  	form.setAttribute('method', 'post');
 		    			  	form.setAttribute('action', 'login?cmd=sendEmail');

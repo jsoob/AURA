@@ -35,7 +35,7 @@
 	<div class="error-pagewrap">
 		<div class="error-page-int">
 			<div class="text-center ps-recovered">
-				<h3>인증번호 입력</h3>
+				<h3>사원 비밀번호 복구 인증번호 입력</h3>
 				<p>비밀번호를 복구하려면 양식을 작성해 주세요.</p>
 			</div>
 			<div class="content-error">
