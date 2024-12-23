@@ -1,4 +1,4 @@
-package com.aura.www.attendance.dao;
+package com.aura.www.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aura.www.attendance.vo.AttendanceVO;
+import com.aura.www.vo.AttendanceVO;
 
 public class AttendanceDAO {
 

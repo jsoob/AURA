@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.aura.www.action.Action;
-import com.aura.www.attendance.dao.AttendanceDAO;
-import com.aura.www.attendance.vo.AttendanceVO;
+import com.aura.www.dao.AttendanceDAO;
+import com.aura.www.vo.AttendanceVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
