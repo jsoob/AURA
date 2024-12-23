@@ -103,6 +103,83 @@ public class AttendanceDAO {
 		return vo;
 	}
 		
+	
+	//////////////////////////////////// 특정 검색을 조건 (날짜 범위 및 직원 번호 검색) ////////////////////////////////////
+	
+	public ArrayList<AttendanceVO> AttendanceSearch (String startDate, String endDate, Integer empNo){
+		ArrayList<AttendanceVO> list = new ArrayList<AttendanceVO>();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		//		4. SQL문 작성
+		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
+		sb.append("FROM ATTENDANCE ");
+		sb.append("WHERE 1=1 ");		// 조건이 없을 경우에도 WHERE 절을 유지할 수 있도록 1=1을 추가
+										// WHERE 1=1 : 처음부터 조건을 추가할 수 있는 조건 값
+										//			   조건이 없더라도 쿼리가 동작할 수 있게끔 설정 (항상 '참'인 설정)
+		
+		// 조건 추가 (날짜 범위, 직원 번호)
+			// 모든 기록을 다 가져오는 것이 아님
+			// 특정 조건에 맞는 기록만 조회가 가능하게끔 설정
+		
+		// 특정 날짜 범위에 대한 조건 검색	
+		if (empNo != null) {								// empNo()가 null이 아니라면?
+			sb.append("AND EMP_NO = ? ");					// 사용자가 사원번호를 입력(?)하면, 해당하는 사원번호의 근태 기록을 조회하는 조건 추가
+			// 사용자가 직원번호를 입력했을 때 조건을 수행
+		}
+		
+		if (startDate != null && !startDate.isEmpty()) {	// startDate()가 null이 아니면서, 공백이 아니어야 함
+			// 이 조건이 만족되어져 수행된다면 아래의 쿼리를 실행
+			sb.append("AND ATTEN_DATE >= ? ");				// 내가 선택한 날짜(?) 이후에 나오는 근태 기록 조회
+		} 
+		
+		if (endDate != null && !endDate.isEmpty()) {		// endDate()가 null이 아니면서, 공백이 아니라면
+			// 이 조건이 만족되어져 수행된다면 아래의 쿼리를 실행
+			sb.append("AND ATTEN_DATE <= ? ");				// 내가 선택한 날짜(?) 이후에 나오는 근태 기록 조회
+		}
+		
+		
+		//		5. 문장 객체 생성
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			int paramIndex = 1;
+			  
+	        // 파라미터 설정
+				// paramIndex++ 방식 : 파라미터의 순서대로 값을 세팅
+			
+	        if (startDate != null && !startDate.isEmpty()) {
+	            pstmt.setString(paramIndex++, startDate);
+	        }
+	        if (endDate != null && !endDate.isEmpty()) {
+	            pstmt.setString(paramIndex++, endDate);
+	        }
+	        if (empNo != null) {
+	            pstmt.setInt(paramIndex++, empNo);
+	        }
+	        
+	        rs = pstmt.executeQuery();
+	        
+	        //		6. 실행 (SELECT ==> ResultSet 객체 )
+	        while(rs.next()) {
+	        	String attenDate = rs.getString("ATTEN_DATE");
+	        	int empNumber = rs.getInt("EMP_NO");
+	        	String startworkTime = rs.getString("STARTWORK_TIME");
+	        	String endworkTime = rs.getString("ENDWORK_TIME");
+	        	
+	        	AttendanceVO vo = new AttendanceVO(attenDate, empNumber, startworkTime, endworkTime);
+	        	
+	        	list.add(vo);
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+			
+	}	// AttendanceSearch() end
+		
+	
+	
 	//////////////////////////////////// 페이지번호 ////////////////////////////////////
 	
 	public List<AttendanceVO> getAttendanceByPage(int page){
