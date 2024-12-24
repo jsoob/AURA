@@ -6,8 +6,10 @@ import java.io.IOException;
 import com.aura.www.action.board.deptboard.DeleteDeptBAction;
 import com.aura.www.action.board.deptboard.DetailDeptBAction;
 import com.aura.www.action.board.deptboard.ModifyDeptBAction;
+import com.aura.www.action.board.deptboard.ModifyDeptBOkAction;
 import com.aura.www.action.board.deptboard.SelectDeptBAction;
 import com.aura.www.action.board.deptboard.WriteDeptBFormAction;
+import com.aura.www.action.board.deptboard.WriteDeptBOkAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -17,7 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/freeboard")
+@WebServlet("/deptboard")
 public class DeptBoardController extends HttpServlet {
 
 	@Override
@@ -40,22 +42,20 @@ public class DeptBoardController extends HttpServlet {
 		} else if(cmd.equals("writeDeptBForm")) {
 			com.aura.www.action.Action action = new WriteDeptBFormAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("writeDeptOk")) {
-			com.aura.www.action.Action action = new WriteDeptBFormAction();
+		} else if(cmd.equals("writeDeptBOk")) {
+			com.aura.www.action.Action action = new WriteDeptBOkAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("modifyFreeB")) {
+		} else if(cmd.equals("modifyDeptB")) {
 			com.aura.www.action.Action action = new ModifyDeptBAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("modifyFreeBOk")) {
-			com.aura.www.action.Action action = new ModifyDeptBAction();
+		} else if(cmd.equals("modifyDeptBOk")) {
+			com.aura.www.action.Action action = new ModifyDeptBOkAction();
 			url = action.execute(req, resp);
-		} else if(cmd.equals("deleteFreeB")) {
+		} else if(cmd.equals("deleteDeptB")) {
 			com.aura.www.action.Action action = new DeleteDeptBAction();
 			url = action.execute(req, resp);
 		}
 		
-		req.setAttribute("title", "AURA 자유게시판");
-	    req.setAttribute("catecory", "게시판");
 	      
 		
 		RequestDispatcher rd = req.getRequestDispatcher(url);

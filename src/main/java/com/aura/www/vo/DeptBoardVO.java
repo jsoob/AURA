@@ -10,13 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DeptBoardVO {
-
-	private int bno;
-	private String writer;
-	private String title;
-	private String contents;
-	private String regdate;
-	private int hits;
-	private String ip;
-	private int status;
+	private int deptBNo;
+	private String deptBTitle; 
+	private String deptBContent;
+	private int deptBView;
+	private int deptBNotice;
+	private int deptBStatus;
+	private int deptBPblc;
+	private int deptNo;	
+	private int deptBCrtr;
+	private String createDate;
+	private String updateDate;
 }

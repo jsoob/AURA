@@ -1,12 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>${commAt["title"]}</title>
+<!-- header 영역에서 첨부된 css 파일+js -->
+<jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+
 </head>
 <body>
+	<!-- Start Left menu area -->
+	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
+
+	<!-- End Left menu area -->
+	<!-- Start Welcome area -->
+	<div class="all-content-wrapper">
+		<jsp:include page="/view/comm/header.jsp"></jsp:include>
+
+		<div class="container-area mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
+
+							<table class="table">
+								<tr>
+									<th>작성자</th>
+									<td>${vo.deptBCrtr}</td>
+
+									<th>작성일시</th>
+									<td>${vo.createDate}</td>
+
+									<th>조회수</th>
+									<td>${vo.deptBView}</td>
+								</tr>
+
+								<tr>
+									<th>제목</th>
+									<td colspan="5">${vo.deptBTitle}</td>
+								</tr>
+
+								<tr>
+									<th>내용</th>
+									<td colspan="5">${vo.deptBContent}</td>
+								</tr>
+
+								<tr>
+									<td colspan="6"><a href="deptboard?cmd=selectDeptB"
+										class="btn btn-outline-primary">목록</a>
+										<c:if test="${loginEmp.getEmpNo() == vo.deptBCrtr}">
+											<a href="deptboard?cmd=modifyDeptB&deptBNo=${vo.deptBNo}" class="btn btn-outline-warning">수정</a>
+											<a href="deptboard?cmd=deleteDeptB&deptBNo=${vo.deptBNo}" class="btn btn-outline-danger">삭제</a>
+										</c:if>
+									</td>
+								</tr>
+
+							</table>
+							
+							<hr />
+							
+							
+							
+							<label>작성자 : ${loginEmp.getEmpNo()}</label>
+							
+							
+							
+						</div>
+						
+					</div>
+					
+				</div>
+				</div>
+			</div>
+		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+		
+	</div>
+
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 </body>
 </html>
