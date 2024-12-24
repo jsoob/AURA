@@ -34,8 +34,8 @@
                                    <%-- 관리자에서만 보여주는 메뉴 --%>
                                     <c:if test="${loginEmp.empNo eq '2024000' }">
 	                                    <ul class="nav navbar-nav mai-top-nav">
-	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=adminLoad" class="nav-link">관리자 조회</a>
-	                                        </li>
+	                                        <%-- <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=adminLoad" class="nav-link">관리자 조회</a>
+	                                        </li> --%>
 	                                        
 	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=selectDept" class="nav-link">부서관리</a>
 	                                        </li>
