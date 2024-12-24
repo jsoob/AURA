@@ -45,6 +45,5 @@ public class SelectCommentAction implements Action {
 			e.printStackTrace();
 		}
 		
-		//commentArray.toJSONString()
 		return commentArray.toJSONString();
 	}}

@@ -27,13 +27,18 @@ public class CommentController extends HttpServlet {
 			action.execute(req, resp);
 		} else if(cmd.equals("selectCmnt")) {
 			Action action = new SelectCommentAction();
-			action.execute(req, resp);
+			url = action.execute(req, resp);
 		} else if(cmd.equals("modifyCmnt")) {
 			Action action = new ModifyCommentAction();
 			action.execute(req, resp);
 		} else if(cmd.equals("deleteCmnt")) {
 			Action action = new DeleteCommentAction();
 			action.execute(req, resp);
-		} 
+		}
+		
+//		if(cmd!=null) {
+//			resp.setContentType("application/json; charset=UTF-8");
+//			resp.getWriter().print(url); // 값 보내기
+//		}
 	}
 }

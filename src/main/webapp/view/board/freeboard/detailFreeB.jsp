@@ -35,6 +35,11 @@
         resize: none;
         box-sizing: border-box;
 }
+
+#cmntText {
+	height: 100%;
+	width:100%;
+}
 </style>
 <script>
 
@@ -75,6 +80,7 @@ $(()=>{
 })
 
 
+
 // 댓글 수정
 	$(document).on("click" , ".modifyBtn", function(){
 			//console.log("test");
@@ -96,7 +102,7 @@ $(()=>{
 			
 		    
 		    
-		  let addhtml = '<input type="hidden" name="no" value="'+no+'" /> <textarea class="form-control" id="cmntText" required>'+content+'</textarea><button class="saveBtn">저장</button>';
+		  let addhtml = '<input type="hidden" name="no" value="'+no+'" /> <textarea class="form-control" id="cmntText" maxlength="100" required>'+content+'</textarea><button class="saveBtn"> 저장 </button><button class="cancelBtn"> 취소 </button>';
 			
 		  $(this).closest('.panel').find('.panel-body').first().html(addhtml);
 			
@@ -154,6 +160,7 @@ $(()=>{
 		    $.ajax({
 		        type: "post",
 		        url: "/aura/comment",
+		        dataType:'json',
 		        data: {
 		            freeBNo: ${vo.freeBNo},
 		            cmd: "selectCmnt",
@@ -164,7 +171,7 @@ $(()=>{
 	
 		            let commentList = data;
 		            
-		            $('#totalCmnt').html("총 댓글 : " + commentList.length);
+		            $('#totalCmnt').html("댓글(" + commentList.length+")");
 		            
 		            commentList.forEach((comment) => {
 		                let commentHtml = 
@@ -235,7 +242,7 @@ $(()=>{
 							</table>
 							
 							<span id="totalCmnt"></span>
-							<button onclick="loadComment()" class="btn"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+							<button onclick="loadComment()" class="btn btn-link"><i class="fa fa-refresh" aria-hidden="true"></i></button>
 							<hr />
 							
 							
