@@ -26,7 +26,7 @@
 	
 	function loadDept(){
 		$.ajax({
-	        url:"adminasync", // AAdminController.java로 접근
+	        url:"adminasync", 
 	        type: "post",
 	        data : {cmd : "selectDept"}, 
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))

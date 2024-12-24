@@ -28,7 +28,7 @@
 		if(cp != "" ) sendData += "&cp="+ cp;
 		
 		$.ajax({
-            url:"adminasync", // AAdminController.java로 접근
+            url:"adminasync", 
             type: "post",
 			data: sendData, // json 방식으로 서블릿에 보낼 데이터
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
@@ -159,7 +159,7 @@
 			   // 만약 Promise리턴을 받으면,
 			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
 					$.ajax({
-			        	url:"adminasync", // AAdminController.java로 접근
+			        	url:"adminasync", 
 			            type: "post",
 						data: { 
 							"cmd" : "disableEmp", 
@@ -214,7 +214,7 @@
 		let sendData = $("form[name=empForm]").serialize();
 		
 		$.ajax({
-            url:"adminasync", // AAdminController.java로 접근
+            url:"adminasync", 
             type: "post",
 			data: sendData, // json 방식으로 서블릿에 보낼 데이터
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
@@ -383,10 +383,8 @@
 											<th style="width: 8%; min-width: 100px;" class="text-center">수정/퇴사처리</th> <!-- Setting -->
 	                                    </tr>
                                     </thead>
-                                    
+                                    <%-- 
                                     <tbody>
-                                    <!-- <td><img src="img/product/book-1.jpg" alt=""></td> -->
-                                	<%-- 테이블 값 --%>
 	                                    <c:forEach var="vo" items="${empList}">
 											<tr name="empList">
 												<td><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
@@ -399,20 +397,12 @@
 												<td><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
 												
 												<td class="text-center">
-													<a onclick="modifyEmp(${vo.empNo});"> <%-- href="admin?cmd=modifyEmp&empNo=${vo.empNo}" --%>
+													<a onclick="modifyEmp(${vo.empNo});">
 														<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="수정">
 															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 														</button>
 													</a>
 													
-													
-													<%-- href="admin?cmd=disableEmp&empNo=${vo.empNo}" --%>
-												<%-- <c:choose>
-													<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
-													</c:when>
-													<c:otherwise>
-													</c:otherwise>
-												</c:choose> --%>
 													<a onclick="disableEmp(${vo.empNo}, '${vo.empName}');"> 
 														<c:choose>
 															<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
@@ -422,7 +412,7 @@
 																<button disabled="disabled" data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
 															</c:otherwise>
 													</c:choose>
-															<i class="fa fa-user-circle" aria-hidden="true"></i> <%-- fa fa-trash-o --%>
+															<i class="fa fa-user-circle" aria-hidden="true"></i>
 														</button>
 													</a>
 												</td>
@@ -445,21 +435,9 @@
 												 </ul>
 											</td>
 										</tr>
+									 --%>
                                 </table>
                             </div>
-                            <%-- 테이블 페이징 처리 --%>
-                            <%-- 8개만 보이자 --%>
-                            <!-- 
-                            <div class="custom-pagination">
-								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">Next</a></li>
-								</ul>
-                            </div>
-                             -->
                         </div>
                     </div>
                     

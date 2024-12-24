@@ -45,7 +45,8 @@ public class AuthenticationFilter implements Filter {
 						"/aura/fonts/", 
 						"/aura/img/", 
 						"/aura/js/", 
-						"/aura/comm/"
+						"/aura/comm/", 
+						"/aura/login"
 //						, "/aura/loginasync"
 				};
 				boolean  rst3 = StringUtils.containsAny(getURL, urlArr);

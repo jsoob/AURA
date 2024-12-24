@@ -25,10 +25,10 @@ public class FindEmailEmpOkActionAsync implements Action {
 		
 		String code = req.getParameter("code");
 		String authCode = req.getParameter("authCode");
-		System.out.println("속성 get : " + req.getAttribute("authCode"));
+//		System.out.println("속성 get : " + req.getAttribute("authCode"));
 		
-		System.out.println("code = " + code);
-		System.out.println("authCode = " + authCode);
+//		System.out.println("code = " + code);
+//		System.out.println("authCode = " + authCode);
 		
 		if(code != null && authCode != null) {
 			if( code.equals(authCode) ) {

@@ -13,62 +13,55 @@
 		let cnt = 0;
 		
 		$("#btnSend").on("click", ()=> {
-			let code = ($("#code").val()).trim();
-			cnt++;
-			if(code.length > 0 ) {
-				/* 
-				let  num_check=/^[0-9]*$/;
+			let code1 = ($("#code1").val()).trim();
+			let code2 = ($("#code2").val()).trim();
+			if(code1.length > 0 ) {
+				let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@~#$%^&*?_]).{8,16}$/;
 				
-				if(num_check.test(code)) {
-				 */
-					$.ajax({
-			        	url:"loginasync", 
-			            type: "post",
-						data: { 
-							"cmd" : "findEmailEmpOk", 
-							"code" : code, 
-							"authCode" : $("#btnSend").data("authCode")
-						}, 
-						dataType: 'json', 
-			            success: (data) => {
-			            	let status = data.status;
-			            	console.log("status = ", status);
-			            	console.log("cnt = ", cnt);
-			            	if(status == 0) {
-				            	console.log("status == 0");
-			            		if(cnt== 5) {
-					            	console.log("cnt == 5");
-			            			location.reload(true); // 5회 이상 틀릴시 새로고침
-			            		}
-			            		$("#msg").text("실패 "+cnt+"회(5회시 인증번호 재발송)");
-				            } else if(status == 1) { // 1이면 조회
-				            	console.log("status == 1");
-				            	
-				            	let form = document.createElement('form');
-			    			  	
-			            		let obj = document.createElement('input');
-			    			   	obj.setAttribute('type', 'hidden');
-			    			  	obj.setAttribute('name', 'empNo');
-			    			  	obj.setAttribute('value', ${empNo});
-			    			  	form.appendChild(obj);
-			    			  	
-			    			    let obj2 = document.createElement('input');
-			    			   	obj2.setAttribute('type', 'hidden');
-			    			  	obj2.setAttribute('name', 'empName');
-			    			  	obj2.setAttribute('value', "${empName}");
-			    			  	form.appendChild(obj2);
-			            		
-			    			  	form.setAttribute('method', 'post');
-			    			  	form.setAttribute('action', 'login?cmd=changeEmpPw');
-			    			    document.body.appendChild(form);
-			    			    form.submit();
-			            	}
-		            	}
-			        });
+				if (passwordRegex.test(code1)) {
+					if(code2.length == 0) {
+						Swal.fire({
+							title : 'Error', 
+							text : '비밀번호 재확인을 입력해 주세요.', 
+							icon : 'error', 
+						});
+					} else if(code1==code2) {
+						let form = document.createElement('form');
+					  	
+		        		let obj = document.createElement('input');
+					   	obj.setAttribute('type', 'hidden');
+					  	obj.setAttribute('name', 'empNo');
+					  	obj.setAttribute('value', ${empNo});
+					  	form.appendChild(obj);
+					  	
+					    let obj2 = document.createElement('input');
+					   	obj2.setAttribute('type', 'hidden');
+					  	obj2.setAttribute('name', 'code1');
+					  	obj2.setAttribute('value', code1);
+					  	form.appendChild(obj2);
+		        		
+					  	form.setAttribute('method', 'post');
+					  	form.setAttribute('action', 'login?cmd=changeEmpPwOk');
+					    document.body.appendChild(form);
+					    form.submit();
+					} else {
+						Swal.fire({
+							title : 'Error', 
+							text : '비밀번호가 일치하지 않습니다.다시 입력해 주세요.', 
+							icon : 'error', 
+						});
+					}
+				} else {
+					Swal.fire({
+						title : 'Error', 
+						text : '8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 비밀번호를 다시 입력해주세요.', 
+						icon : 'error', 
+					});
+				}
 			} else {
 				Swal.fire({
 					title : 'Error', 
-					text : '인증번호를 입력해 주세요.', 
+					text : '비밀번호를 입력해 주세요.', 
 					icon : 'error', 
 				});
 			}
@@ -92,12 +85,13 @@
                         </p>
                         <div>
                             <div class="form-group">
-                                <label class="control-label" for="code">비밀번호 변경</label>
-                                <input type="text" id="code" name="code" class="form-control">
+                                <label class="control-label" for="code1">비밀번호 변경</label>
+                                <input type="text" id="code1" name="code1" class="form-control">
+                                <span class="help-block small">8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 입력해주세요.(!,@,~만 허용)</span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="code">비밀번호 재확인</label>
-                                <input type="text" id="code" name="code" class="form-control">
+                                <label class="control-label" for="code2">비밀번호 재확인</label>
+                                <input type="text" id="code2" name="code2" class="form-control">
                             </div>
                             <button id="btnSend" class="btn btn-success btn-block">확인</button>
                         </div>

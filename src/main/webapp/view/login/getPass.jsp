@@ -16,7 +16,7 @@
 			if(empNo.length > 0 ) {
 			    
 			  	$.ajax({
-		        	url:"loginasync", // AAdminController.java로 접근
+		        	url:"loginasync", 
 		            type: "post",
 					data: { 
 						"cmd" : "findEmailEmp", 

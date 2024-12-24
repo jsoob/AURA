@@ -127,5 +127,26 @@ public class LoginDAO {
 		}
 		return vo;
 	}
+
+	public void changeEmpPw(EmpVO vo) {
+		sb.setLength(0);
+		sb.append("UPDATE EMP SET ");
+		sb.append("EMP_PW = ? ");
+		sb.append("WHERE EMP_NO = ? " );
+		
+		int rst = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			pstmt.setString(1, vo.getEmpPw());
+			pstmt.setInt(2, vo.getEmpNo());
+			
+			rst = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

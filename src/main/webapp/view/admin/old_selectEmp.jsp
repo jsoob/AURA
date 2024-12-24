@@ -25,7 +25,7 @@
 		let sendData = $("form[name=empForm]").serialize();
 		
 		$.ajax({
-            url:"adminasync", // AAdminController.java로 접근
+            url:"adminasync", 
             type: "post",
 			data: sendData, // json 방식으로 서블릿에 보낼 데이터
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))

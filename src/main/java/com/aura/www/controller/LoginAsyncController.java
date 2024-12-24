@@ -11,6 +11,7 @@ import org.json.simple.parser.ParseException;
 import com.aura.www.action.Action;
 import com.aura.www.action.login.FindEmailEmpActionAsync;
 import com.aura.www.action.login.FindEmailEmpOkActionAsync;
+import com.aura.www.action.login.LoginOkActionAsync;
 import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.ServletException;
@@ -44,7 +45,10 @@ public class LoginAsyncController extends HttpServlet {
 		} else if (cmd.equals("findEmailEmpOk")) {
 			Action action = new FindEmailEmpOkActionAsync();
 			tArr = action.execute(req, resp);
-		}
+		} else if (cmd.equals("loginOk")) {
+	  	  Action bc = new LoginOkActionAsync();
+	  	  tArr = bc.execute(req, resp);
+	    } 
 		
 		if(cmd!=null) {
 			// 페이징 방식때문에 jsonObject로 받아한다.

@@ -44,7 +44,7 @@
 		   // 만약 Promise리턴을 받으면,
 		   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
 				$.ajax({
-		        	url:"adminasync", // AAdminController.java로 접근
+		        	url:"adminasync", 
 		            type: "post",
 					data: { 
 						"cmd" : "resetPwEmp", 
@@ -67,7 +67,7 @@
 
 	function loadDept(){
 		$.ajax({
-	        url:"adminasync", // AAdminController.java로 접근
+	        url:"adminasync", 
 	        type: "post",
 	        data : {cmd : "selectDept"}, 
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))

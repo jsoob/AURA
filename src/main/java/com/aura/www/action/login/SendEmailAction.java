@@ -85,9 +85,9 @@ public class SendEmailAction implements Action {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<h3>"+empName+"님, 안녕하세요.</h3>");
 		sb.append("<h3>귀하의 이메일 주소를 통해 인증번호 메일 발송입니다.</h3>");
-		String code = ""+(int)(Math.random() * 899999) + 100000; // (int)(Math.random()*100000);
+		String code = ""+(int)(Math.random() * 8999) + 1000; // (int)(Math.random()*100000);
 		sb.append("<h3> 인증번호는 ["+code+"] 입니다. </h3>");
-		sb.append("<h3> 이 이메일은 발신 전용입니다. 자세한 정보는 AURA 고객센터에 문의해 주세요. </h3>");
+		sb.append("<h3> 이 이메일은 발신 전용입니다. 자세한 정보는 AURA 관리자에게 문의해 주세요. </h3>");
 		
 //		System.out.println("인증번호 code : " + code);
 //		System.out.println("sessions : " + sessions);

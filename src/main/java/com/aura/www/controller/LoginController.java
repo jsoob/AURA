@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.aura.www.action.Action;
 import com.aura.www.action.login.ChangeEmpPwAction;
+import com.aura.www.action.login.ChangeEmpPwOkAction;
 import com.aura.www.action.login.GetPassAction;
 import com.aura.www.action.login.LoginFormAction;
 import com.aura.www.action.login.LoginOkAction;
@@ -27,10 +28,12 @@ public class LoginController extends HttpServlet {
       if(cmd==null || cmd.equals("loginForm")) {
     	  Action bc = new LoginFormAction();
           url = bc.execute(req, resp);
-      } else if (cmd.equals("loginOk")) {
-    	  Action bc = new LoginOkAction();
-          url = bc.execute(req, resp);
-      } else if (cmd.equals("logout")) {
+      } 
+//      else if (cmd.equals("loginOk")) {
+//    	  Action bc = new LoginOkAction();
+//          url = bc.execute(req, resp);
+//      } 
+      else if (cmd.equals("logout")) {
     	  Action bc = new LogoutAction();
           url = bc.execute(req, resp);
       } else if (cmd.equals("getPass")) {
@@ -41,6 +44,9 @@ public class LoginController extends HttpServlet {
           url = bc.execute(req, resp);
       } else if (cmd.equals("changeEmpPw")) {
     	  Action bc = new ChangeEmpPwAction();
+          url = bc.execute(req, resp);
+      } else if (cmd.equals("changeEmpPwOk")) {
+    	  Action bc = new ChangeEmpPwOkAction();
           url = bc.execute(req, resp);
       }
       
