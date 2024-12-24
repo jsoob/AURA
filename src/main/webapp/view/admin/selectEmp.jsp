@@ -13,6 +13,16 @@
 	$( ()=> {
 		loadBtn();
 		
+		$("input[type='text']").on("keyup",function(key){
+			if(key.keyCode==13) {
+				loadBtn();
+			}
+		});
+		
+		$("input[type='date']").change(function(){
+			loadBtn();		
+		});
+		
 		$("#loadBtn").on("click", ()=> {
 			loadBtn();
 		});
@@ -34,12 +44,14 @@
 			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
             success: (data) => {
             	let empList = data.empList;
-				$("tr[name='empList']").remove(); // .empty();
+				
+            	// $("tbody").remove();
+            	$("tr[name='empList']").remove(); // .empty();
 				
 				$.each(empList, (idx, row) => {
 					// console.log(row);
-					let appendText = "";
-					appendText = "<tr name='empList'>";
+					let appendText = ""; // style='height: 415px; vertical-align: top;'
+					appendText = "<tr name='empList'>"; //  style='height: 47px;'
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
@@ -75,11 +87,14 @@
 				});
 				
 				let pageObject = data.pageObject;
-				$("tr[name='empPages']").remove(); // .empty();
 				
-				let appendText = "";
-				appendText = '<tr name="empPages">'
-							+ '<td colspan="9" class="text-center">'
+				// $("tfoot").remove();
+				// $("tr[name='empPages']").remove();
+				$("#pagingDiv").empty();
+				
+				let appendText = ""; // <tfoot>
+				appendText = '<div name="empPages">' // tr
+							+ '<div>' //  class="text-center"
 								+ '<ul class="pagination mg-nn">'
 								+ '<li class="page-item"><a class="page-link" onclick="loadBtn('+ pageObject.prevCnt +')">Previous</a></li>';
 								
@@ -90,11 +105,17 @@
 								   + '</li>';
 					}	
 				appendText += '<li class="page-item"><a class="page-link" onclick="loadBtn('+ pageObject.nextCnt +')">Next</a></li>' // href="adminasync?cmd=selectEmp&cp='+ pageObject.nextCnt +'"
-							 	+"</ul>";
+							 	+"</ul>"
 							 +"</td>"
-						+"</tr>";
-						
-				$("#selectTable").append(appendText);
+						+"</div>" // tr
+					// +"</tfoot>";
+				
+					
+				// let footer = document.getElementById("selectTable").createTFoot();
+				// footer.innerHTML = appendText;
+				
+				// $("#selectTable").append(appendText);
+				$("#pagingDiv").append(appendText);
             },
             error:function(request, err) {
             	console.log("error");
@@ -324,11 +345,11 @@
 										  </div>
 										  <div class="form-group">
 										    <label for="empNo">사원번호</label>
-										    <input type="email" class="form-control wd-80 mg-wd-10" id="empNo" name="empNo" placeholder="">
+										    <input type="text" class="form-control wd-80 mg-wd-10" id="empNo" name="empNo" placeholder="">
 										  </div>
 										  <div class="form-group">
 										    <label for="empName">사원명</label>
-										    <input type="email" class="form-control wd-100 mg-wd-10" id="empName" name="empName" placeholder="">
+										    <input type="text" class="form-control wd-100 mg-wd-10" id="empName" name="empName" placeholder="">
 										  </div>
 									  		
 										  <div class="form-group">
@@ -367,7 +388,7 @@
                            </form>
                             
                             <%-- 테이블 부분 --%>
-                            <div class="asset-inner">
+                            <div class="asset-inner" style="height: 490px;">
                                 <table id="selectTable">
                                 	<%-- 테이블 컬럼 --%>
                                 	<thead>
@@ -383,6 +404,9 @@
 											<th style="width: 8%; min-width: 100px;" class="text-center">수정/퇴사처리</th> <!-- Setting -->
 	                                    </tr>
                                     </thead>
+                                    <tbody>
+                                    
+                                    </tbody>
                                     <%-- 
                                     <tbody>
 	                                    <c:forEach var="vo" items="${empList}">
@@ -437,6 +461,9 @@
 										</tr>
 									 --%>
                                 </table>
+                            </div>
+                            <div id="pagingDiv" class="text-center">
+                            	
                             </div>
                         </div>
                     </div>
