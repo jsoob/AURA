@@ -23,6 +23,10 @@
 			loadPos();
 		});
 		
+		$("#delImg").on("click", ()=> {
+			removeImage();
+		});
+		
 		$("#modifyEmpOk").on("click", ()=> {
 			modifyEmpOk();
 		});
@@ -136,7 +140,24 @@
 		$("#posModal").modal('hide')
 	}
 	
+	// 사진 업로드
+	function loadFile(input) {
+	    let file = input.files[0];	//선택된 파일 가져오기
+		console.log("file = ", file);
+		console.log("file = ", URL.createObjectURL(file));
+		
+	  	//새로운 이미지 추가
+	    let empImage = $("#empImage");
+	    empImage.attr("src", URL.createObjectURL(file));
+	};
+
+	function removeImage() {
+		console.log("removeImage");
+		let empImage = $("#empImage");
+		empImage.attr('src', '');
+	}
 	
+	// write2.jsp / ajax04.jsp 참고하기
 	function modifyEmpOk() {
 		let empName = ($("input[name='empName']").val()).trim();
 		let deptNo = ($("input[name='deptNo']").val()).trim();
@@ -171,7 +192,7 @@
 			return;
 		}
 		
-		let form = document.querySelector("form");
+		let form = document.empModifyForm; // document.querySelector("form");
 	 	form.action="admin?cmd=modifyEmpOk";
 	 	form.method ="post";
 		form.submit();
@@ -194,139 +215,156 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap aura_content" style="padding-top: 4%;">
-		                     <form action="admin">
+		                     
 	                            <div class="col-lg-12 col-sm-12 col-xs-12">
 		                            
 		                            <div class="col-lg-2 col-sm-2 col-xs-2">
 		                            </div>
 		                            <%-- 찐찐 개별 --%>
 		                            <div class="col-lg-5 col-sm-5 col-xs-5">
+		                            	<form name="empModifyForm" action="admin">
 										<!-- 사원 이름 , 부서, 직급, 입사일자 -->
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">사원번호</label>
-			                                        </div>
-			                                        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-12">
-			                                            <input type="text" name="empNo" value="${empVo.empNo}" class="form-control" readonly="readonly">
-			                                        </div>
-			                                        
-			                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">생일</label>
-			                                        </div>
-			                                        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-12">
-			                                        	<input type="text" name="birthdate" value="${empVo.birthdate}" class="form-control" readonly="readonly" />
-		                                        	</div>
-			                                    </div>
-			                                </div>
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">사원명</label>
-			                                        </div>
-			                                        <div class="col-lg-6 col-md-5 col-sm-8 col-xs-12">
-			                                            <input type="text" name="empName" value="${empVo.empName}" maxlength="10" class="form-control">
-			                                        </div>
-			                                        <div class="col-lg-4 col-md-3 col-sm-8 col-xs-12">
-			                                        	<button type="button" id="resetPw" class="btn btn-danger bg-red" style="line-height: 26px;">
-			                                        		<i class="fa fa-cog" aria-hidden="true"></i> 비밀번호 초기화</button>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">부서</label>
-			                                        </div>
-			                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
-			                                        	<input type="hidden" name="deptNo"  value="${empVo.deptNo}">
-			                                            <input type="text" name="deptName" value="${empVo.deptName}" class="form-control" style="width: 80%; float: left;" readonly="readonly">
-			                                            <button type="button" id="deptAdd" class="btn btn-custon-four btn-success" 
-		                                            		data-toggle="modal" data-target=".search-dept-modal" 
-		                                            		style="width: 18%; margin-left: 2%; line-height: 26px;">
-		                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 부서
-			                                            </button>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">직급</label>
-			                                        </div>
-			                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
-			                                        	<input type="hidden" name="posNo" value="${empVo.posNo}">
-			                                            <input type="text" name="posName" class="form-control" value="${empVo.posName}" style="width: 80%; float: left;" readonly="readonly">
-			                                            
-			                                            <button type="button" id="posAdd" class="btn btn-custon-four btn-success" 
-		                                            		data-toggle="modal" data-target=".search-pos-modal" 
-		                                            		style="width: 18%; margin-left: 2%; line-height: 26px;">
-		                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 직급
-			                                            </button>
-			                                        </div>
-			                                        
-			                                    </div>
-			                                </div>
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">외부 이메일</label>
-			                                        </div>
-			                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
-			                                        	<input type="text" name="empEmail" value="${empVo.empEmail}" class="form-control" readonly="readonly">
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">휴대폰</label>
-			                                        </div>
-			                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
-			                                            <input type="text" name="cellphone" value="${empVo.cellphone}" class="form-control" readonly="readonly" />
-			                                        </div>
-			                                        
-			                                    </div>
-			                                </div>
-			                                
-			                                
-			                                <div class="form-group-inner mg-bt-20">
-			                                    <div class="row">
-			                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">입사일자</label>
-			                                        </div>
-			                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-			                                        	<input type="date" name="hiredate" value="${empVo.hiredate}" class="form-control" pattern="\d{4}-\d{2}-\d{2}" />
-		                                        	</div>
-			                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-			                                            <label class="login2 pull-left pull-left-pro">퇴사일자</label>
-			                                        </div>
-			                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
-			                                            <input type="date" name="quitdate" value="${empVo.quitdate}" class="form-control" pattern="\d{4}-\d{2}-\d{2}" />
-		                                        	</div>
-			                                    </div>
-			                                </div>
-			                                
-	                           		</div> 
-	                           
-	                           		<div class="col-lg-3 col-sm-3 col-xs-3" style="height: 420px;">
-	                           			<div class="col-lg-12 text-center" style="line-height: 350px;">
-                                        	<img class="mg-ht-10 viewImg" alt="사원이미지 없음" src="/aura/img/product/pro4.jpg"></a><!-- ${vo.empImage} -->
-                                        </div>
-	                           			<div class="col-lg-12 text-center">
-                                        	<button type="button" id="resetPw" class="btn btn-success" style="line-height: 26px;">
-			                                	<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
-                                        	<button type="button" id="resetPw" class="btn btn-danger bg-red" style="line-height: 26px;">
-			                                	<i class="fa fa-times" aria-hidden="true"></i> 사진 삭제</button>
-                                        </div>
-	                           		</div>
-	                           		
-	                           		<div class="col-lg-12 col-sm-12 col-xs-12">
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">사원번호</label>
+				                                        </div>
+				                                        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-12">
+				                                            <input type="text" name="empNo" value="${empVo.empNo}" class="form-control" readonly="readonly">
+				                                        </div>
+				                                        
+				                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">생일</label>
+				                                        </div>
+				                                        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-12">
+				                                        	<input type="text" name="birthdate" value="${empVo.birthdate}" class="form-control" readonly="readonly" />
+			                                        	</div>
+				                                    </div>
+				                                </div>
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">사원명</label>
+				                                        </div>
+				                                        <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+				                                            <input type="text" name="empName" value="${empVo.empName}" maxlength="10" class="form-control">
+				                                       	</div>
+				                                    </div>
+				                                </div>
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">부서</label>
+				                                        </div>
+				                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
+				                                        	<input type="hidden" name="deptNo"  value="${empVo.deptNo}">
+				                                            <input type="text" name="deptName" value="${empVo.deptName}" class="form-control" style="width: 75%; float: left;" readonly="readonly">
+				                                            <button type="button" id="deptAdd" class="btn btn-custon-four btn-success" 
+			                                            		data-toggle="modal" data-target=".search-dept-modal" 
+			                                            		style="width: 23%; margin-left: 2%; line-height: 26px;">
+			                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 부서
+				                                            </button>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">직급</label>
+				                                        </div>
+				                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
+				                                        	<input type="hidden" name="posNo" value="${empVo.posNo}">
+				                                            <input type="text" name="posName" class="form-control" value="${empVo.posName}" style="width: 75%; float: left;" readonly="readonly">
+				                                            
+				                                            <button type="button" id="posAdd" class="btn btn-custon-four btn-success" 
+			                                            		data-toggle="modal" data-target=".search-pos-modal" 
+			                                            		style="width: 23%; margin-left: 2%; line-height: 26px;">
+			                                            		<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> 직급
+				                                            </button>
+				                                        </div>
+				                                        
+				                                    </div>
+				                                </div>
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">외부 이메일</label>
+				                                        </div>
+				                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
+				                                        	<input type="text" name="empEmail" value="${empVo.empEmail}" class="form-control" readonly="readonly">
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">휴대폰</label>
+				                                        </div>
+				                                        <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
+				                                            <input type="text" name="cellphone" value="${empVo.cellphone}" class="form-control" readonly="readonly" />
+				                                        </div>
+				                                        
+				                                    </div>
+				                                </div>
+				                                
+				                                
+				                                <div class="form-group-inner mg-bt-20">
+				                                    <div class="row">
+				                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">입사일자</label>
+				                                        </div>
+				                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
+				                                        	<input type="date" name="hiredate" value="${empVo.hiredate}" class="form-control" pattern="\d{4}-\d{2}-\d{2}" />
+			                                        	</div>
+				                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+				                                            <label class="login2 pull-left pull-left-pro">퇴사일자</label>
+				                                        </div>
+				                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
+				                                            <input type="date" name="quitdate" value="${empVo.quitdate}" class="form-control" pattern="\d{4}-\d{2}-\d{2}" />
+			                                        	</div>
+				                                    </div>
+				                                </div>
+				                             </form>
+		                           		</div> 
+		                           
+		                           		<div class="col-lg-3 col-sm-3 col-xs-3" style="height: 420px;">
+		                           			<form name="fileUpForm" method="post" enctype="multipart/form-data">
+			                           			<div class="col-lg-12 text-center" style="line-height: 350px;">
+		                                        	<!-- /aura/img/product/pro4.jpg || ${vo.empImage} -->
+		                                        	<img id="empImage" name="empImage" class="mg-ht-10 viewImg" alt="사원이미지 없음" src="${vo.empImage}"></a>
+		                                        </div>
+			                           			<div class="col-lg-12 text-center">
+		                                        	<!-- 
+		                                        	<button type="button" id="changeImg" class="btn btn-success" style="line-height: 26px;">
+					                                	<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
+					                                 -->	
+					                               
+					                                <label class="btn btn-success" style="line-height: 26px;" for="changeImg">
+													  <i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
+													</label>
+													<input type="file" id="changeImg" style="display:none;" accept="image/*" onchange="loadFile(this)" />
+					                                
+					                                <%--
+					                                <input type="file" name="filename" id="" />
+					                                 --%>
+					                                
+		                                        	<button type="button" id="delImg" class="btn btn-danger bg-red" style="line-height: 26px;">
+					                                	<i class="fa fa-times" aria-hidden="true"></i> 사진 삭제</button>
+		                                        </div>
+	                                        </form>
+	                                        
+		                           		</div>
+	                       		</div>
+		                   
+		                   <div class="col-lg-12 col-sm-12 col-xs-12">
 	                          			<div class="form-group-inner mg-tp-10">
 	                          				<div class="login-btn-inner">
 		                                        <div class="row">
 		                                            <div class="col-lg-12 text-center">
 		                                                <div class="cancel-wp pull-center form-bc-ele"> <!-- login-horizental -->
+		                                                    <button type="button" id="resetPw" class="btn btn-danger bg-red" >
+			                                        			<i class="fa fa-cog" aria-hidden="true"></i> 비밀번호 초기화
+			                                        		</button>
 		                                                    <button class="btn pd-setting" type="button" id="modifyEmpOk">정보 수정</button>
 		                                                    <a href="admin?cmd=selectEmp" class="btn btn-default">목록</a>
 		                                                </div>
@@ -335,8 +373,6 @@
 		                                     </div>
 		                                </div>
 	                           		</div>
-	                       		</div>	
-		                   </form>
 		                   
                         </div>
                     </div>
