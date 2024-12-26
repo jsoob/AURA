@@ -26,12 +26,11 @@
 		<!-- 상단 헤더 포함 -->
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-		<div 
-		class="container-area mg-b-15">
+		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
 					<!-- 글쓰기 폼 -->
-					<form action="deptboard">
+					<form action="writeDeptBOk">
 						<table class="table">
 							<!-- 제목 입력 -->
 							<tr>
@@ -56,36 +55,45 @@
 
 							<!-- 공지 설정 -->
 							<tr>
-    							<td colspan="2">
-        							<c:choose>
-            							<c:when test="${loginEmp.posNo >= 200}">
-                							공지로 등록: <input type="checkbox" name="deptBNotice" value="1">
-            							</c:when>
-            							<c:otherwise>
-                							공지로 등록: <input type="checkbox" disabled title="직급 200 이상만 공지 등록이 가능합니다.">
-            							</c:otherwise>
-       							 </c:choose>
-    							</td>
+								<td colspan="2">공지로 등록: <input type="checkbox"
+									id="noticeCheckbox" name="deptBNotice" value="1">
+									<span id="noticeMessage" style="color: gray; display: none;">공지 등록 불가</span>
+								</td>
 							</tr>
 
+							<script>
+								$(document).ready(function() {
+									const posNo = ${loginEmp.posNo};
+									console.log("posno: "+posNo);
+									// 로그인한 사용자의 직급 번호
+									if (posNo < 200 && posNo !== 0) {
+										// 직급이 200 미만이고 0이 아니면 체크박스를 숨기고 메시지를 표시
+										$("#noticeCheckbox").hide();
+										$("#noticeMessage").show();
+									}
+								});
+							</script>
+							
 							<!-- 공개/비공개 설정 -->
 							<tr>
 								<td colspan="2"><input type="radio" name="deptBPblc"
 									value="1"> 공개 <input type="radio" name="deptBPblc"
 									value="0"> 비공개</td>
 							</tr>
-
 							<!-- 버튼 영역 -->
 							<tr>
 
-								<td colspan="2"><input type="button"
-									class="btn btn-outline-primary" value="목록"
-									onclick="location.href='deptboard?cmd=selectDeptB'" /> <input
-									type="button" class="btn btn-outline-success"
-									name="deptBStatus" value="임시저장" /> <input type="submit"
-									class="btn btn-outline-success" value="등록" /> <input
-									type="button" class="btn btn-outline-danger" id="resetBtn"
-									value="다시쓰기" /></td>
+								<td colspan="2">
+									<input type="button"
+										class="btn btn-outline-primary" value="목록"
+										onclick="location.href='deptboard?cmd=selectDeptB'" /> 
+									<input
+										type="button" class="btn btn-outline-success"
+										name="deptBStatus" value="임시저장" /> 
+									<input type="submit" class="btn btn-outline-success" value="등록" /> 
+									<input type="button" class="btn btn-outline-danger" id="resetBtn"
+										value="다시쓰기" />
+								</td>
 							</tr>
 						</table>
 

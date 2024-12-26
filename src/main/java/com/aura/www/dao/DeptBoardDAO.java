@@ -347,6 +347,164 @@ public class DeptBoardDAO {
 	}
 	
 	
+	
+	// 공지사항 최신 3개 
+	public ArrayList<DeptBoardVO> selectThreeRecentNotice() {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
+	    sb.append("FROM DEPTBOARD WHERE DEPTB_NOTICE=1 ORDER BY CREATE_DATE DESC LIMIT 3 "); // 부서 번호 조건 제거
+
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+
+	
+	
+	
+	// 공지사항 최신 3개 제외 전체 글들  
+	public ArrayList<DeptBoardVO> getRestOfAllDeptBoard(int notice1, int notice2, int notice3) {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
+	    sb.append("FROM DEPTBOARD WHERE DEPTB_NO NOT IN ( ? , ? , ? ) ORDER BY CREATE_DATE DESC "); // 부서 번호 조건 제거
+
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        pstmt.setInt(1, notice1);
+	        pstmt.setInt(2, notice2);
+	        pstmt.setInt(3, notice3);
+	        
+	        rs = pstmt.executeQuery();
+	        
+
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	
+	
+	
+	
+	
+	// 공지사항 최신 3개 
+	public ArrayList<DeptBoardVO> selectThreeRecentNoticeByDept(int deptno) {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
+	    sb.append("FROM DEPTBOARD WHERE DEPTB_NOTICE=1 AND DEPT_NO=? ORDER BY CREATE_DATE DESC LIMIT 3 "); // 부서 번호 조건 제거
+
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        pstmt.setInt(1, deptno);
+	        rs = pstmt.executeQuery();
+	        
+
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	// 부서 공지사항 3개 제외 글들 
+	public ArrayList<DeptBoardVO> getRestOfDeptBoard(int deptno, int notice1, int notice2, int notice3) {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
+	    sb.append("FROM DEPTBOARD WHERE DEPT_NO = ? AND DEPTB_NO NOT IN ( ? , ? , ? ) ORDER BY CREATE_DATE DESC "); // 부서 번호 조건 제거
+
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        pstmt.setInt(1, deptno);
+	        pstmt.setInt(2, notice1);
+	        pstmt.setInt(3, notice2);
+	        pstmt.setInt(4, notice3);
+	        
+	        rs = pstmt.executeQuery();
+	        
+
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	
+	
+	
+	
 	// 페이징 
 //	public ArrayList<com.aura.www.vo.DeptBoardVO> selectAllbyPage(int startNo, int endNo) {
 //		ArrayList<com.aura.www.vo.DeptBoardVO> list = new ArrayList<com.aura.www.vo.DeptBoardVO>();

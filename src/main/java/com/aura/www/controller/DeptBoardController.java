@@ -48,6 +48,7 @@ public class DeptBoardController extends HttpServlet {
 
 		// 3. page==null or SelectDeptB 라면
 		if (cmd == null || cmd.equals("selectDeptB")) {
+			System.out.println("inside deptBoardcontroller");
 			com.aura.www.action.Action action = new SelectDeptBAction(userDeptNo);
 			url = action.execute(req, resp); 
 		} else if(cmd.equals("detailDeptB")) {

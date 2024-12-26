@@ -1,20 +1,24 @@
-package com.aura.www.action.board.deptboard;
+package com.aura.www.controller;
 
-import com.aura.www.action.Action;
+import java.io.IOException;
+
 import com.aura.www.dao.DeptBoardDAO;
 import com.aura.www.vo.DeptBoardVO;
 import com.aura.www.vo.EmpVO;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class WriteDeptBOkAction implements Action {
+@WebServlet("/writeDeptBOk")
+public class writeDeptBOk  extends HttpServlet{
 
 	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-	    // 파라미터값 가져오기
-	    String deptBTitle = req.getParameter("deptBTitle");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String deptBTitle = req.getParameter("deptBTitle");
 	    String deptBContent = req.getParameter("deptBContent");
 	    String dbn = req.getParameter("deptBNotice");
 	    String dbp = req.getParameter("deptBPblc");
@@ -61,8 +65,11 @@ public class WriteDeptBOkAction implements Action {
 	    vo.setDeptNo(loginEmp.getDeptNo());
 
 	    dao.insertOne(vo);
-
-	    return "deptboard?cmd=selectDeptB";
 	    
+	    resp.sendRedirect(req.getContextPath()  +"/success");
+
+	
 	}
+	
+	
 }

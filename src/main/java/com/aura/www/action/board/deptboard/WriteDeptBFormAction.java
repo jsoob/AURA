@@ -1,5 +1,6 @@
 package com.aura.www.action.board.deptboard;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.aura.www.action.Action;
@@ -26,8 +27,8 @@ public class WriteDeptBFormAction implements Action {
 
 		req.setAttribute("commAt", map);
 
+		
 		return "view/board/deptboard/writeDeptB.jsp"; 
-
 	}
 }
 
