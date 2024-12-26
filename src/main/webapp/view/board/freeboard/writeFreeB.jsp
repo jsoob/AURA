@@ -89,9 +89,9 @@ $(()=>{
 					
 					appendText += '<td><a onclick="getSaveList('+list.freeBNo+',\''+list.freeBTitle+'\',\''+list.freeBContent+'\')">'+list.freeBNo+'</td>';
 					
-					appendText += '<td>'+list.freeBTitle+'</td>';
-					appendText += '<td>'+list.createDate+'</td>';
-					appendText += '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+					appendText += '<td><a onclick="getSaveList('+list.freeBNo+',\''+list.freeBTitle+'\',\''+list.freeBContent+'\')">'+list.freeBTitle+'</td>';
+					appendText += '<td><a onclick="getSaveList('+list.freeBNo+',\''+list.freeBTitle+'\',\''+list.freeBContent+'\')">'+list.createDate+'</td>';
+					appendText += '<td><a onclick="DeleteTempSave('+list.freeBNo+')"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>';
 					
 					appendText +="</tr>";
 					
@@ -111,8 +111,24 @@ $(()=>{
 				
 		$('input[name="cmd"]').val("modifyFreeBOk");
 		
-		$("#tempsaveListModal").modal('hide')
+		$("#tempsaveListModal").modal('hide');
 
+	}
+	
+	function DeleteTempSave(no){
+		if (confirm("정말 삭제하시겠습니까?")) {
+		$.ajax({
+			url:"/aura/deleteTempSave", 
+	        type: "get",
+	        data : {freeBNo : no},
+	        success: (data) => {
+	        	console.log(data);
+	        	console.log("임시저장 글 삭제");
+	        	alert("임시저장한 글이 삭제되었습니다.");
+	        	loadSaveList();
+	        	}
+	        })
+		}
 	}
 	</script>
 </head>

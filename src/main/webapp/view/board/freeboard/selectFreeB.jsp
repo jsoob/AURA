@@ -9,7 +9,11 @@
 
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
-
+<style>
+.text-center {
+    text-align: center !important;
+}
+</style>
 <script>
 
 	$(()=>{
@@ -45,14 +49,16 @@
 				 
 				    // 데이터가 없을 경우 처리
 				    if (data.length === 0) {
-				        $(".freeBList").append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+				        $(".freeBList").append("<tr><td colspan='5' class='text-center'>게시글이 없습니다.</td></tr>");
 				    }
 				 
 				let obj = data;
                 $.each(obj,(index, freeB)=>{
                 	// console.log(freeB.freeBNo);
-                	
-                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td><a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
+                	let notice;
+                	if(freeB.freeBNotice == 1) notice='[공지]';
+                	else notice='';
+                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td>'+notice+'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
                     $(".freeBList").append(rowHtml);
                     
                 	})      
