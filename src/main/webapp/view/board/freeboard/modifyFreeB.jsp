@@ -57,7 +57,7 @@
 								<td colspan="2"><a href="freeboard?cmd=selectFreeB"> <input
 										type="button" class="btn btn-outline-primary" value="취소" /></a> <input
 									type="submit" class="btn btn-outline-success" value="등록" /> <input
-									type="button" class="btn btn-outline-danger" id="btn"
+									type="button" class="btn btn-outline-danger" id="resetBtn"
 									value="다시쓰기" /></td>
 							</tr>
 						</table>
@@ -67,6 +67,15 @@
 				</div>
 			</div>
 		</div>
+				<script>
+				// 다시 쓰기 누르면 reset
+				$("#resetBtn").on("click", ()=>{
+					$(".summernote6").summernote('reset');		
+					$("input[type=text]").val('');
+				/* 	document.getElementById("summernote6").value='';
+					form태그객체.reset(); */
+				});
+		</script>
 
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>

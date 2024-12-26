@@ -16,17 +16,14 @@
 		loadFreeBList();
 		
 		// 엔터를 눌러도 검색버튼을 누른 것처럼 작동
-		$("#searchWord").on("keyup",function(e){
-			console.log("Search Word:", $("#searchWord").val());
-			if(e.key === "Enter") {
-				//e.preventDefault(); // 기본동작 방지
+		$("#searchWord").on("keypress",function(e){
+			// console.log("Search Word:", $("#searchWord").val());
+			if(e.key == "Enter") {
+				e.preventDefault(); // 기본동작 방지
 				console.log("Search Word:", $("#searchWord").val());
-				alert("엔터눌림");
 				loadFreeBList();
-				
 			}
 		});
-		
 	})
 	
 	// 게시글 목록

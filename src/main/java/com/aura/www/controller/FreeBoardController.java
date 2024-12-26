@@ -29,6 +29,7 @@ public class FreeBoardController extends HttpServlet {
 
 		// 2. page 파라미터 값 가져오기
 		String cmd = req.getParameter("cmd");
+		String freeBStatus = req.getParameter("freeBStatus");
 		String url = "";
 
 		// 3. page==null or SelectFreeB 라면
@@ -48,6 +49,7 @@ public class FreeBoardController extends HttpServlet {
 			Action action = new ModifyFreeBAction();
 			url = action.execute(req, resp);
 		} else if (cmd.equals("modifyFreeBOk")) {
+			// 임시저장한 글 불러와서 등록한 경우에도 이거 실행
 			Action action = new ModifyFreeBOkAction();
 			url = action.execute(req, resp);
 		} else if (cmd.equals("deleteFreeB")) {
