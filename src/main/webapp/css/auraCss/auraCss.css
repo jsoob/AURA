@@ -136,6 +136,12 @@
 	width: 100% !important;
 }
 
+/* 사원 상세정보 이미지 */
+.myViewImg {
+	width: 200px !important;
+	height: 200px !important;
+}
+
 /* 사원 list 이미지 */
 .empListImg {
 	width: 50px !important;
@@ -153,8 +159,26 @@
     color: #006DF0;
 }
 
+/* 버튼 색깔 css */
+.btn-primary {
+	background: #006DF0 !important;
+}
+
 /* 중간사이즈 모달 css */
 .middleMoalWd {
 	width: 50% !important;
     max-width: 600px !important;
+}
+
+/* 내 정보 모달 css */
+.myMoalWd {
+	width: 60% !important;
+    max-width: 700px !important;
+}
+
+.header-menu-list {
+	padding: 10px 30px;
+    display: block;
+    color: #303030;
+    font-size: 14px;
 }

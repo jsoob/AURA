@@ -134,7 +134,9 @@ public class AdminController extends HttpServlet {
 	    	resp.sendRedirect("admin/cmd=selectDept");
 	    } else if (cmd.equals("insertEmpOk")) {
 	    	resp.sendRedirect(url);
-	    }  
+	    } else if (cmd.equals("modifyEmpOk")) {
+	    	resp.sendRedirect(url);
+	    }
 	    else {
 	    	RequestDispatcher rd = req.getRequestDispatcher(url);
 	    	rd.forward(req, resp);

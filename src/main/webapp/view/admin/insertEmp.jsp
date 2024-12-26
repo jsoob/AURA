@@ -34,7 +34,6 @@
 	        	let rows = data;
 				$("tr[name='deptList']").empty();
 				$.each(rows, (idx, row) => {
-					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='deptList'>";
 					appendText += "<td class='text-center'><a onclick='addDept("+row.deptNo+", \""+row.deptName+"\")'>"+row.deptNo+"</td>'";
@@ -43,12 +42,6 @@
 					
 					$("#selectDept").append(appendText);
 				});
-	        },
-	        error:function(request, err) {
-	        	console.log("error");
-	        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        },
-	        complete: function () {
 	        }
 	    });
 	}
@@ -63,7 +56,6 @@
 	        	let rows = data;
 				$("tr[name='posList']").empty();
 				$.each(rows, (idx, row) => {
-					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='posList'>";
 					appendText += "<td class='text-center'><a onclick='addPos("+row.posNo+", \""+row.posName+"\")'>"+row.posNo+"</td>'";
@@ -72,36 +64,29 @@
 					
 					$("#selectPos").append(appendText);
 				});
-	        },
-	        error:function(request, err) {
-	        	console.log("error");
-	        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        },
-	        complete: function () {
 	        }
 	    });
 	}
 	
 	// 여기서 모달값 선택시 모달 닫기 + value 넣어주기
 	function addDept(no, name) {
-		$("input[name='deptNo']").val(no);
-		$("input[name='deptName']").val(name);
+		$("[name=empInsertForm] input[name='deptNo']").val(no);
+		$("[name=empInsertForm] input[name='deptName']").val(name);
 		$("#deptModal").modal('hide')
 	}
 	
 	function addPos(no, name) {
-		$("input[name='posNo']").val(no);
-		$("input[name='posName']").val(name);
+		$("[name=empInsertForm] input[name='posNo']").val(no);
+		$("[name=empInsertForm] input[name='posName']").val(name);
 		$("#posModal").modal('hide')
 	}
 	
 	function insertEmp() {
-		let empName = ($("input[name='empName']").val()).trim();
-		let deptNo = ($("input[name='deptNo']").val()).trim();
-		let posNo = ($("input[name='posNo']").val()).trim();
+		let empName = ($("[name=empInsertForm] input[name='empName']").val()).trim();
+		let deptNo = ($("[name=empInsertForm] input[name='deptNo']").val()).trim();
+		let posNo = ($("[name=empInsertForm] input[name='posNo']").val()).trim();
 
-		let hiredate = ($("input[name='hiredate']").val());
-		console.log("hiredate = " + hiredate);
+		let hiredate = ($("[name=empInsertForm] input[name='hiredate']").val());
 		if(empName.length == 0 ) {
 			Swal.fire({
 			  title: "미입력",
@@ -130,7 +115,7 @@
 			return;
 		}
 		
-		let form = document.querySelector("form");
+		let form = document.empInsertForm;
 	 	form.action="admin?cmd=insertEmpOk";
 	 	form.method ="post";
 		form.submit();
@@ -158,7 +143,7 @@
 	                            <%-- 찐찐 개별 --%>
 	                            <div class="col-lg-6 col-sm-8 col-xs-8">
 									<!-- 사원 이름 , 부서, 직급, 입사일자 -->
-		                            <form action="admin">
+		                            <form name="empInsertForm" action="admin">
 		                                <div class="form-group-inner mg-bt-30">
 		                                    <div class="row">
 		                                        <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">

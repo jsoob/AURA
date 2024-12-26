@@ -26,8 +26,7 @@
 		            success: (data) => {
 		            	let getEmailEmp = data.getEmailEmp;
 		            	let status = data.status;
-		            	console.log("status = ", status);
-		            	console.log("getEmailEmp = ", getEmailEmp);
+		            	
 		            	if(status == 0) { 
 		            		Swal.fire({
 		          			  title: "Error",

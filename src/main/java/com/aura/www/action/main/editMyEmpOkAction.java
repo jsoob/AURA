@@ -1,19 +1,22 @@
-package com.aura.www.action.admin.emp;
+package com.aura.www.action.main;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.json.simple.JSONObject;
+
 import com.aura.www.action.Action;
-import com.aura.www.dao.AdminEmpDAO;
+import com.aura.www.dao.LoginDAO;
 import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
-public class ModifyEmpOkAction implements Action {
+public class editMyEmpOkAction implements Action {
 	// 파일 저장경로
 	private static final String UPLOAD_DIRECTORY = "upload\\emp"; 
 	private static final String UPLOAD_PATH = "upload/emp"; 
@@ -21,32 +24,32 @@ public class ModifyEmpOkAction implements Action {
 		
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String eNo = req.getParameter("empNo");
-	    String empName = req.getParameter("empName");
-	    String pNo = req.getParameter("posNo");
-	    String dNo = req.getParameter("deptNo");
-	    String hiredate = req.getParameter("hiredate");
-	    String quitdate = req.getParameter("quitdate");
-	    
+		System.out.println("editMyEmpOkAction");
+		
+		JSONObject obj = new JSONObject();
+		
+		HttpSession session = req.getSession();
+		EmpVO loginEmp = (EmpVO)session.getAttribute("loginEmp");
+		
+		String eNo = loginEmp.getEmpNo()+"";
+		String birthdate = req.getParameter("birthdate");
+		String cellphone = req.getParameter("cellphone");
+		String empEmail = req.getParameter("empEmail");
+		
 	    if (eNo != null && !eNo.isEmpty()) {
-	        AdminEmpDAO dao = new AdminEmpDAO();
+	        LoginDAO dao = new LoginDAO();
+	        
 	        EmpVO vo = new EmpVO();
-	        
 	        int empNo = Integer.parseInt(eNo);
-	        int deptNo = Integer.parseInt(dNo);
-	        int posNo = Integer.parseInt(pNo);
-	        
 	        vo.setEmpNo(empNo);
-	        vo.setEmpName(empName);
-	        vo.setPosNo(posNo);
-	        vo.setDeptNo(deptNo);
-		    if (hiredate != null && !hiredate.isEmpty()) vo.setHiredate(hiredate);
-		    if (quitdate != null && !quitdate.isEmpty()) vo.setQuitdate(quitdate);
+	        if (birthdate != null && !birthdate.isEmpty()) vo.setBirthdate(birthdate);
+	        if (cellphone != null && !cellphone.isEmpty()) vo.setCellphone(cellphone);
+	        if (empEmail != null && !empEmail.isEmpty()) vo.setEmpEmail(empEmail);
 		    
 		 // file
 		    Part filePart;
 			try {
-				filePart = req.getPart("changeImg");
+				filePart = req.getPart("myChangeImg");
 				
 				if(filePart != null) {
 			    	// 절대 경로 위치
@@ -82,10 +85,18 @@ public class ModifyEmpOkAction implements Action {
 			} catch (ServletException e) {
 				e.printStackTrace();
 			}
-	        dao.updateEmpOne(vo);
+	        int status = dao.editMyEmp(vo);
+	        if(status == 1) {
+	        	loginEmp = dao.selectLogin(loginEmp.getEmpNo(), loginEmp.getEmpPw());
+	        	if(loginEmp!=null) {
+	        		System.out.println("loginEmp/setAttribute");
+	        		session.setAttribute("loginEmp", loginEmp);
+	        	}
+	        }
+	        obj.put("status", status);
 	    }
 	    // 처리 후 부서 조회 화면으로 이동
-	    return "admin?cmd=selectEmp";
+	    return obj.toJSONString();
 	}
 	
 	// 업로드된 파일의 이름만 가져오기.

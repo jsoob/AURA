@@ -34,18 +34,13 @@
 						dataType: 'json', 
 			            success: (data) => {
 			            	let status = data.status;
-			            	console.log("status = ", status);
-			            	console.log("cnt = ", cnt);
+			            	
 			            	if(status == 0) {
-				            	console.log("status == 0");
-			            		if(cnt== 5) {
-					            	console.log("cnt == 5");
-			            			location.reload(true); // 5회 이상 틀릴시 새로고침
+				            	if(cnt== 5) {
+					            	location.reload(true); // 5회 이상 틀릴시 새로고침
 			            		}
 			            		$("#msg").text("실패 "+cnt+"회(5회시 인증번호 재발송)");
 				            } else if(status == 1) { // 1이면 조회
-				            	console.log("status == 1");
-				            	
 				            	let form = document.createElement('form');
 			    			  	
 			            		let obj = document.createElement('input');

@@ -35,13 +35,26 @@ public class LoginDAO {
 		}
 	} // constructer end
 
-	public EmpVO selectLogin(int emp_no, String emp_pw) {
+	public EmpVO selectLogin(int empNo, String empPw) {
 		sb.setLength(0);
 		sb.append("SELECT ");
-		sb.append("EMP_NO, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
-		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
-		sb.append("POS_NO, DEPT_NO, CREATE_DATE, UPDATE_DATE ");
-		sb.append("FROM EMP ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_PW, EMP_NAME, EMP_IMAGE, CMP_EMAIL, EMP_EMAIL, CELLPHONE, ");
+//		sb.append("HIREDATE, QUITDATE, BIRTHDATE, ");
+
+		// 유저들은 YYYY-MM-DD 로 보이게
+		sb.append("DATE_FORMAT(HIREDATE, '%Y-%m-%d') AS HIREDATE, ");
+		sb.append("DATE_FORMAT(QUITDATE, '%Y-%m-%d') AS QUITDATE, ");
+		sb.append("DATE_FORMAT(BIRTHDATE, '%Y-%m-%d') AS BIRTHDATE, ");
+		
+		sb.append("CREATE_DATE, UPDATE_DATE ");
+		sb.append("FROM EMP E ");
+		
+		sb.append("LEFT OUTER JOIN POSITION P ");
+		sb.append("ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ");
+		sb.append("ON E.DEPT_NO = D.DEPT_NO ");
+		
 		sb.append("WHERE EMP_NO = ? ");
 		sb.append("AND EMP_PW = ? ");
 //		sb.append("AND QUITDATE IS NULL "); 
@@ -52,43 +65,48 @@ public class LoginDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, emp_no);
-			pstmt.setString(2, emp_pw);
+			pstmt.setInt(1, empNo);
+			pstmt.setString(2, empPw);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				String emp_name = rs.getString("EMP_NAME");
-				String emp_image = rs.getString("EMP_IMAGE");
-				String cmp_email = rs.getString("CMP_EMAIL");
-				String emp_email = rs.getString("EMP_EMAIL");
+				String empName = rs.getString("EMP_NAME");
+				String empImage = rs.getString("EMP_IMAGE");
+				String cmpEmail = rs.getString("CMP_EMAIL");
+				String empEmail = rs.getString("EMP_EMAIL");
 				String cellphone = rs.getString("CELLPHONE");
 				
 				String hiredate = rs.getString("HIREDATE");
 				String quitdate = rs.getString("QUITDATE");
 				String birthdate = rs.getString("BIRTHDATE");
 				
-				int pos_no = rs.getInt("POS_NO");
-				int dept_no = rs.getInt("DEPT_NO");
-				String create_date = rs.getString("CREATE_DATE");
-				String update_date = rs.getString("UPDATE_DATE");
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				
+				String createDate = rs.getString("CREATE_DATE");
+				String updateDate = rs.getString("UPDATE_DATE");
 			
 				vo = new EmpVO();
 				
-				vo.setEmpNo(emp_no);
-				vo.setEmpPw(emp_pw);
-				vo.setEmpName(emp_name);
-				vo.setEmpImage(emp_image);
-				vo.setCmpEmail(cmp_email);
-				vo.setEmpEmail(emp_email);
+				vo.setEmpNo(empNo);
+				vo.setEmpPw(empPw);
+				vo.setEmpName(empName);
+				vo.setEmpImage(empImage);
+				vo.setCmpEmail(cmpEmail);
+				vo.setEmpEmail(empEmail);
 				vo.setCellphone(cellphone);
 				vo.setHiredate(hiredate);
 				vo.setQuitdate(quitdate);
 				vo.setBirthdate(birthdate);
-				vo.setPosNo(pos_no);
-				vo.setDeptNo(dept_no);
-				vo.setCreateDate(create_date);
-				vo.setUpdateDate(update_date);
+				vo.setPosNo(posNo);
+				vo.setDeptNo(deptNo);
+				vo.setPosName(posName);
+				vo.setDeptName(deptName);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
 			}
 		} catch (SQLException e) {
 		
@@ -147,6 +165,57 @@ public class LoginDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int editMyEmp(EmpVO vo) {
+		sb.setLength(0);
+		sb.append("UPDATE EMP SET ");
+		sb.append("UPDATE_DATE  = CURRENT_TIMESTAMP() "); // 수정
+		
+		if( vo.getBirthdate() == null ) {
+			sb.append(", BIRTHDATE  = CURRENT_TIMESTAMP() ");
+		} else if(vo.getBirthdate() != null && !vo.getBirthdate().equals("")) {
+			sb.append(", BIRTHDATE  = STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s') ");
+		}
+		
+		if(vo.getCellphone() != null && !vo.getCellphone().equals("") ) sb.append(", CELLPHONE = ? ");
+		if(vo.getEmpEmail() != null && !vo.getEmpEmail().equals("") ) sb.append(", EMP_EMAIL = ? ");
+		
+		if(vo.getEmpImage() == null ) { 
+			sb.append(", EMP_IMAGE = NULL ");
+		} else if(vo.getEmpImage() != null && !vo.getEmpImage().equals("") ) {
+			sb.append(", EMP_IMAGE = ? ");
+		}
+		
+		sb.append("WHERE EMP_NO = ? " );
+		
+		int rst = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			
+			int cnt = 0;
+			
+			if(vo.getBirthdate() != null && !vo.getBirthdate().equals("") )
+				pstmt.setString(++cnt, vo.getBirthdate()+" 09");
+			
+			if(vo.getCellphone() != null && !vo.getCellphone().equals("") )
+				pstmt.setString(++cnt, vo.getCellphone());
+			
+			if(vo.getEmpEmail() != null && !vo.getEmpEmail().equals("") )
+				pstmt.setString(++cnt, vo.getEmpEmail());
+
+			if(vo.getEmpImage() != null && !vo.getEmpImage().equals("") )
+				pstmt.setString(++cnt, vo.getEmpImage());
+			
+			pstmt.setInt(++cnt, vo.getEmpNo());
+			
+			rst = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rst;
 	}
 	
 }

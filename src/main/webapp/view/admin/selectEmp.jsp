@@ -49,7 +49,6 @@
             	$("tr[name='empList']").remove(); // .empty();
 				
 				$.each(empList, (idx, row) => {
-					// console.log(row);
 					let appendText = ""; // style='height: 415px; vertical-align: top;'
 					appendText = "<tr name='empList' style='height: 69.1px;'>"; //  style='height: 47px;'
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
@@ -119,11 +118,7 @@
             },
             error:function(request, err) {
             	console.log("error");
-            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            },
-            complete: function () {
             }
-            
         });
 		
 	} // end loadBtn
@@ -189,7 +184,6 @@
 			            },
 			            error:function(request, err) {
 			            	console.log("error");
-			            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			            },
 			            complete: function () { // 일단 완료되면 다시 조회
 							loadBtn();

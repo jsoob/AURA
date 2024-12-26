@@ -76,12 +76,6 @@
             }
             
         });
-		/* 
-		let form = document.querySelector("form");
-        form.action = "admin?cmd=selectEmp";
-        form.method ="post";
-        form.submit();
-         */
 	}
 </script>
 

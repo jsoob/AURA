@@ -79,7 +79,6 @@
 	        	let rows = data;
 				$("tr[name='deptList']").empty();
 				$.each(rows, (idx, row) => {
-					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='deptList'>";
 					appendText += "<td class='text-center'><a onclick='addDept("+row.deptNo+", \""+row.deptName+"\")'>"+row.deptNo+"</td>'";
@@ -88,12 +87,6 @@
 					
 					$("#selectDept").append(appendText);
 				});
-	        },
-	        error:function(request, err) {
-	        	console.log("error");
-	        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        },
-	        complete: function () {
 	        }
 	    });
 	}
@@ -108,7 +101,6 @@
 	        	let rows = data;
 				$("tr[name='posList']").empty();
 				$.each(rows, (idx, row) => {
-					// console.log(row);
 					let appendText = "";
 					appendText = "<tr name='posList'>";
 					appendText += "<td class='text-center'><a onclick='addPos("+row.posNo+", \""+row.posName+"\")'>"+row.posNo+"</td>'";
@@ -117,34 +109,26 @@
 					
 					$("#selectPos").append(appendText);
 				});
-	        },
-	        error:function(request, err) {
-	        	console.log("error");
-	        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        },
-	        complete: function () {
 	        }
 	    });
 	}
 	
 	// 여기서 모달값 선택시 모달 닫기 + value 넣어주기
 	function addDept(no, name) {
-		$("input[name='deptNo']").val(no);
-		$("input[name='deptName']").val(name);
+		$("form[name=empModifyForm] input[name='deptNo']").val(no);
+		$("form[name=empModifyForm] input[name='deptName']").val(name);
 		$("#deptModal").modal('hide')
 	}
 	
 	function addPos(no, name) {
-		$("input[name='posNo']").val(no);
-		$("input[name='posName']").val(name);
+		$("form[name=empModifyForm] input[name='posNo']").val(no);
+		$("form[name=empModifyForm] input[name='posName']").val(name);
 		$("#posModal").modal('hide')
 	}
 	
 	// 사진 업로드
 	function loadFile(input) {
 	    let file = input.files[0];	//선택된 파일 가져오기
-		console.log("file = ", file);
-		console.log("file = ", URL.createObjectURL(file));
 		
 	  	//새로운 이미지 추가
 	    let empImage = $("#empImage");
@@ -152,17 +136,15 @@
 	};
 
 	function removeImage() {
-		console.log("removeImage");
 		let empImage = $("#empImage");
 		empImage.attr('src', '');
 	}
 	
-	// write2.jsp / ajax04.jsp 참고하기
 	function modifyEmpOk() {
-		let empName = ($("input[name='empName']").val()).trim();
-		let deptNo = ($("input[name='deptNo']").val()).trim();
-		let posNo = ($("input[name='posNo']").val()).trim();
-		let hiredate = ($("input[name='hiredate']").val()).trim();
+		let empName = ($("form[name=empModifyForm] input[name='empName']").val()).trim();
+		let deptNo = ($("form[name=empModifyForm] input[name='deptNo']").val()).trim();
+		let posNo = ($("form[name=empModifyForm] input[name='posNo']").val()).trim();
+		let hiredate = ($("form[name=empModifyForm] input[name='hiredate']").val()).trim();
 		
 		if(empName.length == 0 ) {
 			Swal.fire({
@@ -192,7 +174,7 @@
 			return;
 		}
 		
-		let form = document.empModifyForm; // document.querySelector("form");
+		let form = document.empModifyForm;
 	 	form.action="admin?cmd=modifyEmpOk";
 	 	form.method ="post";
 		form.submit();

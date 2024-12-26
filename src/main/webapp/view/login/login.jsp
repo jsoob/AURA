@@ -43,7 +43,7 @@
 		          			  button: "확인",
 		          			});
 			            } if(status == 1) {
-							let form = document.querySelector("form");
+							let form = document.loginForm;
 						 	form.action="main";
 						 	form.method ="post";
 							form.submit();
@@ -80,7 +80,6 @@
 	        <i></i>
 	        <div class="login">
 	            <div class="logo"><img src="https://logowik.com/content/uploads/images/aura-digital-safety4284.logowik.com.webp" alt="" /></div>
-	            <%-- <form name="loginForm"> --%>
 	            <form name="loginForm">
 	            	<div class="input-box">
 	            		<%-- <input type="hidden" name="cmd" value="loginOk" /> --%>

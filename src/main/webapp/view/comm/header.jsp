@@ -1,6 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<script>
+	$(()=>{
+		$('.mypage-modal').on('show.bs.modal', function (event) {
+			$("#myModifyBtn").css("display", "");
+			$("#mySaveBtn").css("display", "none");
+			$(".myImageBtnDiv").css("display", "none");
+			
+			let myModal = $(this);
+			myModal.find('[name=empImage]').attr("src", "${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}");
+			myModal.find('[name=empNo]').val("${loginEmp.empNo }").attr("disabled", true);
+			myModal.find('[name=birthdate]').val("${loginEmp.birthdate }").attr("disabled", true);
+			
+			myModal.find('[name=hiredate]').val("${loginEmp.hiredate }").attr("disabled", true);
+			myModal.find('[name=quitdate]').val("${loginEmp.quitdate }").attr("disabled", true);
+			    
+			myModal.find('[name=empName]').val("${loginEmp.empName }").attr("disabled", true);
+			myModal.find('[name=cellphone]').val("${loginEmp.cellphone }").attr("disabled", true);
+			    
+			myModal.find('[name=deptName]').val("${loginEmp.deptName }").attr("disabled", true);
+			myModal.find('[name=posName]').val("${loginEmp.posName }").attr("disabled", true);
+			    
+			myModal.find('[name=empEmail]').val("${loginEmp.empEmail }").attr("disabled", true);
+			myModal.find('[name=cmpEmail]').val("${loginEmp.cmpEmail }").attr("disabled", true);
+			 
+		});
+		
+		$("#myModifyBtn").on("click", ()=> {
+			$("#myModifyBtn").css("display", "none");
+			$("#mySaveBtn").css("display", "");
+			$(".myImageBtnDiv").css("display", "");
+			
+			let myModal = $("#myModal");
+			// myModal.find('[name=empImage]').attr("src", "${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}");
+			myModal.find('[name=empNo]').attr("disabled", true);
+			myModal.find('[name=birthdate]').attr("disabled", false);
+			
+			myModal.find('[name=hiredate]').attr("disabled", true);
+			myModal.find('[name=quitdate]').attr("disabled", true);
+			    
+			myModal.find('[name=empName]').attr("disabled", true);
+			
+			myModal.find('[name=cellphone]').attr("disabled", false);
+			    
+			myModal.find('[name=deptName]').attr("disabled", true);
+			myModal.find('[name=posName]').attr("disabled", true);
+			    
+			myModal.find('[name=empEmail]').attr("disabled", false);
+			myModal.find('[name=cmpEmail]').attr("disabled", true);
+		});
+		
+		$("#myDelImg").on("click", ()=> {
+			myRemoveImage();
+		});
+		
+		$("#mySaveBtn").on("click", ()=> {
+			console.log("save");
+			
+			// 방법 1
+			/* 
+			// let fileData = new FormData($("#myModal")[0]);
+			let myModal = $("#myModal");
+			console.log("myModal = ", myModal);
+			
+			let myFormData = new FormData();
+			myFormData.append("cmd", "editMyEmpOk");
+			// myFormData.append("file", $("#myChangeImg")[0].files[0]);
+			myFormData.append("myChangeImg", myModal.find('[name=myChangeImg]')[0].files[0]);
+			myFormData.append("empNo", myModal.find('[name=empNo]').val());
+			myFormData.append("birthdate", myModal.find('[name=birthdate]').val());
+			myFormData.append("cellphone", myModal.find('[name=cellphone]').val());
+			myFormData.append("empEmail", myModal.find('[name=empEmail]').val());
+			console.log( myFormData);
+			 */
+			 
+			// 방법 2
+			/*  
+			let myFormData = $("form[name=myPageForm]").serialize();
+			myFormData += "&cmd="+ "editMyEmpOk";
+			 */
+			
+			let myModal = $("#myModal");
+			
+			let myFormData = new FormData();
+			myFormData.append("cmd", "editMyEmpOk");
+			// myFormData.append("file", $("#myChangeImg")[0].files[0]);
+			myFormData.append("myChangeImg", myModal.find('[name=myChangeImg]')[0].files[0]);
+			myFormData.append("empNo", myModal.find('[name=empNo]').val());
+			myFormData.append("birthdate", myModal.find('[name=birthdate]').val());
+			myFormData.append("cellphone", myModal.find('[name=cellphone]').val());
+			myFormData.append("empEmail", myModal.find('[name=empEmail]').val());
+			console.log( myFormData); 
+			
+			$.ajax({
+	        	url:"main", // upload 
+	        	type: "post", 
+	            enctype: 'multipart/form-data',
+	            
+	            // AJAX 통신 시 contentType, processData 파라미터를 false 로 지정하여 통신 시 오류 없음.
+	            contentType: false, 
+	            processData: false, 
+	            
+	            data: myFormData, 
+				dataType: 'json', // json 타입으로 풀어줌
+	            success: (data) => {
+	            	//$('#headerEmpImg').attr("src", "${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}");
+	            	//$("#myModal").modal('hide');
+	            	location.reload(true);
+	            },
+	            error:function(request, err) {
+	            	console.log("error");
+	            }
+	        });
+		});
+	})
+	
+	// 사진 업로드
+	function myLoadFile(input) {
+	    let file = input.files[0];	//선택된 파일 가져오기
+		
+	  	//새로운 이미지 추가
+	    let myModal = $("#myModal");
+		myModal.find('[name=empImage]').attr("src", URL.createObjectURL(file));
+	}
+
+	function myRemoveImage() {
+		let myModal = $("#myModal");
+		myModal.find('[name=empImage]').attr('src', '');
+	}
+</script>
     
 <div class="container-fluid">
 	<div class="row">
@@ -197,20 +327,22 @@
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 												<%-- <img src="${pageContext.request.contextPath}/img/product/pro4.jpg" alt="" /> --%>
-												<img alt="ㅣ" src="${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}" />
+												<img id="headerEmpImg" alt="ㅣ" src="${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}" />
 												
 												<span class="admin-name">${loginEmp.empName }</span>
 												<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 											</a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
+                                                <!-- <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a></li> -->
+                                                <li>
+                                                	<span class="header-menu-list" data-toggle="modal" data-target=".mypage-modal">My Page</span>
+                                                	<%-- 
+                                                	<a href="${pageContext.request.contextPath}/mypage?cmd=detail" >
+                                                		<span class="edu-icon edu-user-rounded author-log-ic"></span>My Page</a>
+                                                	 --%>
                                                 </li>
-                                                <li><a href="${pageContext.request.contextPath}/mypage?cmd=detail" ><span class="edu-icon edu-user-rounded author-log-ic"></span>My Page</a>
-                                                </li>
-                                                <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
-                                                </li>
-                                                <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
-                                                </li>
+                                                <!-- <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a></li> -->
+                                                <!-- <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a></li> -->
                                                 <li><a href="${pageContext.request.contextPath}/login?cmd=logout"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
                                                 </li>
                                             </ul>
@@ -225,6 +357,141 @@
             </div>
         </div>
     </div>
+    
+    <%-- modal --%>
+    <div class="modal fade mypage-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" > <!-- aria-hidden="true" -->
+		<div class="modal-dialog modal-lg myMoalWd">
+	    	<div class="modal-content">
+	    		<div class="modal-header">
+	    			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+					<h4 class="modal-title" id="myModalLabel">&nbsp;
+						<div class="col-lg-8 col-sm-8 col-xs-8 text-left">
+							내 정보
+						</div>
+						
+						<div class="col-lg-3 col-sm-3 col-xs-3 pd-nn text-right">
+							<button type="button" id="myModifyBtn" class="btn btn-primary">수정</button>
+							<button type="button" id="mySaveBtn" class="btn btn-primary">저장</button>
+						</div>
+					</h4>
+	    		</div>
+	    		<div class="modal-body">
+	    			
+	    			<div class="row">
+	    				<form name="myPageForm">
+		    				<div class="col-lg-12 col-sm-12 col-xs-12">
+								<div class="col-lg-12 col-sm-12 col-xs-12 myImageDiv">
+		                        	<div class="col-lg-12 text-center" style="height: 200px;">
+		                        		<img class="myViewImg" name="empImage" alt="사원이미지 없음" src="">
+		                        	</div>
+		                        		<div class="col-lg-12 text-center myImageBtnDiv mg-ht-10">
+		                            		<label class="btn btn-success" style="line-height: 26px;" for="myChangeImg">
+												<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경
+											</label>
+											<input type="file" id="myChangeImg" name="myChangeImg" style="display:none;" accept="image/*" onchange="myLoadFile(this)">
+		                            		<button type="button" id="myDelImg" class="btn btn-danger bg-red" style="line-height: 26px;">
+		                            			<i class="fa fa-times" aria-hidden="true"></i> 사진 삭제</button>
+	                                	</div>
+		                        </div>
+								
+								<div class="col-lg-12 col-sm-12 col-xs-12">
+									<div class="form-group-inner mg-bt-20">
+			                        	<div class="row">
+			                        		<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+			                                	<label class="login2 pull-left pull-left-pro">사원번호</label>
+			                                </div>
+			                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+			                                	<input type="text" name="empNo" class="form-control" disabled="disabled">
+			                                </div>
+			                                        
+			                                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+			                                	<label class="login2 pull-left pull-left-pro">생일</label>
+			                                </div>
+			                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+			                                	<input type="date" name="birthdate" class="form-control" pattern="\d{4}-\d{2}-\d{2}" disabled="disabled" />
+		                                    </div>
+			                        	</div>
+			                        </div>
+			                        
+			                        <div class="form-group-inner mg-bt-20">
+			                       		<div class="row">
+			                       			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">입사일자</label>
+			                                </div>
+			                            	<div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+			                            		<input type="date" name="hiredate" class="form-control" pattern="\d{4}-\d{2}-\d{2}" disabled="disabled" />
+		                                    </div>
+			                                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+			                                	<label class="login2 pull-left pull-left-pro">퇴사일자</label>
+			                                </div>
+			                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+			                                	<input type="date" name="quitdate" class="form-control" pattern="\d{4}-\d{2}-\d{2}" disabled="disabled" />
+		                                    </div>
+			                            </div>
+			                       </div> 
+			                       
+			                        <div class="form-group-inner mg-bt-20">
+			                        	<div class="row">
+			                        		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">사원명</label>
+			                        		</div>
+				                        	<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+				                        		<input type="text" name="empName" class="form-control" disabled="disabled">
+				                        	</div>
+				                        	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">휴대폰</label>
+			                            	</div>
+			                            	<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+			                            		<input type="text" name="cellphone" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+			                            			maxlength="11" class="form-control" disabled="disabled" />
+			                            	</div>
+			                        	</div>
+			                        </div>
+			                        <div class="form-group-inner mg-bt-20">
+			                        	<div class="row">
+			                        		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">부서</label>
+			                        		</div>
+			                        		<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+			                                	<input type="text" name="deptName" class="form-control" disabled="disabled">
+			                            	</div>
+			                            	
+			                            	<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">직급</label>
+			                        		</div>
+			                        		<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+			                        			<input type="text" name="posName" class="form-control" disabled="disabled">
+			                        		</div>
+			                            </div>
+			                        </div>
+			                        
+			                        <div class="form-group-inner mg-bt-20">
+			                        	<div class="row">
+			                        		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">외부 이메일</label>
+			                        		</div>
+			                        		<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+			                        			<input type="text" name="empEmail" class="form-control" disabled="disabled" maxlength="100">
+			                        		</div>
+			                        		<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+			                        			<label class="login2 pull-left pull-left-pro">사내 이메일</label>
+			                        		</div>
+			                        		<div class="col-lg-4 col-md-9 col-sm-9 col-xs-12">
+			                        			<input type="text" name="cmpEmail" class="form-control" disabled="disabled">
+			                        		</div>
+			                        	</div>
+			                       </div>
+			                             
+		                        </div>
+		                        
+		                    </div>
+	    				</form>
+	    			</div>
+	    			
+	    		</div><!-- modal-body -->
+			</div>
+		</div>
+	</div>
     
     <!-- Mobile Menu start -->
     <!-- mobile로 볼때? 굳이? -->    
@@ -264,7 +531,7 @@
 										request.getRequestURL() = http://localhost:8080/aura/view/admin/adminLoad.jsp
 										request.getServletPath() = /view/admin/adminLoad.jsp
                                 	--%>
-                                	
+                                	<%-- 
                                 	<%
                                 		/* 
 	                                	System.out.println("request.getRequestURI() = " + request.getRequestURI());   
@@ -278,6 +545,7 @@
 	                                	System.out.println("substring = " + tUrl.substring(tUrl.indexOf("/aura")));
 	                                	 */
                                 	%>
+                                	 --%>
                                 	<%-- 이전:${ pages }" / 현재 map --%>
                                 	<%-- 
                                 	<a href="${pageContext.request.contextPath}/${commAt['category']}/${cmd}">${commAt["pagesName"]}</a> 
