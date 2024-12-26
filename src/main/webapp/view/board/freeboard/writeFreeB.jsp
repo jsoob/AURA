@@ -36,7 +36,7 @@ $(()=>{
 		
 		$.ajax({
 	        url: "/aura/insertTempSave",
-	        type: "post",
+	        type: "get",
 	        data: {
 	            freeBTitle: $("#title").val(),
 	            freeBContent: $(".summernote6").summernote('code'),

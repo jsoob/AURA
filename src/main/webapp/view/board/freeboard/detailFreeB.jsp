@@ -58,7 +58,7 @@ $(()=>{
 			
 		}else {
 		$.ajax({
-			type:"post", // GET, POST
+			type:"get", // GET, POST
 			async:true, // 비동기화 true, 동기화 false
 			url : "/aura/comment", // 찾아갈 url
 			data:{
@@ -120,7 +120,7 @@ $(()=>{
 	    console.log("수정된 내용:", content);
 	    
 	$.ajax({
-		type:"post",
+		type:"get",
 		url:"/aura/comment",
 		data:{
 			cmntNo: cmntNo,
@@ -142,7 +142,7 @@ $(()=>{
 		
 		 if (confirm("정말 삭제하시겠습니까?")) {
  	$.ajax({
-		type:"post",
+		type:"get",
 		url:"/aura/comment",
 		data:{
 			cmntNo: cmntNo,
@@ -158,7 +158,7 @@ $(()=>{
 	// 댓글 목록 출력
 		function loadComment(){
 		    $.ajax({
-		        type: "post",
+		        type: "get",
 		        url: "/aura/comment",
 		        dataType:'json',
 		        data: {

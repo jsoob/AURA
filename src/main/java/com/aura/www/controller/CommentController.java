@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/comment")
 public class CommentController extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cmd = req.getParameter("cmd");
 		String url = "";
 
