@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,12 @@
 <!-- 공통 CSS 및 JS 파일 -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 <!-- jQuery 라이브러리 추가 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- Summernote CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css"
+	rel="stylesheet">
 </head>
 <body>
 	<!-- 좌측 메뉴 포함 -->
@@ -22,7 +26,8 @@
 		<!-- 상단 헤더 포함 -->
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 
-		<div class="container-area mg-b-15">
+		<div 
+		class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
 					<!-- 글쓰기 폼 -->
@@ -36,7 +41,8 @@
 											<label for="deptBTitle" class="control-label">제목:</label>
 										</div>
 										<div class="col-sm-11">
-											<input type="text" name="deptBTitle" class="form-control" id="deptBTitle" />
+											<input type="text" name="deptBTitle" class="form-control"
+												id="deptBTitle" />
 										</div>
 									</div>
 								</td>
@@ -44,35 +50,42 @@
 
 							<!-- Summernote 에디터로 내용 입력 -->
 							<tr>
-								<td colspan="2">
-									<textarea class="summernote6" name="deptBContent" id="summernote6"></textarea>
-								</td>
+								<td colspan="2"><textarea class="summernote6"
+										name="deptBContent" id="summernote6"></textarea></td>
 							</tr>
 
 							<!-- 공지 설정 -->
 							<tr>
-								<td colspan="2">
-									공지로 등록: <input type="checkbox" name="deptBNotice" value="1">
-								</td>
+    							<td colspan="2">
+        							<c:choose>
+            							<c:when test="${loginEmp.posNo >= 200}">
+                							공지로 등록: <input type="checkbox" name="deptBNotice" value="1">
+            							</c:when>
+            							<c:otherwise>
+                							공지로 등록: <input type="checkbox" disabled title="직급 200 이상만 공지 등록이 가능합니다.">
+            							</c:otherwise>
+       							 </c:choose>
+    							</td>
 							</tr>
 
 							<!-- 공개/비공개 설정 -->
 							<tr>
-								<td colspan="2">
-									<input type="radio" name="deptBPblc" value="1"> 공개
-									<input type="radio" name="deptBPblc" value="0"> 비공개
-								</td>
+								<td colspan="2"><input type="radio" name="deptBPblc"
+									value="1"> 공개 <input type="radio" name="deptBPblc"
+									value="0"> 비공개</td>
 							</tr>
 
 							<!-- 버튼 영역 -->
 							<tr>
-								
-								<td colspan="2">
-									<input type="button" class="btn btn-outline-primary" value="목록" onclick="location.href='deptboard?cmd=selectDeptB'" />
-									<input type="button" class="btn btn-outline-success" name="deptBStatus" value="임시저장" />
-									<input type="submit" class="btn btn-outline-success" value="등록"  />
-									<input type="button" class="btn btn-outline-danger" id="resetBtn" value="다시쓰기" />
-								</td>
+
+								<td colspan="2"><input type="button"
+									class="btn btn-outline-primary" value="목록"
+									onclick="location.href='deptboard?cmd=selectDeptB'" /> <input
+									type="button" class="btn btn-outline-success"
+									name="deptBStatus" value="임시저장" /> <input type="submit"
+									class="btn btn-outline-success" value="등록" /> <input
+									type="button" class="btn btn-outline-danger" id="resetBtn"
+									value="다시쓰기" /></td>
 							</tr>
 						</table>
 
@@ -92,15 +105,17 @@
 	<!-- 공통 JS 파일 -->
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 	<!-- Summernote JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
 			// Summernote 초기화
 			$('.summernote6').summernote({
-				height: 300, // 에디터 높이
-				placeholder: '여기에 내용을 입력하세요...',
-				focus: true // 로드 시 포커스
+				height : 300, // 에디터 높이
+				placeholder : '여기에 내용을 입력하세요...',
+				focus : true
+			// 로드 시 포커스
 			});
 
 			// 다시쓰기 버튼 동작

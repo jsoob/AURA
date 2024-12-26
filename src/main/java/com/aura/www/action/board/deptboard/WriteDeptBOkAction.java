@@ -11,37 +11,47 @@ import jakarta.servlet.http.HttpSession;
 
 public class WriteDeptBOkAction implements Action {
 
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        // 파라미터값 가져와서 DB에 저장
-        String deptBTitle = req.getParameter("deptBTitle");
-        String deptBContent = req.getParameter("deptBContent");
-        String dbn = req.getParameter("deptBNotice");
-        String dbp = req.getParameter("deptBPblc");
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+	    // 파라미터값 가져오기
+	    String deptBTitle = req.getParameter("deptBTitle");
+	    String deptBContent = req.getParameter("deptBContent");
+	    String dbn = req.getParameter("deptBNotice");
+	    String dbp = req.getParameter("deptBPblc");
 
-        // 세션에서 로그인 사용자 정보 가져오기
-        HttpSession session = req.getSession();
-        EmpVO loginEmp = (EmpVO) session.getAttribute("loginEmp");
-        int deptBCrtr = loginEmp.getEmpNo(); // 작성자 번호
-        int deptNo = loginEmp.getDeptNo();  // 로그인한 사용자의 부서 번호
-        int deptBNotice = (dbn != null) ? Integer.parseInt(dbn) : 0; // 공지 여부
-        int deptBPblc = (dbp != null) ? Integer.parseInt(dbp) : 1;   // 공개 여부
-        int deptBStatus = 1; // 상태: 등록됨
+	    HttpSession session = req.getSession();
+	    EmpVO loginEmp = (EmpVO) session.getAttribute("loginEmp");
 
-        // 게시글 데이터 생성
-        DeptBoardVO vo = new DeptBoardVO();
-        vo.setDeptBTitle(deptBTitle);
-        vo.setDeptBContent(deptBContent);
-        vo.setDeptBNotice(deptBNotice);
-        vo.setDeptBStatus(deptBStatus);
-        vo.setDeptBPblc(deptBPblc);
-        vo.setDeptBCrtr(deptBCrtr);
-        vo.setDeptNo(deptNo); // 부서 번호 추가
+	    int deptBCrtr = loginEmp.getEmpNo();
+	    int posNo = loginEmp.getPosNo(); // 로그인한 사용자의 직급 번호 가져오기
+	    int deptBNotice = 0; // 공지 여부 기본값 (공지 아님)
+	    int deptBPblc = 1; // 공개 여부 기본값
+	    int deptBStatus = 1; // 등록 상태 기본값
 
-        // DB에 저장
-        DeptBoardDAO dao = new DeptBoardDAO();
-        dao.insertOne(vo);
+	    // 공지 설정 (직급 번호 확인)
+	    if (dbn != null && posNo >= 200 && posNo == 0) { // 직급 200 이상만 공지 가능
+	        deptBNotice = Integer.parseInt(dbn);
+	    }
 
-        return "deptboard?cmd=selectDeptB";
-    }
+	    // 공개 설정
+	    if (dbp != null) {
+	        deptBPblc = Integer.parseInt(dbp);
+	    }
+
+	    // 게시글 저장
+	    DeptBoardDAO dao = new DeptBoardDAO();
+	    DeptBoardVO vo = new DeptBoardVO();
+
+	    vo.setDeptBTitle(deptBTitle);
+	    vo.setDeptBContent(deptBContent);
+	    vo.setDeptBNotice(deptBNotice);
+	    vo.setDeptBStatus(deptBStatus);
+	    vo.setDeptBPblc(deptBPblc);
+	    vo.setDeptBCrtr(deptBCrtr);
+	    vo.setDeptNo(loginEmp.getDeptNo());
+
+	    dao.insertOne(vo);
+
+	    return "deptboard?cmd=selectDeptB";
+	}
 }

@@ -31,7 +31,7 @@ public class SelectDeptBAction implements Action {
 	    if (loginEmp.getEmpNo() == 2024000) { 
 	        // 관리자는 모든 데이터 조회
 	        list = dao.selectAll();
-	        deptName = "전체 부서"; // 관리자 화면용
+	        deptName = "전체 "; // 관리자 화면용
 	    } else {
 	        // 일반 사용자는 본인 부서 게시판만 조회
 	        list = dao.selectByDeptNo(loginEmp.getDeptNo());
