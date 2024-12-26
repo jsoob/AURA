@@ -69,18 +69,17 @@ public class FreeBoardFileDAO {
 	public void insertFile(FreeBoardFileVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FBFILE ");
-		sb.append("VALUES(NEXTVAL('FILENO'), ?, ?, ? )");
+		sb.append("VALUES(NULL, ?, ?, (SELECT MAX(FREEB_NO) FROM FREEBOARD))");
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setString(1, vo.getFileName());
 			pstmt.setString(2, vo.getFileRoute());
-			pstmt.setInt(3, vo.getFreeBNo());
+			//pstmt.setInt(3, vo.getFreeBNo());
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

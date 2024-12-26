@@ -10,6 +10,84 @@
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
+<script>
+
+	$(()=>{
+		loadFreeBList();
+		
+		// 엔터를 눌러도 검색버튼을 누른 것처럼 작동
+		$("#searchWord").on("keyup",function(e){
+			console.log("Search Word:", $("#searchWord").val());
+			if(e.key === "Enter") {
+				//e.preventDefault(); // 기본동작 방지
+				console.log("Search Word:", $("#searchWord").val());
+				alert("엔터눌림");
+				loadFreeBList();
+				
+			}
+		});
+		
+	})
+	
+	// 게시글 목록
+	function loadFreeBList (){
+		
+		let sendData = $("form[name=searchForm]").serialize();
+		console.log(sendData);
+		$.ajax({
+			type:"get",
+			url : "/aura/freeboard2",
+			dataType: 'json',
+			data: sendData,
+			success:function(data){
+				$("#searchWord").val('');
+				 $('.freeBList').empty();
+				 
+				 $('#total').empty();
+				 $('#total').append(data.length);
+				 
+				    // 데이터가 없을 경우 처리
+				    if (data.length === 0) {
+				        $(".freeBList").append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+				    }
+				 
+				let obj = data;
+                $.each(obj,(index, freeB)=>{
+                	// console.log(freeB.freeBNo);
+                	
+                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td><a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
+                    $(".freeBList").append(rowHtml);
+                    
+                	})      
+			}
+		});	
+	}
+
+	// 정렬 // 이건 작동하지 않음
+/* 	 $("#order").change(function(){
+         if($(this).val() == "recent"){
+             alert("최신순으로 정렬");
+         } else if($(this).val() == "old"){
+             alert("오래된순으로 정렬");
+         } else if($(this).val() == "최철수"){
+             alert("조회수순으로 정렬");
+         }
+     }); */
+     
+	// 옵션 선택하면 바로 정렬될 수 있게
+	 $(document).on("change", "#order", function () {
+		 // 선택한 옵션에 따라 다르게
+		 if($(this).val() == "recent"){
+             loadFreeBList();
+         } else if($(this).val() == "old"){
+             loadFreeBList();
+         } else if($(this).val() == "view"){
+             loadFreeBList();
+         }
+	});
+	
+</script>
+
 </head>
 <body>
 	<!-- Start Left menu area -->
@@ -32,7 +110,7 @@
 								<div class="form-inline">
 									<div class="pull-left">
 									
-										<label>전체글(${totalCount})</label>
+										<label>전체글(<span id=total></span>)</label>
 									
 										<a href="freeboard?cmd=writeFreeBForm"> <input
 											type="button" class="btn btn-outline-primary" value="글쓰기" />
@@ -42,26 +120,27 @@
 										
 										<div class="form-group">
 											
-											
-											<select name="orderBy" class="form-control" id="orderBy">
-								                <option value="new">최신순</option>
-								                <option value="old">오래된순</option>
-								                <option value="view">조회순</option>
-								            </select>
-											
-											<select name="search" class="form-control" id="search">
-								                <option value="title">제목</option>
-								                <option value="content">내용</option>
-								                <option value="writer">작성자</option>
-								            </select>
-											
-											<input type="text" class="form-control mg-wd-10"
-												id="searchWord" placeholder="검색어를 입력하세요">
+											<form name="searchForm">
+												<select class="form-control" id="order" name="order">
+									                <option value="recent">최신순</option>
+									                <option value="old">오래된순</option>
+									                <option value="view">조회순</option>
+									            </select>
+												
+												<select name="search" class="form-control" id="search">
+									                <option value="title">제목</option>
+									                <option value="content">내용</option>
+									                <option value="writer">작성자</option>
+									            </select>
+												
+												<input type="text" class="form-control mg-wd-10"
+													id="searchWord" name="searchWord" placeholder="검색어를 입력하세요">
+												<span class="pd-lt-10">
+													<button type="button" onclick="loadFreeBList()" class="btn pd-setting">검색</button>
+												</span>
+												<!-- <input type="hidden" name="cmd" value="selectFreeBAsync" /> -->
+											</form>
 										</div>
-
-										<span class="pd-lt-10">
-											<button type="button" class="btn pd-setting">검색</button>
-										</span>
 									</div>
 								</div>
 							</div>
@@ -73,7 +152,8 @@
 									<th>등록일자</th>
 									<th>조회수</th>
 								</tr>
-								<c:forEach var="vo" items="${list}">
+								<tbody class="freeBList">
+			<%-- 					<c:forEach var="vo" items="${list}">
 									<tr>
 										<td>${vo.freeBNo}</td>
 										<td><a
@@ -83,7 +163,8 @@
 										<td>${vo.createDate}</td>
 										<td>${vo.freeBView}</td>
 									</tr>
-								</c:forEach>
+								</c:forEach> --%>
+									</tbody>								
 							</table>
 						</div>
 					</div>

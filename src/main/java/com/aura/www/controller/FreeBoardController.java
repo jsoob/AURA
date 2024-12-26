@@ -8,8 +8,8 @@ import com.aura.www.action.board.freeboard.DetailFreeBAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBOkAction;
 import com.aura.www.action.board.freeboard.SelectFreeBAction;
-import com.aura.www.action.board.freeboard.WriteFreeBOkAction;
 import com.aura.www.action.board.freeboard.WriteFreeBFormAction;
+import com.aura.www.action.board.freeboard.WriteFreeBOkAction;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -59,4 +59,5 @@ public class FreeBoardController extends HttpServlet {
 		rd.forward(req, resp);
 
 	}
+
 }

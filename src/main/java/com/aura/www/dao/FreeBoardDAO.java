@@ -82,26 +82,28 @@ public class FreeBoardDAO {
 	
 	// 검색해서 게시글 찾기
 	// 제목, 내용, 작성자로 검색가능
-	public ArrayList<FreeBoardVO> searchFreeBoard( FreeBoardVO vo ){
+	public ArrayList<FreeBoardVO> searchFreeBoard( FreeBoardVO vo, String order ){
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 		sb.setLength(0);
 		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
 		sb.append("FROM FREEBOARD ");
-		sb.append("WHERE 1=1 ");
-		if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) sb.append("AND FREEB_TITLE LIKE ? ");
-		if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) sb.append("AND FREEB_CONTENT LIKE ? ");
+		sb.append("WHERE FREEB_STATUS !=0 && FREEB_PBLC !=0 "); // 임시저장이 아니거나 공개상태인것
+		if(vo.getFreeBTitle() != null ) sb.append("AND FREEB_TITLE LIKE ? ");
+		if(vo.getFreeBContent() != null ) sb.append("AND FREEB_CONTENT LIKE ? ");
 		if(vo.getFreeBCrtr() != 0 ) sb.append("AND FREEB_CRTR = ? ");
-		sb.append("ORDER BY CREATE_DATE DESC ");
+		if(order.equals("recent"))sb.append("ORDER BY CREATE_DATE DESC ");
+		if(order.equals("old"))sb.append("ORDER BY CREATE_DATE ASC ");
+		if(order.equals("view"))sb.append("ORDER BY FREEB_VIEW DESC ");
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			int cnt = 0;
 			
-			if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) {
+			if(vo.getFreeBTitle() != null ) {
 				pstmt.setString(++cnt, "%"+vo.getFreeBTitle()+"%");
 			}
-			if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) {
+			if(vo.getFreeBContent() != null ) {
 				pstmt.setString(++cnt, "%"+vo.getFreeBContent()+"%");
 			}
 			if(vo.getFreeBCrtr() != 0) {
@@ -194,7 +196,7 @@ public class FreeBoardDAO {
 	public void insertOne(FreeBoardVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBOARD ");
-		sb.append("VALUES(2,?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"); // NEXTVAL('FREEBNO')
+		sb.append("VALUES(NULL,?,?,0,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)"); // NEXTVAL('FREEBNO')
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
@@ -288,6 +290,44 @@ public class FreeBoardDAO {
 		}
 		return result;
 	}
+	
+	
+	// 검색 조건에 따른 총 게시물수
+		public int getTotalCountSearch(FreeBoardVO vo) {
+			int cnt = 0;
+			
+			sb.setLength(0);
+			sb.append("SELECT COUNT(*) cnt " );
+			sb.append("FROM FREEBOARD " );
+			sb.append("WHERE 1=1 ");
+			
+			if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) sb.append("AND FREEB_TITLE LIKE ? ");
+			if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) sb.append("AND FREEB_CONTENT LIKE ? ");
+			if(vo.getFreeBCrtr() != 0 ) sb.append("AND FREEB_CRTR = ? ");
+			
+			try {
+				pstmt = conn.prepareStatement(sb.toString());
+	
+				if(vo.getFreeBTitle().equals("") && vo.getFreeBTitle() != null ) {
+					pstmt.setString(++cnt, "%"+vo.getFreeBTitle()+"%");
+				}
+				if(vo.getFreeBContent().equals("") && vo.getFreeBContent() != null ) {
+					pstmt.setString(++cnt, "%"+vo.getFreeBContent()+"%");
+				}
+				if(vo.getFreeBCrtr() != 0) {
+					pstmt.setInt(++cnt, vo.getFreeBCrtr());
+				}
+				
+				rs = pstmt.executeQuery();
+				rs.next();
+				cnt = rs.getInt("cnt");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return cnt;
+		}
+	
+	
 	
 	// 페이징 처리해야함
 //	SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE

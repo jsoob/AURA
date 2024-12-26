@@ -88,7 +88,7 @@ public class FreeBoardCommentDAO {
 	public void insertComment(FreeBoardCommentVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FREEBCOMMENT ");
-		sb.append("VALUES(7, ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)"); //VALUES(NEXTVAL('FBCOMNTNO')
+		sb.append("VALUES(NULL, ? ,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)"); 
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
