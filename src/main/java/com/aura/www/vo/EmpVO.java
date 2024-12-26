@@ -1,7 +1,6 @@
 package com.aura.www.vo;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +20,11 @@ public class EmpVO extends DeptVO {
 	private String empEmail;			// 개인 이메일
 	private String cellphone;			// 휴대폰번호
 	private String hiredate;			// 입사일자
+	
+	private String hiredate_st;			// 검색조건 입사일자 
+	private String hiredate_ed;			// 검색조건 입사일자
+	private String qdYN;				// 검색조건 퇴사여부
+	
 	private String quitdate;			// 퇴사일자
 	private String birthdate;			// 생년월일
 	private int posNo;					// 직급번호
