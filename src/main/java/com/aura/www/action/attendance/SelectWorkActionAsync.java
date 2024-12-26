@@ -1,4 +1,4 @@
-package com.aura.www.action.admin.position;
+package com.aura.www.action.attendance;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -8,7 +8,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.aura.www.action.Action;
+import com.aura.www.dao.AttendanceDAO;
 import com.aura.www.dao.PositionDAO;
+import com.aura.www.vo.AttendanceVO;
 import com.aura.www.vo.PositionVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,13 +18,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 // 특정 직책(Position)에 대한 데이터를 데이터베이스로부터 가져와 JSON 형식으로 변환하여 반환하는 역할
 //SelectPosActionAsync 클래스는 Action 인터페이스를 구현
-public class SelectPosActionAsync implements Action {
+public class SelectWorkActionAsync implements Action {
 
 	@SuppressWarnings("unchecked")			// unchecked 경고를 무시하라는 어노테이션
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		PositionDAO dao = new PositionDAO();
-		ArrayList<PositionVO> list = dao.selectPosAll();
+		AttendanceDAO dao = new AttendanceDAO();
+		ArrayList<AttendanceVO> list = dao.selectAll();
 		
 		req.setAttribute("list", list);		// list를 request 객체에 저장
 		
@@ -34,10 +36,10 @@ public class SelectPosActionAsync implements Action {
 	}
 	
 	// 리스트를 JSON 배열로 변환하는 메서드
-	private JSONArray listmap_to_json(List<PositionVO> list)
+	private JSONArray listmap_to_json(List<AttendanceVO> list)
     {       
         JSONArray json_arr=new JSONArray();							// JSON 배열 객체 생성
-        for (PositionVO vo : list) {								// 리스트의 각 VO를 순회
+        for (AttendanceVO vo : list) {								// 리스트의 각 VO를 순회
             JSONObject json_obj = new JSONObject();					// 각 VO를 JSON 객체로 변환
             
 			Field[] fields = vo.getClass().getDeclaredFields();		// VO 클래스의 모든 필드 가져옴
