@@ -767,6 +767,10 @@ public class AdminEmpDAO {
 			sb.append(", QUITDATE = STR_TO_DATE(?, '%Y-%m-%d %H:%i:%s') ");
 		}
 		
+		if(vo.getEmpImage() != null && !vo.getEmpImage().equals("") ) {
+			sb.append(", EMP_IMAGE = ? ");
+		}
+		
 		sb.append("WHERE EMP_NO = ? " );
 		
 		int rst = 0;
@@ -784,6 +788,8 @@ public class AdminEmpDAO {
 				pstmt.setString(++cnt, vo.getHiredate()+" 09");
 			if(vo.getQuitdate() != null && !vo.getQuitdate().equals("") )
 				pstmt.setString(++cnt, vo.getQuitdate()+" 09");
+			
+			pstmt.setString(++cnt, vo.getEmpImage());
 			
 			pstmt.setInt(++cnt, vo.getEmpNo());
 			

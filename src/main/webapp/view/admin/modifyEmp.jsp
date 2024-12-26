@@ -216,13 +216,13 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap aura_content" style="padding-top: 4%;">
 		                     
-	                            <div class="col-lg-12 col-sm-12 col-xs-12">
+		                	<form name="empModifyForm" action="admin" enctype="multipart/form-data">
+	                        	<div class="col-lg-12 col-sm-12 col-xs-12">
 		                            
 		                            <div class="col-lg-2 col-sm-2 col-xs-2">
 		                            </div>
 		                            <%-- 찐찐 개별 --%>
 		                            <div class="col-lg-5 col-sm-5 col-xs-5">
-		                            	<form name="empModifyForm" action="admin">
 										<!-- 사원 이름 , 부서, 직급, 입사일자 -->
 				                                <div class="form-group-inner mg-bt-20">
 				                                    <div class="row">
@@ -324,37 +324,27 @@
 			                                        	</div>
 				                                    </div>
 				                                </div>
-				                             </form>
+				                             
 		                           		</div> 
 		                           
 		                           		<div class="col-lg-3 col-sm-3 col-xs-3" style="height: 420px;">
-		                           			<form name="fileUpForm" method="post" enctype="multipart/form-data">
+		                           			<!-- <form name="fileUpForm" method="post" enctype="multipart/form-data"> -->
 			                           			<div class="col-lg-12 text-center" style="line-height: 350px;">
 		                                        	<!-- /aura/img/product/pro4.jpg || ${vo.empImage} -->
-		                                        	<img id="empImage" name="empImage" class="mg-ht-10 viewImg" alt="사원이미지 없음" src="${vo.empImage}"></a>
+		                                        	<img id="empImage" name="empImage" class="mg-ht-10 viewImg" alt="사원이미지 없음" src="${ empVo.empImage != null ? pageContext.request.contextPath : '' }${empVo.empImage}"></a>
 		                                        </div>
 			                           			<div class="col-lg-12 text-center">
-		                                        	<!-- 
-		                                        	<button type="button" id="changeImg" class="btn btn-success" style="line-height: 26px;">
-					                                	<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
-					                                 -->	
-					                               
 					                                <label class="btn btn-success" style="line-height: 26px;" for="changeImg">
 													  <i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경</button>
 													</label>
-													<input type="file" id="changeImg" style="display:none;" accept="image/*" onchange="loadFile(this)" />
-					                                
-					                                <%--
-					                                <input type="file" name="filename" id="" />
-					                                 --%>
-					                                
-		                                        	<button type="button" id="delImg" class="btn btn-danger bg-red" style="line-height: 26px;">
+													<input type="file" id="changeImg" name="changeImg" style="display:none;" accept="image/*" onchange="loadFile(this)" />
+					                                <button type="button" id="delImg" class="btn btn-danger bg-red" style="line-height: 26px;">
 					                                	<i class="fa fa-times" aria-hidden="true"></i> 사진 삭제</button>
 		                                        </div>
-	                                        </form>
-	                                        
+	                                        <!-- </form> -->
 		                           		</div>
-	                       		</div>
+	                       		</div><%-- 전체 col-sm-12 --%>
+		                   </form>
 		                   
 		                   <div class="col-lg-12 col-sm-12 col-xs-12">
 	                          			<div class="form-group-inner mg-tp-10">

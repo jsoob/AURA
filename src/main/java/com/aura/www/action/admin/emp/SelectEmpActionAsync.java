@@ -110,7 +110,7 @@ public class SelectEmpActionAsync implements Action {
 	public HashMap<String, Object> getPage(int totalCount, HttpServletRequest req) {
 		HashMap<String, Object> page = new HashMap<String, Object>();
 
-		int recordPerPage = 9; // 한 페이지당 게시물 8
+		int recordPerPage = 6; // 한 페이지당 게시물 6
 		// 총 페이지수 301/8 ==> 37 38
 		int totalPage = (totalCount%recordPerPage == 0) ? 
 				(totalCount/recordPerPage) : (totalCount/recordPerPage)+1;

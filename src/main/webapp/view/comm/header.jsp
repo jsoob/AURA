@@ -196,7 +196,9 @@
                                         <!-- 사원 정보 표시 부분 -->
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-												<img src="${pageContext.request.contextPath}/img/product/pro4.jpg" alt="" />
+												<%-- <img src="${pageContext.request.contextPath}/img/product/pro4.jpg" alt="" /> --%>
+												<img alt="ㅣ" src="${ loginEmp.empImage != null ? pageContext.request.contextPath : '' }${loginEmp.empImage}" />
+												
 												<span class="admin-name">${loginEmp.empName }</span>
 												<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 											</a>

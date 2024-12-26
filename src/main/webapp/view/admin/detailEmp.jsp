@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -150,7 +151,7 @@
 	                           
 	                           		<div class="col-lg-3 col-sm-3 col-xs-3" style="height: 420px;">
 	                           			<div class="col-lg-12 text-center" style="line-height: 400px;">
-                                        	<img class="mg-ht-10 viewImg" alt="사원이미지 없음" src="/aura/img/product/pro4.jpg"></a><!-- ${vo.empImage} -->
+                                        	<img class="mg-ht-10 viewImg" alt="사원이미지 없음" src="${ empVo.empImage != null ? pageContext.request.contextPath : '' }${empVo.empImage}">
                                         </div>
 	                           		</div>
 	                           		

@@ -51,11 +51,11 @@
 				$.each(empList, (idx, row) => {
 					// console.log(row);
 					let appendText = ""; // style='height: 415px; vertical-align: top;'
-					appendText = "<tr name='empList'>"; //  style='height: 47px;'
+					appendText = "<tr name='empList' style='height: 69.1px;'>"; //  style='height: 47px;'
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
+					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' class='empListImg' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : '${pageContext.request.contextPath}'+row.empImage )  +"'></a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ ( (row.empEmail == null || row.empEmail == "null") ? "" : row.empEmail ) +"</a></td>";
 					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
@@ -144,12 +144,6 @@
 	}
 	
 	function detailEmp(empNo) {
-		/* 
-		let form = document.querySelector("form");
-	    form.action = "admin?cmd=selectEmp";
-	    form.method ="post";
-	    form.submit();
-	     */
 		let form = document.createElement('form');
 	       
 	    let obj = document.createElement('input');
@@ -201,121 +195,12 @@
 							loadBtn();
 			            }
 			        });
-				   /* 
-				   $.ajax({
-			            url:"adminasync", 
-			            type: "post",
-						data: { "cmd", "disableEmp", "empNo" : empNo }, // json 방식으로 서블릿에 보낼 데이터
-			            success: (data) => {
-			            	console.log("data = ", data);
-			            	Swal.fire('삭제가 완료되었습니다.', '', 'success');
-							loadBtn();
-			            }
-				   });
-			    */
 			   }
 			});
-		/* 
-		let form = document.createElement('form');
-	    
-	    let obj = document.createElement('input');
-	   	obj.setAttribute('type', 'hidden');
-	  	obj.setAttribute('name', 'empNo');
-	  	obj.setAttribute('value', empNo);
-	  	form.appendChild(obj);
-	  	
-	  	form.setAttribute('method', 'post');
-	  	form.setAttribute('action', 'admin?cmd=disableEmp');
-	    document.body.appendChild(form);
-	    form.submit();
-	     */
 	}
-	
-	function old_loadBtn(){
-		let sendData = $("form[name=empForm]").serialize();
-		
-		$.ajax({
-            url:"adminasync", 
-            type: "post",
-			data: sendData, // json 방식으로 서블릿에 보낼 데이터
-			dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
-            success: (data) => {
-            	let rows = data;
-				$("tr[name='empList']").remove(); // .empty();
-				$.each(rows, (idx, row) => {
-					// console.log(row);
-					let appendText = "";
-					appendText = "<tr name='empList'>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.deptName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empNo +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'><img alt='사원이미지 없음' src='"+ ( (row.empImage == null || row.empImage == "null") ? "" : row.empImage )  +"'></a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.posName +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.empEmail +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ row.hiredate +"</a></td>";
-					appendText +="<td><a onclick='detailEmp("+ row.empNo +")'>"+ 
-								(row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined" ? "근무중" : row.quitdate) +"</a></td>";
-					
-					// 이 부분 해야함			
-					appendText += "<td class='text-center'>"
-									+ "<a onclick='modifyEmp("+ row.empNo +");'>" 
-									+	"<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='수정'>"
-									+		"<i class='fa fa-pencil-square-o' aria-hidden='true'></i>"
-									+	"</button>"
-									+ "</a> ";
-									
-								appendText += "<a onclick='disableEmp("+ row.empNo+", \""+row.empName+"\");'>";
-								
-								if( (row.quitdate == null || row.quitdate == "" || row.quitdate == "undefined") ) {
-									appendText += "<button data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
-								} else {
-									appendText += "<button disabled='disabled' data-toggle='tooltip' class='pd-setting-ed' data-original-title='퇴사'>";
-								}
-								appendText += "<i class='fa fa-user-circle' aria-hidden='true'></i>"
-									+	"</button>"
-									+ "</a>"
-								 +"</td>"
-								+"</tr>";
-					
-					$("#selectTable").append(appendText);
-				});
-            },
-            error:function(request, err) {
-            	console.log("error");
-            	// console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            },
-            complete: function () {
-            }
-            
-        });
-		
-	} // end loadBtn
 	
 </script>
 
-<%--
-<script type="text/javascript">
-	$(function() {
-		fnSetDate();
-	  
-		$('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-			$(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-		});
-	
-		$('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-			$(this).val('');
-		});
-	});
-	function fnSetDate() {
-		$('input[name="hiredate"]').daterangepicker({
-			autoUpdateInput: false,
-			locale: {
-				cancelLabel: 'Clear'
-			}
-		});
-	}
-</script>
- --%>
 </head>
 <body>
 	<%-- Start Left menu area --%>
@@ -407,59 +292,7 @@
                                     <tbody>
                                     
                                     </tbody>
-                                    <%-- 
-                                    <tbody>
-	                                    <c:forEach var="vo" items="${empList}">
-											<tr name="empList">
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.deptName}</a></td> 
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.empNo}</a></td>
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.empName}</a></td>
-												<td><a onclick="detailEmp(${vo.empNo})"><img alt="사원이미지 없음" src="${vo.empImage}"></a></td>
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.posName}</a></td>
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.empEmail}</a></td>
-												<td><a onclick="detailEmp(${vo.empNo})">${vo.hiredate}</a></td>
-												<td><a onclick="detailEmp(${vo.empNo})">${( vo.quitdate == null || row.quitdate == "" ? "근무중" : vo.quitdate )}</a></td>
-												
-												<td class="text-center">
-													<a onclick="modifyEmp(${vo.empNo});">
-														<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="수정">
-															<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-														</button>
-													</a>
-													
-													<a onclick="disableEmp(${vo.empNo}, '${vo.empName}');"> 
-														<c:choose>
-															<c:when test="${ vo.quitdate eq null || row.quitdate eq '' }">
-																<button data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
-															</c:when>
-															<c:otherwise>
-																<button disabled="disabled" data-toggle="tooltip" class="pd-setting-ed" data-original-title="퇴사">
-															</c:otherwise>
-													</c:choose>
-															<i class="fa fa-user-circle" aria-hidden="true"></i>
-														</button>
-													</a>
-												</td>
-												
-											</tr>
-										</c:forEach>
-									</tbody>
-										<tr name="empPages">
-											<td colspan="9" class="text-center">
-												<ul class="pagination mg-nn">
-												    <li class="page-item"><a class="page-link" href="admin?cmd=selectEmp&cp=${page['prevCnt'] }">Previous</a></li>
-													<!-- currentPage-1 -->
-													<c:forEach var="i" begin="${page['startPage'] }" end="${page['endPage'] }" step="1">
-														<li class="page-item">
-															<a class="page-link" href="admin?cmd=selectEmp&cp=${i }">${i }</a>
-														</li>
-													</c:forEach>	
-													<li class="page-item"><a class="page-link" href="admin?cmd=selectEmp&cp=${page['nextCnt'] }">Next</a></li>
-													<!-- currentPage+1 -->
-												 </ul>
-											</td>
-										</tr>
-									 --%>
+                                    
                                 </table>
                             </div>
                             <div id="pagingDiv" class="text-center">
@@ -470,34 +303,6 @@
                     
                 </div>
                 
-                <!-- 이전 -->
-                <%-- 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<a href="admin?cmd=insertPos">
-						<input type="button" class="btn btn-outline-primary" value="직급등록" />
-					</a>
-					<table class="table" width="100px" height="100px">
-						<tr>
-							<th>부서명</th>
-							<th>사원번호</th>
-							<th>사원명</th>
-							<th>직급</th>
-							<th>외부이메일</th>
-							<th>입사일자</th>
-						</tr>
-						<c:forEach var="vo" items="${list}">>
-							<tr>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.deptName}</a></td>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.empNo}</a></td>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.empName}</a></td>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.posName}</a></td>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.empEmail}</a></td>
-								<td><a href="admin?cmd=modifyPos&posNo=${vo.posNo}">${vo.hiredate}</a></td>
-							</tr>
-						</c:forEach>
-					</table>    		
-                </div>
-                 --%>
             </div>
         </div>
         
