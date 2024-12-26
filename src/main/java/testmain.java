@@ -7,9 +7,12 @@ public class testmain {
 	public static void main(String[] args) {
 		DeptBoardDAO dao = new DeptBoardDAO();
 		DeptBoardVO vo = new DeptBoardVO();
-		ArrayList<DeptBoardVO> list =  dao.selectAll();
+	// 	ArrayList<DeptBoardVO> list =  dao.selectAll();
 
 		
-		System.out.println(list);
+		// System.out.println(list);
+	
+		System.out.println();
+	
 	}
 }

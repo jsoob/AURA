@@ -14,6 +14,8 @@ public class ModifyDeptBOkAction implements Action {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
 		String deptBno = req.getParameter("deptBNo");
+		
+		
 		String deptBTitle = req.getParameter("deptBTitle");
 		String deptBContent = req.getParameter("deptBContent");
 		String dbn = req.getParameter("deptBNotice");
@@ -23,21 +25,25 @@ public class ModifyDeptBOkAction implements Action {
 		
 		int deptBNo = Integer.parseInt(deptBno);
 		
-		if(deptBno != null) {
-			deptBNotice = Integer.parseInt(dbn);	
+		
+		
+		if (dbn != null) {
+		deptBNotice = Integer.parseInt(dbn);	
 		}
-		int freeBPblc = Integer.parseInt(dbp);
+		int deptBPblc = Integer.parseInt(dbp); 
 
 		DeptBoardDAO dao = new DeptBoardDAO();
 
 		DeptBoardVO vo = new DeptBoardVO();
 		
+		// System.out.println(deptBTitle + " : " + deptBContent + " : " + dbn + " : " + dbp + " : " + deptBNotice + " : " + deptBStatus );
+
 		vo.setDeptBNo(deptBNo);
 		vo.setDeptBTitle(deptBTitle);
 		vo.setDeptBContent(deptBContent);
 		vo.setDeptBNotice(deptBNotice);
 		vo.setDeptBStatus(deptBStatus);
-		vo.setDeptBPblc(freeBPblc);
+		vo.setDeptBPblc(deptBPblc);
 		
 		dao.updateOne(vo);
 		

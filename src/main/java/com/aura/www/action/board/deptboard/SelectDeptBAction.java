@@ -6,34 +6,52 @@ import java.util.HashMap;
 import com.aura.www.action.Action;
 import com.aura.www.dao.DeptBoardDAO;
 import com.aura.www.vo.DeptBoardVO;
+import com.aura.www.vo.EmpVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class SelectDeptBAction implements Action {
+	private int userDeptNo; // 로그인한 사용자의 부서 ID
+
+	public SelectDeptBAction(int userDeptNo) {
+		this.userDeptNo = userDeptNo;
+	}
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+	    DeptBoardDAO dao = new DeptBoardDAO();
+	    HttpSession session = req.getSession();
+	    EmpVO loginEmp = (EmpVO) session.getAttribute("loginEmp");
 
-		DeptBoardDAO dao = new DeptBoardDAO();
-		ArrayList<DeptBoardVO> list = dao.selectAll();
+	    ArrayList<DeptBoardVO> list;
+	    String deptName;
 
-		int totalCount = dao.getTotalCount();
-		
-		req.setAttribute("list", list);
-		req.setAttribute("totalCount", totalCount);
+	    if (loginEmp.getEmpNo() == 2024000) { 
+	        // 관리자는 모든 데이터 조회
+	        list = dao.selectAll();
+	        deptName = "전체 부서"; // 관리자 화면용
+	    } else {
+	        // 일반 사용자는 본인 부서 게시판만 조회
+	        list = dao.selectByDeptNo(loginEmp.getDeptNo());
+	        deptName = dao.getDeptNameByDeptNo(loginEmp.getDeptNo()); // 부서명 가져오기
+	    }
 
-		HashMap<String, String> map = new HashMap<String, String>();
+	    int totalCount = list.size();
 
-		map.put("title", "AURA 부서게시판 페이지"); // 웹 제목?
-		map.put("category", "deptboard"); // 카테고리 찾는 key
-		map.put("categoryName", "부서게시판 페이지"); // 사용자에게 보여주는 카테고리명
-		map.put("pages", "selectDeptB"); // 페이지명
-		map.put("pagesName","부서게시판"); // 사용자에게 보여주는 페이지명
+	    req.setAttribute("list", list);
+	    req.setAttribute("totalCount", totalCount);
 
-		req.setAttribute("commAt", map);
+	    HashMap<String, String> map = new HashMap<>();
+	    map.put("title", deptName + " 부서 게시판 페이지"); // 부서명 포함
+	    map.put("category", "deptboard");
+	    map.put("categoryName", deptName + " 부서 게시판"); // 사용자 표시 이름
+	    map.put("pages", "selectDeptB");
+	    map.put("pagesName", deptName + " 부서 게시판");
 
-		return "view/board/deptboard/selectDeptB.jsp";
+	    req.setAttribute("commAt", map);
+
+	    return "view/board/deptboard/selectDeptB.jsp";
 	}
-
 }

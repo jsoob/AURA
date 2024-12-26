@@ -54,7 +54,7 @@
 									<input type="radio" name="deptBPblc" value="1" checked="checked" required> 공개 
 									<input type="radio" name="deptBPblc" value="0"> 비공개
 								</td>
-							</tr>
+							</tr> 
 							<tr>
 								<td colspan="2">
 									<a href="deptboard?cmd=selectDeptB">

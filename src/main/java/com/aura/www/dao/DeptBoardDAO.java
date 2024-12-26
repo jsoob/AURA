@@ -37,46 +37,68 @@ public class DeptBoardDAO {
 
 	// 전체 조회
 	public ArrayList<DeptBoardVO> selectAll() {
-		ArrayList<DeptBoardVO> list = new ArrayList<DeptBoardVO>();
-		sb.setLength(0);
-		sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, DEPTB_STATUS, DEPTB_PBLC, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
-		sb.append("FROM DEPTBOARD ");
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
+	    sb.append("FROM DEPTBOARD"); // 부서 번호 조건 제거
 
-		try {
-			pstmt = conn.prepareStatement(sb.toString());
-			rs = pstmt.executeQuery();
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				int deptBNo = rs.getInt("DEPTB_NO");
-				String deptBTitle = rs.getString("DEPTB_TITLE");
-				String deptBContent = rs.getString("DEPTB_CONTENT");
-				int deptBView = rs.getInt("DEPTB_VIEW");
-				int deptBNotice = rs.getInt("DEPTB_NOTICE");
-				int deptBStatus = rs.getInt("DEPTB_STATUS");
-				int deptBPblc = rs.getInt("DEPTB_PBLC");
-				int deptBCrtr = rs.getInt("DEPTB_CRTR");
-				String createDate = rs.getString("CREATE_DATE");
-				String updateDate = rs.getString("UPDATE_DATE");
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	// 부서별 조회 
+	public ArrayList<DeptBoardVO> selectByDeptNo(int deptNo) {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+	    sb.append("SELECT * FROM DEPTBOARD WHERE DEPT_NO = ?");
 
-				DeptBoardVO vo = new DeptBoardVO();
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        pstmt.setInt(1, deptNo);
+	        rs = pstmt.executeQuery();
 
-				vo.setDeptBNo(deptBNo);
-				vo.setDeptBTitle(deptBTitle);
-				vo.setDeptBContent(deptBContent);
-				vo.setDeptBView(deptBView);
-				vo.setDeptBNotice(deptBNotice);
-				vo.setDeptBStatus(deptBStatus);
-				vo.setDeptBPblc(deptBPblc);
-				vo.setDeptBCrtr(deptBCrtr);
-				vo.setCreateDate(createDate);
-				vo.setUpdateDate(updateDate);
+	        while (rs.next()) {
+	            DeptBoardVO vo = new DeptBoardVO();
+	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
+	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
+	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
+	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
+	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
+	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
+	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
+	            vo.setDeptNo(rs.getInt("DEPT_NO"));
+	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
+	            vo.setCreateDate(rs.getString("CREATE_DATE"));
+	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
 
-				list.add(vo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
+	            list.add(vo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
 	}
 
 	// 검색해서 게시글 찾기
@@ -217,30 +239,27 @@ public class DeptBoardDAO {
 
 	// 게시물 작성
 
-	public void insertOne(com.aura.www.vo.DeptBoardVO vo) {
-		sb.setLength(0);
-		sb.append("INSERT INTO DEPTBOARD ");
-		sb.append("VALUES (3,?,?,0,?,?,?,?,?,CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) ");
+	public void insertOne(DeptBoardVO vo) {
+	    sb.setLength(0);
+	    sb.append("INSERT INTO DEPTBOARD ");
+	    sb.append("(DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
+	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE) ");
+	    sb.append("VALUES (NULL, ?, ?, 0, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
 
-
-		try {
-			System.out.println("sb = " + sb.toString());
+	    try {
 	        pstmt = conn.prepareStatement(sb.toString());
 	        pstmt.setString(1, vo.getDeptBTitle());
 	        pstmt.setString(2, vo.getDeptBContent());
 	        pstmt.setInt(3, vo.getDeptBNotice());
 	        pstmt.setInt(4, vo.getDeptBStatus());
 	        pstmt.setInt(5, vo.getDeptBPblc());
-	        pstmt.setInt(6, vo.getDeptNo());	        
+	        pstmt.setInt(6, vo.getDeptNo()); // 부서 번호 저장
 	        pstmt.setInt(7, vo.getDeptBCrtr());
-
 	        pstmt.executeUpdate();
-
 	    } catch (SQLException e) {
-	        System.err.println("SQL 오류: " + e.getMessage());
 	        e.printStackTrace();
 	    }
-	} // insertOne() end
+	}
 
 	// 게시글 수정
 	
@@ -306,7 +325,26 @@ public class DeptBoardDAO {
 		}
 	} // 삭제 end
 
+	
+	// 부서명 가져오기 
+	public String getDeptNameByDeptNo(int deptNo) {
+	    String deptName = null;
+	    sb.setLength(0);
+	    sb.append("SELECT DEPT_NAME FROM DEPT WHERE DEPT_NO = ?");
 
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        pstmt.setInt(1, deptNo);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            deptName = rs.getString("DEPT_NAME");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return deptName;
+	}
 	
 	
 	// 페이징 
