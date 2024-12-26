@@ -80,7 +80,7 @@
                         	<span class="mini-click-non">근태 관리</span>
                         </a>
                         <ul class="submenu-angle" aria-expanded="false">
-                            <li><a title="Inbox" href="${pageContext.request.contextPath}/work/selectWork"><span class="mini-sub-pro">근태이력조회</span></a></li>
+                            <li><a title="Inbox" href="${pageContext.request.contextPath}/work"><span class="mini-sub-pro">근태이력조회</span></a></li>
                             <%-- <li><a title="View Mail" href="${pageContext.request.contextPath}/work/selectWork"><span class="mini-sub-pro">근태이력</span></a></li> --%>
                         </ul>
                     </li>

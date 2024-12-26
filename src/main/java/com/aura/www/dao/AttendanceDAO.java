@@ -16,7 +16,7 @@ public class AttendanceDAO {
 //	1. 변수선언
 
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306:aura";
+	String url = "jdbc:mysql://localhost:3306/aura";
 	String user = "aura";
 	String password = "tigertiger12$$";
 	Connection conn = null;

@@ -17,6 +17,12 @@ public class SelectWorkAction implements Action {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
+		map.put("title", "AURA 사원관리 페이지"); // 웹 제목?
+		map.put("category", "emp"); // 카테고리 찾는 key
+		map.put("categoryName", "근태관리"); // 사용자에게 보여주는 카테고리명
+		map.put("pages", "selectEmp"); // 페이지명
+		map.put("pagesName", "근태 조회"); // 사용자에게 보여주는 페이지명
+		
 		map.put("attenDate", "날짜");				// 오늘 날짜
 		map.put("startWorkTime", "출근시간");		// 출근 시간
 		map.put("endWorkTime", "퇴근시간");		// 퇴근 시간
@@ -41,7 +47,7 @@ public class SelectWorkAction implements Action {
 		req.setAttribute("list", list);
 		
 		// view의 경로 반환
-		return "view/attendance/SelectWork.jsp";
+		return "view/work/SelectWork.jsp";
 		
 	}
 }
