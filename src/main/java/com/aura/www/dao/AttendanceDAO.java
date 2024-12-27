@@ -61,8 +61,8 @@ public class AttendanceDAO {
 		sb.append("POS_NAME, DEPT_NAME, EMP_NAME ");
 		sb.append("FROM ATTENDANCE A ");
 		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
-		sb.append("INNER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
-		sb.append("INNER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("LEFT OUTER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
 		sb.append("WHERE E.EMP_NO = ? ");
 		
 		
@@ -86,11 +86,14 @@ public class AttendanceDAO {
 				int deptNo = rs.getInt("DEPT_NO");
 				String posName = rs.getString("POS_NAME");
 				String deptName = rs.getString("DEPT_NAME");
-
+				
 				// 반복문 안에서 매번 새로운 객체 생성 후 하나씩 할당
 					// 자바에서는 ArrayList는 객체의 참조를 저장
 					// vo 객체를 반복문 안에서 계속 덮어쓰게 되면, list의 모든 요소가 같은 객체 (즉, 마지막 값)로 덮어씌워짐
-				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
+				vo = new AttendanceVO();
+				vo.setAttenDate(attenDate);
+				vo.setStartworkTime(startworkTime);
+				vo.setEndworkTime(endworkTime);
 				vo.setEmpNo(empNo);
 				vo.setEmpName(empName);
 				vo.setPosNo(posNo);

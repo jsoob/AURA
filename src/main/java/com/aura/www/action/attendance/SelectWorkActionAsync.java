@@ -11,10 +11,12 @@ import com.aura.www.action.Action;
 import com.aura.www.dao.AttendanceDAO;
 import com.aura.www.dao.PositionDAO;
 import com.aura.www.vo.AttendanceVO;
+import com.aura.www.vo.EmpVO;
 import com.aura.www.vo.PositionVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 // 특정 직책(Position)에 대한 데이터를 데이터베이스로부터 가져와 JSON 형식으로 변환하여 반환하는 역할
 //SelectPosActionAsync 클래스는 Action 인터페이스를 구현
@@ -28,7 +30,12 @@ public class SelectWorkActionAsync implements Action {
 	    // 임의의 AttendanceVO 객체 생성 (필요하다면 특정 값으로 초기화 가능)
 		// 기본값 설정을 위한 임시 vo 객체
 	    AttendanceVO tempVO = new AttendanceVO(); 
-	    tempVO.setEmpNo(0); // empNo는 기본값 0으로 설정 (필요한 값으로 변경 가능)
+	    
+	    HttpSession session = req.getSession();
+//		// 세션에서 EmpVO 객체 가져오기 (강제 형변환)
+	    EmpVO loginEmp = (EmpVO)session.getAttribute("loginEmp");
+//	    
+	    tempVO.setEmpNo(loginEmp.getEmpNo());
 	    
 	    // selectAll() 호출 시 tempVO 전달
 	    // DAO의 selectAll 메서드 호출

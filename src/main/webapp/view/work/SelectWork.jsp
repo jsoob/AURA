@@ -93,13 +93,14 @@
                  $("tr[name='workList']").remove(); // .empty();
               
 	             $.each(workList, (idx, row) => {
+	            	 console.log("workList = ", workList);
 	                 let appendText = ""; // style='height: 415px; vertical-align: top;'
 	                 appendText = "<tr name='workList' style='height: 69.1px;'>"; //  style='height: 47px;'
 	                 
 	                 appendText +="<td><a>"+ row.empNo +"</a></td>"
 	                          +"<td><a>"+ row.empName +"</a></td>"
-	                          +"<td><a>"+ row.deptName +"</a></td>"
-	                          +"<td><a>"+ row.posName +"</a></td>"
+	                          +"<td><a>"+ (row.deptName == null || row.deptName == "" || row.deptName == "undefined" ? "" : row.deptName ) +"</a></td>"
+	                          +"<td><a>"+ (row.posName == null || row.posName == "" || row.posName == "undefined" ? "" : row.posName) +"</a></td>"
 	                          +"<td><a>"+ row.startworkTime +"</a></td>";
 	                 
 	                 // 퇴근시간
@@ -131,6 +132,7 @@
                // 서버로부터 받은 출근 시간 표시
                if (response.status) {
                   alert('출근 시간이 등록되었습니다: ');
+                  loadWork();
                } else {
                   alert('출근 처리가 되어있는 상태입니다.');
                }
@@ -154,6 +156,7 @@
                // 응답 처리 후 퇴근 시간 표시
                if (response.status) {
                   alert('퇴근 시간이 등록되었습니다: ');
+                  loadWork();
                } else {
                   alert('퇴근 처리가 되어있는 상태입니다.');
                }

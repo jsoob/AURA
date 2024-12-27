@@ -51,7 +51,11 @@ public class workServlet extends HttpServlet {
         	int cnt = dao.checkAttendance(vo);
         	
         	if(cnt == 0) {
-        		dao.insertOne(vo);
+        		if(workGubun.equals("start")) { // 출근 
+        			dao.insertOne(vo);
+        		} else if(workGubun.equals("end")) { // 퇴근
+        			dao.updateEndWork(vo);
+        		}
         		obj.put("status", 1);
         	} else if(cnt == 1) {
         		obj.put("status", 0);
