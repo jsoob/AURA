@@ -24,7 +24,7 @@ public class SelectWorkActionAsync implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		AttendanceDAO dao = new AttendanceDAO();
-		JSONObject obj = new JSONObject();
+		
 	    // 임의의 AttendanceVO 객체 생성 (필요하다면 특정 값으로 초기화 가능)
 		// 기본값 설정을 위한 임시 vo 객체
 	    AttendanceVO tempVO = new AttendanceVO(); 
@@ -36,11 +36,15 @@ public class SelectWorkActionAsync implements Action {
 	    
 	    // dao.selectAll() 오류가 나서 위 tempVO 객체를 따로 생성하여 선언
 		// ArrayList<AttendanceVO> list = dao.selectAll();
+	    
+	    System.out.println("list = " + list.size());
 		
 		req.setAttribute("list", list);		// 조회 결과 list를 request 객체에 저장
 		
 		// PositionVO 리스트를 JSON 배열로 변환
 		JSONArray jArr = listmap_to_json(list);
+		
+		JSONObject obj = new JSONObject();
 		obj.put("workList", jArr);
 		
 		// JSON 배열을 문자열로 변환하여 반환

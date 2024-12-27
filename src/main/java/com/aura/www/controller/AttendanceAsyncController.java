@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AttendanceAsyncController extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// 1. 한글처리
 		req.setCharacterEncoding("UTF-8");
@@ -31,6 +31,8 @@ public class AttendanceAsyncController extends HttpServlet {
 		String cmd = req.getParameter("cmd");
 		// System.out.println("cmd의 값은 : " + cmd); // cmd의 값은 : null
 		String tArr = "";
+		
+		System.out.println("cmd = " + cmd);
 
 		// 3. cmd == null or selectWork 라면?
 			// 조회, 수정, 수정ok

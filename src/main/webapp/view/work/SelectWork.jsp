@@ -87,28 +87,29 @@
            data: {cmd:"selectWorkAsync"}, // json 방식으로 서블릿에 보낼 데이터
            dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
               success: (data) => {
-                 let workList = data;
+            	  console.log("data = ", data);
+                 let workList = data.workList;
               
                  $("tr[name='workList']").remove(); // .empty();
               
-              $.each(workList, (idx, row) => {
-                 let appendText = ""; // style='height: 415px; vertical-align: top;'
-                 appendText = "<tr name='workList' style='height: 69.1px;'>"; //  style='height: 47px;'
-                 
-                 appendText +="<td><a>"+ row.empNo +"</a></td>"
-                          +"<td><a>"+ row.empName +"</a></td>"
-                          +"<td><a>"+ row.deptName +"</a></td>"
-                          +"<td><a>"+ row.posName +"</a></td>"
-                          +"<td><a>"+ row.startworkTime +"</a></td>";
-                 
-                 // 퇴근시간
-                 appendText +="<td><a>"+ 
-                  (row.endworkTime == null || row.endworkTime == "" || row.endworkTime == "undefined" ? "근무중" : row.endworkTime) +"</a></td>";
-                     
-               appendText +="</tr>";
-                 
-                 $("#table").append(appendText);
-              });
+	             $.each(workList, (idx, row) => {
+	                 let appendText = ""; // style='height: 415px; vertical-align: top;'
+	                 appendText = "<tr name='workList' style='height: 69.1px;'>"; //  style='height: 47px;'
+	                 
+	                 appendText +="<td><a>"+ row.empNo +"</a></td>"
+	                          +"<td><a>"+ row.empName +"</a></td>"
+	                          +"<td><a>"+ row.deptName +"</a></td>"
+	                          +"<td><a>"+ row.posName +"</a></td>"
+	                          +"<td><a>"+ row.startworkTime +"</a></td>";
+	                 
+	                 // 퇴근시간
+	                 appendText +="<td><a>"+ 
+	                  (row.endworkTime == null || row.endworkTime == "" || row.endworkTime == "undefined" ? "근무중" : row.endworkTime) +"</a></td>";
+	                     
+	               appendText +="</tr>";
+	                 
+	                 $("#table").append(appendText);
+	             });
               },
               error:function(request, err) {
                  console.log("error");
