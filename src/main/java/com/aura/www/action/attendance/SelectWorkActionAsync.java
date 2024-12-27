@@ -24,7 +24,7 @@ public class SelectWorkActionAsync implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		AttendanceDAO dao = new AttendanceDAO();
-		
+		JSONObject obj = new JSONObject();
 	    // 임의의 AttendanceVO 객체 생성 (필요하다면 특정 값으로 초기화 가능)
 		// 기본값 설정을 위한 임시 vo 객체
 	    AttendanceVO tempVO = new AttendanceVO(); 
@@ -41,19 +41,51 @@ public class SelectWorkActionAsync implements Action {
 		
 		// PositionVO 리스트를 JSON 배열로 변환
 		JSONArray jArr = listmap_to_json(list);
+		obj.put("workList", jArr);
 		
 		// JSON 배열을 문자열로 변환하여 반환
-		return jArr.toJSONString(); // JSON -> Array
+		return obj.toJSONString(); // JSON -> Array
 	}
 	
 	// 리스트를 JSON 배열로 변환하는 메서드
 	private JSONArray listmap_to_json(List<AttendanceVO> list){       
         JSONArray json_arr = new JSONArray();							// JSON 배열 객체 생성
-
+        
         for (AttendanceVO vo : list) {
-            json_arr.add(vo); // VO 객체를 그대로 추가
+            JSONObject json_obj = new JSONObject();
+            
+	         Field[] fields = vo.getClass().getDeclaredFields();
+	         for(int i=0; i <fields.length; i++){
+	            fields[i].setAccessible(true);
+	            
+	            String key = fields[i].getName();
+	            Object value = null;
+	            try {
+	               value = fields[i].get(vo);
+	            } catch (IllegalArgumentException e) {
+	               e.printStackTrace();
+	            } catch (IllegalAccessException e) {
+	               e.printStackTrace();
+	            }
+	            json_obj.put(key,value);
+	         }
+	         // 상속받은 vo들 변수(필드)값
+	         json_obj.put("empNo", vo.getEmpNo());
+	         json_obj.put("empName", vo.getEmpName());
+	         
+	         json_obj.put("deptNo", vo.getDeptNo());
+	         json_obj.put("deptName", vo.getDeptName());
+	         
+	         json_obj.put("posNo", vo.getPosNo());
+	         json_obj.put("posName", vo.getPosName());
+	         json_arr.add(json_obj);
         }
         
+//
+//        for (AttendanceVO vo : list) {
+//            json_arr.add(vo); // VO 객체를 그대로 추가
+//        }
+//        
         return json_arr;											// JSON 배열 반환
     }
 }
