@@ -34,39 +34,7 @@ public class DeptBoardDAO {
 		}
 
 	} // constructor end
-
-	// 전체 조회
-	public ArrayList<DeptBoardVO> selectAll() {
-	    ArrayList<DeptBoardVO> list = new ArrayList<>();
-	    sb.setLength(0);
-	    sb.append("SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, ");
-	    sb.append("DEPTB_STATUS, DEPTB_PBLC, DEPT_NO, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
-	    sb.append("FROM DEPTBOARD"); // 부서 번호 조건 제거
-
-	    try {
-	        pstmt = conn.prepareStatement(sb.toString());
-	        rs = pstmt.executeQuery();
-
-	        while (rs.next()) {
-	            DeptBoardVO vo = new DeptBoardVO();
-	            vo.setDeptBNo(rs.getInt("DEPTB_NO"));
-	            vo.setDeptBTitle(rs.getString("DEPTB_TITLE"));
-	            vo.setDeptBContent(rs.getString("DEPTB_CONTENT"));
-	            vo.setDeptBView(rs.getInt("DEPTB_VIEW"));
-	            vo.setDeptBNotice(rs.getInt("DEPTB_NOTICE"));
-	            vo.setDeptBStatus(rs.getInt("DEPTB_STATUS"));
-	            vo.setDeptBPblc(rs.getInt("DEPTB_PBLC"));
-	            vo.setDeptNo(rs.getInt("DEPT_NO")); // DEPT_NO 추가
-	            vo.setDeptBCrtr(rs.getInt("DEPTB_CRTR"));
-	            vo.setCreateDate(rs.getString("CREATE_DATE"));
-	            vo.setUpdateDate(rs.getString("UPDATE_DATE"));
-	            list.add(vo);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return list;
-	}
+	
 	
 	// 부서별 조회 
 	public ArrayList<DeptBoardVO> selectByDeptNo(int deptNo) {
@@ -253,11 +221,13 @@ public class DeptBoardDAO {
 	        pstmt.setInt(3, vo.getDeptBNotice());
 	        pstmt.setInt(4, vo.getDeptBStatus());
 	        pstmt.setInt(5, vo.getDeptBPblc());
-	        pstmt.setInt(6, vo.getDeptNo()); // 부서 번호 저장
+	        pstmt.setInt(6, vo.getDeptNo());
 	        pstmt.setInt(7, vo.getDeptBCrtr());
 	        pstmt.executeUpdate();
+	        System.out.println("SQL 실행 성공");
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	        System.out.println("SQL 오류 발생: " + e.getMessage());
 	    }
 	}
 
@@ -348,7 +318,7 @@ public class DeptBoardDAO {
 	
 	
 	
-	// 공지사항 최신 3개 
+	// 관리자 공지사항 최신 3개 
 	public ArrayList<DeptBoardVO> selectThreeRecentNotice() {
 	    ArrayList<DeptBoardVO> list = new ArrayList<>();
 	    sb.setLength(0);
@@ -382,9 +352,10 @@ public class DeptBoardDAO {
 	}
 
 	
+	///////// 공지사항 ///////
 	
 	
-	// 공지사항 최신 3개 제외 전체 글들  
+	// 관리자 공지사항 최신 3개 제외 전체 글들  
 	public ArrayList<DeptBoardVO> getRestOfAllDeptBoard(int notice1, int notice2, int notice3) {
 	    ArrayList<DeptBoardVO> list = new ArrayList<>();
 	    sb.setLength(0);
@@ -422,12 +393,8 @@ public class DeptBoardDAO {
 	    return list;
 	}
 	
-	
-	
-	
-	
-	
-	// 공지사항 최신 3개 
+
+	// 부서 공지사항 최신 3개 
 	public ArrayList<DeptBoardVO> selectThreeRecentNoticeByDept(int deptno) {
 	    ArrayList<DeptBoardVO> list = new ArrayList<>();
 	    sb.setLength(0);
@@ -501,58 +468,119 @@ public class DeptBoardDAO {
 	    return list;
 	}
 	
+	///// 페이징 //////
 	
+	public ArrayList<DeptBoardVO> getDeptBoardWithPaging(int deptNo, int empNo, boolean isAdmin, int currentPage, int recordPerPage) {
+	    ArrayList<DeptBoardVO> list = new ArrayList<>();
+	    sb.setLength(0);
+
+	    // 첫 페이지 처리 (공지사항 3개 + 일반 글)
+	    if (currentPage == 1) {
+	        // 공지사항 쿼리
+	        sb.append("SELECT * FROM DEPTBOARD WHERE DEPTB_NOTICE = 1 ORDER BY CREATE_DATE DESC LIMIT 3");
+	        try {
+	            pstmt = conn.prepareStatement(sb.toString());
+	            rs = pstmt.executeQuery();
+
+	            while (rs.next()) {
+	                DeptBoardVO vo = mapResultSetToDeptBoardVO(rs);
+	                list.add(vo);
+	            }
+
+	            // 일반 글 쿼리
+	            sb.setLength(0);
+	            sb.append("SELECT * FROM DEPTBOARD WHERE DEPTB_NOTICE = 0 ");
+	            if (!isAdmin) {
+	                sb.append("AND (DEPTB_PBLC = 1 OR DEPTB_CRTR = ?) ");
+	            }
+	            sb.append("ORDER BY CREATE_DATE DESC LIMIT ? OFFSET 0");
+
+	            pstmt = conn.prepareStatement(sb.toString());
+	            if (!isAdmin) {
+	                pstmt.setInt(1, empNo);
+	                pstmt.setInt(2, recordPerPage - list.size());
+	            } else {
+	                pstmt.setInt(1, recordPerPage - list.size());
+	            }
+
+	            rs = pstmt.executeQuery();
+	            while (rs.next()) {
+	                DeptBoardVO vo = mapResultSetToDeptBoardVO(rs);
+	                list.add(vo);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    } else {
+	        // 두 번째 페이지부터 일반 글 처리
+	        sb.append("SELECT * FROM DEPTBOARD WHERE DEPTB_NOTICE = 0 ");
+	        if (!isAdmin) {
+	            sb.append("AND (DEPTB_PBLC = 1 OR DEPTB_CRTR = ?) ");
+	        }
+	        sb.append("ORDER BY CREATE_DATE DESC LIMIT ? OFFSET ?");
+
+	        try {
+	            pstmt = conn.prepareStatement(sb.toString());
+	            if (!isAdmin) {
+	                pstmt.setInt(1, empNo);
+	                pstmt.setInt(2, recordPerPage);
+	                pstmt.setInt(3, (currentPage - 1) * recordPerPage);
+	            } else {
+	                pstmt.setInt(1, recordPerPage);
+	                pstmt.setInt(2, (currentPage - 1) * recordPerPage);
+	            }
+
+	            rs = pstmt.executeQuery();
+	            while (rs.next()) {
+	                DeptBoardVO vo = mapResultSetToDeptBoardVO(rs);
+	                list.add(vo);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return list;
+	}
 	
+	public int getDeptBoardCount(int deptNo, int empNo, boolean isAdmin) {
+	    int totalCount = 0;
+	    sb.setLength(0);
+	    sb.append("SELECT COUNT(*) AS CNT FROM DEPTBOARD WHERE DEPTB_NOTICE = 0 ");
+	    if (!isAdmin) {
+	        sb.append("AND (DEPTB_PBLC = 1 OR DEPTB_CRTR = ?)");
+	    }
+
+	    try {
+	        pstmt = conn.prepareStatement(sb.toString());
+	        if (!isAdmin) {
+	            pstmt.setInt(1, empNo);
+	        }
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            totalCount = rs.getInt("CNT");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return totalCount;
+	}
 	
+	private DeptBoardVO mapResultSetToDeptBoardVO(ResultSet rs) throws SQLException {
+	    return DeptBoardVO.builder()
+	        .deptBNo(rs.getInt("DEPTB_NO"))
+	        .deptBTitle(rs.getString("DEPTB_TITLE"))
+	        .deptBContent(rs.getString("DEPTB_CONTENT"))
+	        .deptBView(rs.getInt("DEPTB_VIEW"))
+	        .deptBNotice(rs.getInt("DEPTB_NOTICE"))
+	        .deptBStatus(rs.getInt("DEPTB_STATUS"))
+	        .deptBPblc(rs.getInt("DEPTB_PBLC"))
+	        .deptNo(rs.getInt("DEPT_NO"))
+	        .deptBCrtr(rs.getInt("DEPTB_CRTR"))
+	        .createDate(rs.getString("CREATE_DATE"))
+	        .updateDate(rs.getString("UPDATE_DATE"))
+	        .build();
+	}
 	
-	// 페이징 
-//	public ArrayList<com.aura.www.vo.DeptBoardVO> selectAllbyPage(int startNo, int endNo) {
-//		ArrayList<com.aura.www.vo.DeptBoardVO> list = new ArrayList<com.aura.www.vo.DeptBoardVO>();
-//
-////4. SQL문 작성
-//		sb.setLength(0);
-//		sb.append("SELECT SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, DEPTB_STATUS, DEPTB_PBLC, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
-//		sb.append("FROM ( SELECT ROWNUM RN , BNO, WRITER, TITLE, CONTENTS, REGDATE, HITS, IP, STATUS ");
-//		sb.append("		FROM  ( SELECT BNO, WRITER, TITLE, CONTENTS, REGDATE, HITS, IP, STATUS ");
-//		sb.append("	        FROM BOARD ");
-//		sb.append("	        ORDER BY BNO DESC ) ");
-//		sb.append("		WHERE ROWNUM <= ?) ");
-//		sb.append("WHERE RN >= ? ");
-//
-////5. 문장 객체 생성
-//		try {
-//			pstmt = conn.prepareStatement(sb.toString());
-//			pstmt.setInt(1, endNo);
-//			pstmt.setInt(2, startNo);
-//			rs = pstmt.executeQuery();
-////6. 실행 (SELECT ==> ResultSet 객체 )
-//			while (rs.next()) {
-//				int bno = rs.getInt("bno");
-//				String writer = rs.getString("writer");
-//				String title = rs.getString("title");
-//				String contents = rs.getString("contents");
-//				String regdate = rs.getString("regdate");
-//				int hits = rs.getInt("hits");
-//				String ip = rs.getString("ip");
-//				int status = rs.getInt("status");
-//
-////기본생성자를 불러서 setter로 담아도 되고
-////BoardVO vo = new BoardVO(bno, writer, title, contents, regdate, hits, ip, status);
-//
-////위와 같은 방식이 아닌 @Build 로 객체를 만드는 방법도 있다
-////build 객체인 나 자신을 불러옴
-//				com.aura.www.vo.DeptBoardVO vo = com.aura.www.vo.DeptBoardVO.builder().bno(bno).writer(writer)
-//						.title(title).contents(contents).regdate(regdate).hits(hits).ip(ip).status(status).build();
-//
-//				list.add(vo);
-//			}
-//		} catch (SQLException e) {
-////TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-////여러번 반복 이후에 return 실행
-//		return list;
-//	} 
 
 	// 자원 반납
 	public void close() {

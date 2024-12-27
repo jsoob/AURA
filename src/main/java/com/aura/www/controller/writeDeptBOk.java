@@ -37,7 +37,7 @@ public class writeDeptBOk  extends HttpServlet{
 	    int deptBStatus = 1; // 등록 상태 기본값
 	    
 	    if(isNotice != null) {
-	    	deptBTitle = "[공지] " + deptBTitle;
+	    	// deptBTitle = "[공지] " + deptBTitle;
 	    	deptBNotice = 1;
 	    }
 

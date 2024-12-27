@@ -32,20 +32,20 @@ public class WriteDeptBOkAction implements Action {
 	    int deptBPblc = 1; // 공개 여부 기본값
 	    int deptBStatus = 1; // 등록 상태 기본값
 	    
-	    if(isNotice != null) {
-	    	deptBTitle = "[공지] " + deptBTitle;
-	    	deptBNotice = 1;
-	    }
-
+	    
 
 	    // 공지 설정 (직급 번호 확인)
-	    if (dbn != null && posNo >= 200 && posNo == 0) { // 직급 200 이상만 공지 가능
+	    if (dbn != null && posNo >= 200 || posNo == 0) { // 직급 200 이상만 공지 가능
 	        deptBNotice = Integer.parseInt(dbn);
+	        // deptBTitle = "[공지] " + deptBTitle;
+	        
 	    }
 
 	    // 공개 설정
 	    if (dbp != null) {
 	        deptBPblc = Integer.parseInt(dbp);
+	       
+	        
 	    }
 
 	    // 게시글 저장
@@ -60,7 +60,14 @@ public class WriteDeptBOkAction implements Action {
 	    vo.setDeptBCrtr(deptBCrtr);
 	    vo.setDeptNo(loginEmp.getDeptNo());
 
-	    dao.insertOne(vo);
+	    
+	    try {
+            dao.insertOne(vo);
+            System.out.println("글쓰기 성공: " + vo.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("글쓰기 실패: " + e.getMessage());
+        }
 
 	    return "deptboard?cmd=selectDeptB";
 	    
