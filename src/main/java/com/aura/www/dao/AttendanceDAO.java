@@ -42,17 +42,36 @@ public class AttendanceDAO {
 	
 	///////////////////////////////////////////// 전체조회 /////////////////////////////////////////////
 	
-	public ArrayList<AttendanceVO> selectAll(){
+	public ArrayList<AttendanceVO> selectAll(AttendanceVO vo){
 		ArrayList<AttendanceVO> list = new ArrayList<AttendanceVO>();
 		
 		//	4. SQL문 작성
 		sb.setLength(0);
-		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
-		sb.append("FROM ATTENDANCE ");
+		
+		// 이렇게 서브쿼리로 작성하는 방법도 있고
+//		sb.append("SELECT (SELECT DEPT_NAME FROM DEPT D WHERE E.DEPT_NO=D.DEPT_NO), (SELECT POS_NAME FROM POSITION P WHERE E.POS_NO=P.POS_NO), A.*, E.* ");
+//		sb.append("FROM ATTENDANCE A ");
+//		sb.append("INNER JOIN EMP E ");
+//		sb.append("ON A.EMP_NO = E.EMP_NO ");
+//		sb.append("WHERE E.EMP_NO = ? ");
+		
+		// 이렇게 JOIN해서 작성하는 방법도 있음 
+		sb.append("SELECT ");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ATTEN_DATE, STARTWORK_TIME, ENDWORK_TIME, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME ");
+		sb.append("FROM ATTENDANCE A ");
+		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
+		sb.append("INNER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("INNER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
+		sb.append("WHERE E.EMP_NO = ? ");
+		
 		
 		//	5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
+			System.out.println(sb.toString());
+			pstmt.setInt(1, vo.getEmpNo());
+		
 			rs = pstmt.executeQuery();
 			//	6. 실행 (SELECT ==> ResultSet 객체 )
 			while(rs.next()) {
@@ -61,11 +80,27 @@ public class AttendanceDAO {
 				String startworkTime = rs.getString("STARTWORK_TIME");
 				String endworkTime = rs.getString("ENDWORK_TIME");
 				
-				AttendanceVO vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime);
+				String empName = rs.getString("EMP_NAME");
 				
-				list.add(vo);
+				int posNo = rs.getInt("POS_NO");
+				int deptNo = rs.getInt("DEPT_NO");
+				String posName = rs.getString("POS_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+
+				// 반복문 안에서 매번 새로운 객체 생성 후 하나씩 할당
+					// 자바에서는 ArrayList는 객체의 참조를 저장
+					// vo 객체를 반복문 안에서 계속 덮어쓰게 되면, list의 모든 요소가 같은 객체 (즉, 마지막 값)로 덮어씌워짐
+				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
+				vo.setEmpNo(empNo);
+				vo.setEmpName(empName);
+				vo.setPosNo(posNo);
+				vo.setPosName(posName);
+				vo.setDeptNo(deptNo);
+				vo.setDeptName(deptName);
+				list.add(vo);	// 생성된 객체(vo)를 리스트에 추가
 			}
-		} catch (SQLException e) {	
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 발생 : " + e.getMessage());	// 오류 메시지 출력
 			e.printStackTrace();
 		}		
 	return list;
@@ -95,7 +130,7 @@ public class AttendanceDAO {
 				String startworkTime = rs.getString("STARTWORK_TIME");
 				String endworkTime = rs.getString("ENDWORK_TIME");
 				
-				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime);
+				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -167,7 +202,7 @@ public class AttendanceDAO {
 	        	String startworkTime = rs.getString("STARTWORK_TIME");
 	        	String endworkTime = rs.getString("ENDWORK_TIME");
 	        	
-	        	AttendanceVO vo = new AttendanceVO(attenDate, empNumber, startworkTime, endworkTime);
+	        	AttendanceVO vo = new AttendanceVO(attenDate, empNumber, startworkTime, endworkTime, null);
 	        	
 	        	list.add(vo);
 	        }
@@ -190,7 +225,7 @@ public class AttendanceDAO {
 		//		4. SQL문 작성
 		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
 		sb.append("FROM ATTENDANCE ");
-		sb.append("ORDER BY CREATE_DATE DESC ");	// 생성된 날짜 기준으로 내림차순
+		sb.append("ORDER BY ATTEN_DATE DESC ");		// 생성된 날짜 기준으로 내림차순
 		sb.append("LIMIT 10 OFFSET ? ");			// (예시) 한 페이지당 10개로 출력, 원한다면 숫자 조절 가능
 		
 		int offset = (page - 1) * 10;				// 0일 때 1번 게시글, 1일 때 11번 게시글이 보여짐
@@ -241,47 +276,108 @@ public class AttendanceDAO {
 	//////////////////////////////////// 추가 ////////////////////////////////////
 		
 		
-	public void addOne(AttendanceVO vo) {
+	public void insertOne(AttendanceVO vo) {
 		
 		//		4. SQL문 작성
 		sb.setLength(0);
-		sb.append("INSERT INTO ATTENDANCE (ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ) ");
-		sb.append("VALUES (CURRENT_TIMESTAMP, ?, ?, ? ) ");
+		sb.append("INSERT INTO ATTENDANCE (ATTEN_DATE, EMP_NO ) ");
+		sb.append("VALUES (CURRENT_TIMESTAMP, ? ) ");
 		
 		//		5. 문장 객체 생성
 	    // Timestamp.valueOf를 사용해서 String을 데이터베이스에서 사용하는 TIMESTAMP 형식으로 변환
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, vo.getEmpNo());
-	        pstmt.setTimestamp(2, Timestamp.valueOf(vo.getStartworkTime())); // String -> Timestamp 변환
-	        pstmt.setTimestamp(3, Timestamp.valueOf(vo.getEndworkTime()));  // String -> Timestamp 변환
+//	        pstmt.setTimestamp(2, Timestamp.valueOf(vo.getStartworkTime())); // String -> Timestamp 변환
+//	        pstmt.setTimestamp(3, Timestamp.valueOf(vo.getEndworkTime()));  // String -> Timestamp 변환
 
 			//		6. 실행 (SELECT ==> ResultSet 객체 )
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}	// addOne() end
+	}	// insertOne() end
 	
+	//////////////////////////////////// 등록 유무 ////////////////////////////////////
+	
+	public int checkAttendance(AttendanceVO vo) {
+		
+		//		4. SQL문 작성
+		sb.setLength(0);
+		sb.append("SELECT COUNT(*) CNT ");
+		sb.append("FROM ATTENDANCE ");
+		sb.append("WHERE EMP_NO = ? ");
+		sb.append("AND DATE_FORMAT(ATTEN_DATE, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') ");
+		
+		if(vo.getWorkGubun() == null || vo.getWorkGubun().equals("start") ) {
+	         
+	    } else if(vo.getWorkGubun().equals("end") ) {
+	    	sb.append("AND ENDWORK_TIME IS NOT NULL ");
+	    }
+		
+		int cnt = 0;
+		
+		//		5. 문장 객체 생성
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, vo.getEmpNo());
+			rs = pstmt.executeQuery();
+			//		6. 실행 (SELECT ==> ResultSet 객체 )
+			if(rs.next()) {
+				cnt = rs.getInt("CNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	
+	//////////////////////////////////// 출퇴근 상태 추가 ////////////////////////////////////
+	
+	// 출퇴근 시간 등록 메서드
+    public boolean insertWork(AttendanceVO vo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO ATTENDANCE (EMP_NO, STARTWORK_TIME, ENDWORK_TIME) ");
+        sb.append("VALUES (?, ?, ?) ");
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sb.toString())) {
+            // 사원 번호 설정
+            pstmt.setInt(1, vo.getEmpNo()); 
+            // 출근 시간, 퇴근 시간은 Timestamp로 변환하여 설정
+            pstmt.setTimestamp(2, Timestamp.valueOf(vo.getStartworkTime())); 
+            pstmt.setTimestamp(3, Timestamp.valueOf(vo.getEndworkTime()));
+
+            // 쿼리 실행        
+            int result = pstmt.executeUpdate();
+            return result > 0; // 쿼리 실행 결과가 1 이상이면 성공
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // 예외 발생 시 false 반환
+        }
+    }
+
+
+
 	
 	//////////////////////////////////// 수정(변경) ////////////////////////////////////
 	
-	public void updateOne(AttendanceVO vo) {
+	public void updateEndWork(AttendanceVO vo) {
 		
 		//		4. SQL문 작성
 		sb.setLength(0);
 	    sb.append("UPDATE ATTENDANCE ");
-	    sb.append("SET ATTEN_DATE = ?, STARTWORK_TIME = ?, ENDWORK_TIME = ? ");
+	    sb.append("SET ENDWORK_TIME = CURRENT_TIMESTAMP() ");
 	    sb.append("WHERE EMP_NO = ?");
-
+	
 	    // 		5. 문장 객체 생성
 	    // Timestamp.valueOf를 사용해서 String을 데이터베이스에서 사용하는 TIMESTAMP 형식으로 변환
 	    try {
 	        pstmt = conn.prepareStatement(sb.toString());
-	        pstmt.setTimestamp(1, Timestamp.valueOf(vo.getAttenDate())); // String -> Timestamp 변환
-	        pstmt.setTimestamp(2, Timestamp.valueOf(vo.getStartworkTime())); // String -> Timestamp 변환
-	        pstmt.setTimestamp(3, Timestamp.valueOf(vo.getEndworkTime())); // String -> Timestamp 변환
-	        pstmt.setInt(4, vo.getEmpNo()); // WHERE 절의 EMP_NO 바인딩
+	        // String -> Timestamp 변환
+	        // pstmt.setTimestamp(2, Timestamp.valueOf(vo.getStartworkTime()));  // 출근 시간
+	        // pstmt.setTimestamp(3, Timestamp.valueOf(vo.getEndworkTime()));    // 퇴근 시간
+	        pstmt.setInt(1, vo.getEmpNo());  // 사원 번호 (WHERE 조건 : WHERE 절의 EMP_NO 바인딩)
+	        pstmt.executeUpdate();
 	        
 			//		6. 실행 (SELECT ==> ResultSet 객체 )
 		} catch (SQLException e) {
@@ -301,7 +397,7 @@ public class AttendanceDAO {
 		// 5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, empNo);
+			pstmt.setInt(1, empNo);			// 삭제할 사원 번호
 			// 6. 실행 (SELECT ==> ResultSet 객체 )
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -314,16 +410,15 @@ public class AttendanceDAO {
 
 	public void close() {
 		try {
-			if (rs != null)
-				rs.close();
-			if (pstmt != null)
-				pstmt.close();
-			if (conn != null)
-				conn.close();
+			if (rs != null) rs.close();
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	} // close() end
-		
+
+
+
 }

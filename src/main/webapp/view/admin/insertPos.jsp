@@ -33,13 +33,11 @@
 
 							<tr>
 								<th>직급명</th>
-								<td><input type="text" name="posName" class="form-control"
-									placeholder="직급명 입력" /></td>
+								<td><input type="text" name="posName" class="form-control" placeholder="직급명 입력" /></td>
 							</tr>
 
 							<tr>
-								<td colspan="2"><a href="admin?cmd=selectPos"
-									class="btn btn-outline-primary" />취소</a>
+								<td colspan="2"><a href="admin?cmd=selectPos" class="btn btn-outline-primary">취소</a>
 									<input type="submit" class="btn pd-setting" value="등록" /></td>
 							</tr>
 

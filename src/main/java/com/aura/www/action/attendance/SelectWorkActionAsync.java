@@ -24,9 +24,20 @@ public class SelectWorkActionAsync implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		AttendanceDAO dao = new AttendanceDAO();
-		ArrayList<AttendanceVO> list = dao.selectAll();
 		
-		req.setAttribute("list", list);		// list를 request 객체에 저장
+	    // 임의의 AttendanceVO 객체 생성 (필요하다면 특정 값으로 초기화 가능)
+		// 기본값 설정을 위한 임시 vo 객체
+	    AttendanceVO tempVO = new AttendanceVO(); 
+	    tempVO.setEmpNo(0); // empNo는 기본값 0으로 설정 (필요한 값으로 변경 가능)
+	    
+	    // selectAll() 호출 시 tempVO 전달
+	    // DAO의 selectAll 메서드 호출
+	    ArrayList<AttendanceVO> list = dao.selectAll(tempVO);
+	    
+	    // dao.selectAll() 오류가 나서 위 tempVO 객체를 따로 생성하여 선언
+		// ArrayList<AttendanceVO> list = dao.selectAll();
+		
+		req.setAttribute("list", list);		// 조회 결과 list를 request 객체에 저장
 		
 		// PositionVO 리스트를 JSON 배열로 변환
 		JSONArray jArr = listmap_to_json(list);
@@ -36,29 +47,13 @@ public class SelectWorkActionAsync implements Action {
 	}
 	
 	// 리스트를 JSON 배열로 변환하는 메서드
-	private JSONArray listmap_to_json(List<AttendanceVO> list)
-    {       
-        JSONArray json_arr=new JSONArray();							// JSON 배열 객체 생성
-        for (AttendanceVO vo : list) {								// 리스트의 각 VO를 순회
-            JSONObject json_obj = new JSONObject();					// 각 VO를 JSON 객체로 변환
-            
-			Field[] fields = vo.getClass().getDeclaredFields();		// VO 클래스의 모든 필드 가져옴
-			for(int i=0; i <fields.length; i++){			
-				fields[i].setAccessible(true);						// private 필드에 접근 가능하게 설정
-				
-				String key = fields[i].getName();					// 필드 이름(key)
-				Object value = null;
-				try {
-					value = fields[i].get(vo);						// 필드 값(value)
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();							// 예외 발생 시 스택 트레이스 출력
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-				json_obj.put(key,value);							// JSON 객체에 key-value 쌍 추가
-			}
-            json_arr.add(json_obj);									// JSON 배열에 JSON 객체 추가
+	private JSONArray listmap_to_json(List<AttendanceVO> list){       
+        JSONArray json_arr = new JSONArray();							// JSON 배열 객체 생성
+
+        for (AttendanceVO vo : list) {
+            json_arr.add(vo); // VO 객체를 그대로 추가
         }
+        
         return json_arr;											// JSON 배열 반환
     }
 }

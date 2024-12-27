@@ -13,6 +13,7 @@
 
 </head>
 <body>
+
 	<!-- Start Left menu area -->
 	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
 
@@ -22,33 +23,35 @@
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
-				<div class="row">
+				<div class="row">	`
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap aura_content">
 
 							<div class="text-right mg-bt-10">
-								<!-- startWorkBtn : 출근 버튼, endWorkBtn : 퇴근 버튼 -->
+ 								<!-- startWorkBtn : 출근 버튼, endWorkBtn : 퇴근 버튼 -->
 								<button type="button" id="startWorkBtn" class="btn pd-setting">출근</button>
 								<button type="button" id="endWorkBtn" class="btn pd-setting">퇴근</button>
-
+			 
 							</div>
+							
 
 							<!-- 	<div>
 								<button id="showDateBtn">현재 날짜 및 시간 출력(테스트 대충 만듬)</button>
 							</div> -->
 
 							<div class="asset-inner">
-								<table id="table">
+								<table id="table" >
 									<tr>
+										<th class="text-center col-sm-2">사원번호</th>
 										<th class="text-center col-sm-2">사원명</th>
 										<th class="text-center col-sm-2">부서</th>
 										<th class="text-center col-sm-2">직급</th>
 										<th class="text-center col-sm-2">출근시간</th>
 										<th class="text-center col-sm-2">퇴근시간</th>
 									</tr>
-
-
+															
+										<%-- 
 									<c:forEach var="vo" items="${list}">
 										<tr>
 											<td class="text-center col-sm-2">${vo.empNo}</td>
@@ -59,8 +62,7 @@
 											<td class="text-center col-sm-2">${vo.endworkTime}</td>
 										</tr>
 									</c:forEach>
-
-
+										 --%>
 								</table>
 							</div>
 
@@ -74,52 +76,56 @@
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 	<script>
+		$( ()=> {
+		      loadWork();
+		});	
 	
-	//출근 버튼을 클릭했을 때 실행할 함수 설정
-	document.getElementById("startWorkBtn").addEventListener("click", function() {
+		// 출근 버튼 클릭 시 출근 시간 조회
+		$("#startWorkBtn").on("click", function() {
+			let empNo = $("#empNo").val(); // 사원 번호 가져오기
+			console.log("empno : " + empNo);
+			$.ajax({
+				url: 'workservlet', // 출근 시간을 처리할 서블릿 경로
+				type: 'POST',
+				dataType : 'json', 
+				data: { empNo: empNo, workGubun:"start" },
+				success: function(response) {
+					// 서버로부터 받은 출근 시간 표시
+					if (response.status) {
+						alert('출근 시간이 등록되었습니다: ');
+					} else {
+						alert('출근 처리가 되어있는 상태입니다.');
+					}
+				},
+				error: function() {
+					alert('출근 시간 처리 중 오류가 발생했습니다.');
+				}
+			});
+		});
 
-		// 현재 시간 가져오기
-		// setTimeout을 사용해서 1초 후에 날짜와 시간 출력
-		// setTimeout() : 지연 시간을 설정할 수 있음
-		// new Date() : 현재 날짜와 시간을 가져옴
-		// .toLocaleString() : 날짜와 시간을 사용자의 로컬 형식으로 변환해주는 함수
-		setTimeout(function() {
-			const now = new Date(); 				// 현재 날짜와 시간
-			const startTime = now.toLocaleString(); // 현재 날짜와 시간을 로컬 형식으로 변환
-									
-			// 테이블에 새로운 행 추가
-			const table = document.getElementById("table");		// 테이블 요소 가져오기
-			const newRow = table.insertRow();					// 새로운 행 추가
-						
-			// 출근 시간 행 추가
-			const newCell = newRow.insertCell();				// 새로운 셀 추가
-			newCell.innerText = '출근 시간 : ' + startTime;		// 출근 시간 삽입
-									
-			// 출근 버튼 클릭하면 동작 (알림 팝업창 생성)
-			alert("출근 시간이 정상 등록되었습니다.");
-		},1000);	// 1초 후에 실행
-	});
-				
-	// 퇴근 버튼을 클릭했을 때 실행할 함수 설정
-	document.getElementById("endWorkBtn").addEventListener("click", function(){
-		
-		// 현재 시간을 가져오기
-		const now = new Date();								// 현재 날짜와 시간
-		const endTime = now.toLocaleString();		// 로컬 형식으로 변환
-		
-		// 테이블에 새로운 행 추가
-		const table = document.getElementById("table");		// 테이블 요소 가져오기
-		const newRow = table.insertRow();					// 새로운 행 추가
-		
-		// 퇴근 시간 행 추가
-		const newCell = newRow.insertCell();				// 새로운 셀 추가
-		newCell.innerText = '퇴근 시간 : ' + endTime;			// 행에 퇴근 시간 삽입
-		
-		// 퇴근 버튼 클릭하면 동작 (알림 팝업창 생성)
-		alert("퇴근 시간이 정상 등록되었습니다.");
-	},1000);	// 1초 후에 실행
-	
-</script>
+		// 퇴근 버튼 클릭 시 퇴근 시간 조회
+		$("#endWorkBtn").on("click", function() {
+			var empNo = $("#empNo").val(); // 사원 번호 가져오기
+
+			$.ajax({
+				url: 'workservlet', // 퇴근 시간을 처리할 서블릿 경로
+				type: 'POST',
+				dataType : 'json', 
+				data: { empNo: empNo, workGubun:"end"},
+				success: function(response) {
+					// 응답 처리 후 퇴근 시간 표시
+					if (response.status) {
+						alert('퇴근 시간이 등록되었습니다: ');
+					} else {
+						alert('퇴근 처리가 되어있는 상태입니다.');
+					}
+				},
+				error: function() {
+					alert('퇴근 시간 처리 중 오류가 발생했습니다.');
+				}
+			});
+		});
+	</script>
 
 </body>
 </html>

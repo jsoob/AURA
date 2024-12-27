@@ -27,7 +27,7 @@ public class ModifyWorkOkAction implements Action {
 			vo.setStartworkTime(startWorkTime);
 			vo.setEndworkTime(endWorkTime);
 			
-			dao.updateOne(vo);
+			dao.updateEndWork(vo);
 			
 			}
 
