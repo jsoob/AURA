@@ -83,10 +83,9 @@ public class FreeBoardDAO {
 	public ArrayList<FreeBoardVO> searchFreeBoard(FreeBoardVO vo, String order) {
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 		sb.setLength(0);
-		sb.append(
-				"SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
+		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
 		sb.append("FROM FREEBOARD ");
-		sb.append("WHERE FREEB_STATUS !=0 && FREEB_PBLC !=0 "); // 임시저장이 아니거나 공개상태인것
+		sb.append("WHERE FREEB_STATUS !=0 "); // 임시저장이 아닌 것
 		if (vo.getFreeBTitle() != null)
 			sb.append("AND FREEB_TITLE LIKE ? ");
 		if (vo.getFreeBContent() != null)

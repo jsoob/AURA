@@ -34,7 +34,9 @@
 	function loadFreeBList (){
 		
 		let sendData = $("form[name=searchForm]").serialize();
-		console.log(sendData);
+		
+		let cnt=0;
+		
 		$.ajax({
 			type:"get",
 			url : "/aura/freeboard2",
@@ -45,7 +47,7 @@
 				 $('.freeBList').empty();
 				 
 				 $('#total').empty();
-				 $('#total').append(data.length);
+				 // $('#total').append(data.length);
 				 
 				    // 데이터가 없을 경우 처리
 				    if (data.length === 0) {
@@ -54,16 +56,61 @@
 				 
 				let obj = data;
                 $.each(obj,(index, freeB)=>{
-                	// console.log(freeB.freeBNo);
-                	let notice;
+                	let notice;	// 공지
+                	let lock;	// 자물쇠 
+                	let rowHtml='';
+                	
+                	// 공지, 공개여부, 내가쓴 글인지
                 	if(freeB.freeBNotice == 1) notice='[공지]';
                 	else notice='';
-                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td>'+notice+'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
-                    $(".freeBList").append(rowHtml);
+                	
+  					// 비공개인 게시글
+                	if(freeB.freeBPblc==0){
+                		lock='<i class="fa fa-lock" aria-hidden="true"></i>';
+                	}
+                	else {lock=''};
+                	
+                	console.log(${loginEmp.getEmpNo()});
+                	
+                	rowHtml += '<tr>';
+                	// 관리자라면 임시저장 제외 다 보이게
+                	if(${loginEmp.getEmpNo()} == '2024000'){
+                		cnt++;
+                		rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
+                	} else {
+                		// 내가 쓴 글 
+                		if(freeB.freeBCrtr == ${loginEmp.getEmpNo()}){
+                			cnt++;
+                			rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
+                		}else{
+                			// 내가 쓴 글 아니고 공개인 게시글
+                			if(freeB.freeBPblc == 1){
+                				cnt++;
+                				rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
+                			}
+                		}
+                	}
+                	rowHtml += '</tr>';
+                	
+                	
+                	$(".freeBList").append(rowHtml);
+                	
+                	
+                	$('#total').empty();
+                	$('#total').append(cnt);
                     
                 	})      
 			}
+                	
 		});	
+		
+
+   	 // 데이터가 없을 경우 처리
+	    if (cnt === 0) {
+	        $(".freeBList").empty();
+	        $(".freeBList").append("<tr><td colspan='5' class='text-center'>게시글이 없습니다.</td></tr>");
+	    }
+		
 	}
 
 	// 정렬 // 이건 작동하지 않음

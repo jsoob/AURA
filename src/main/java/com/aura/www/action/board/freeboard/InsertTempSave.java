@@ -23,29 +23,31 @@ public class InsertTempSave extends HttpServlet{
 		String fbs = req.getParameter("freeBStatus");
 		String fbn = req.getParameter("freeBNotice");
 		String fbp = req.getParameter("freeBPblc");
-		
-		int	freeBCrtr = Integer.parseInt(fbc);
-		int	freeBStatus = Integer.parseInt(fbs);
-		int	freeBNotice = Integer.parseInt(fbn);
-		int	freeBPblc = Integer.parseInt(fbp);
-		
-		
-		System.out.println(freeBTitle);
-		System.out.println(freeBContent);
-		System.out.println(freeBCrtr);
-		System.out.println(freeBStatus);
-		System.out.println(freeBNotice);
-		System.out.println(freeBPblc);
+
 		
 		FreeBoardDAO dao = new FreeBoardDAO();
 
 		FreeBoardVO vo = new FreeBoardVO();
+		
 		vo.setFreeBTitle(freeBTitle);
 		vo.setFreeBContent(freeBContent);
-		vo.setFreeBCrtr(freeBCrtr);
-		vo.setFreeBStatus(freeBStatus);
-		vo.setFreeBNotice(freeBNotice);
-		vo.setFreeBPblc(freeBPblc);
+		
+		if(fbc != null) {
+			int freeBCrtr = Integer.parseInt(fbc);
+			vo.setFreeBCrtr(freeBCrtr);
+		}
+		if(fbs != null) {
+			int freeBStatus = Integer.parseInt(fbs);
+			vo.setFreeBStatus(freeBStatus);
+		}
+		if(fbn != null) {
+			int freeBNotice = Integer.parseInt(fbn);
+			vo.setFreeBNotice(freeBNotice);
+		}
+		if(fbp != null) {
+			int freeBPblc = Integer.parseInt(fbp);
+			vo.setFreeBPblc(freeBPblc);
+		}
 		
 		dao.insertOne(vo);
 		
