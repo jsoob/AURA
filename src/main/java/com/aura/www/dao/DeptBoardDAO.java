@@ -69,75 +69,6 @@ public class DeptBoardDAO {
 	    return list;
 	}
 
-	// 검색해서 게시글 찾기
-	// 제목, 내용, 작성자로 검색가능
-	public ArrayList<DeptBoardVO> searchFreeBoard(DeptBoardVO vo) {
-		ArrayList<DeptBoardVO> list = new ArrayList<DeptBoardVO>();
-		sb.setLength(0);
-		sb.append(
-				"SELECT DEPTB_NO, DEPTB_TITLE, DEPTB_CONTENT, DEPTB_VIEW, DEPTB_NOTICE, DEPTB_STATUS, DEPTB_PBLC, DEPTB_CRTR, CREATE_DATE, UPDATE_DATE ");
-		sb.append("FROM DEPTBOARD ");
-		sb.append("WHERE 1=1 ");
-		if (vo.getDeptBTitle().equals("") && vo.getDeptBTitle() != null)
-			sb.append("AND DEPTB_TITLE LIKE ? ");
-		if (vo.getDeptBContent().equals("") && vo.getDeptBContent() != null)
-			sb.append("AND DEPTB_CONTENT LIKE ? ");
-		if (vo.getDeptBCrtr() != 0)
-			sb.append("AND DEPTB_CRTR = ? ");
-		sb.append("ORDER BY CREATE_DATE DESC ");
-
-		try {
-			pstmt = conn.prepareStatement(sb.toString());
-
-			int cnt = 0;
-
-			if (vo.getDeptBTitle().equals("") && vo.getDeptBTitle() != null) {
-				pstmt.setString(++cnt, "%" + vo.getDeptBTitle() + "%");
-			}
-			if (vo.getDeptBContent().equals("") && vo.getDeptBContent() != null) {
-				pstmt.setString(++cnt, "%" + vo.getDeptBContent() + "%");
-			}
-			if (vo.getDeptBCrtr() != 0) {
-				pstmt.setInt(++cnt, vo.getDeptBCrtr());
-			}
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				int deptBNo = rs.getInt("DEPTB_NO");
-				String deptBTitle = rs.getString("DEPTB_TITLE");
-				String deptBContent = rs.getString("DEPTB_CONTENT");
-				int deptBView = rs.getInt("DEPTB_VIEW");
-				int deptBNotice = rs.getInt("DEPTB_NOTICE");
-				int deptBStatus = rs.getInt("DEPTB_STATUS");
-				int deptBPblc = rs.getInt("DEPTB_PBLC");
-				int deptNo = rs.getInt("DEPT_NO");				
-				int deptBCrtr = rs.getInt("DEPTB_CRTR");
-				String createDate = rs.getString("CREATE_DATE");
-				String updateDate = rs.getString("UPDATE_DATE");
-
-				DeptBoardVO findvo = new DeptBoardVO();
-
-				vo.setDeptBNo(deptBNo);
-				vo.setDeptBTitle(deptBTitle);
-				vo.setDeptBContent(deptBContent);
-				vo.setDeptBView(deptBView);
-				vo.setDeptBNotice(deptBNotice);
-				vo.setDeptBStatus(deptBStatus);
-				vo.setDeptBPblc(deptBPblc);
-				vo.setDeptNo(deptNo);
-				vo.setDeptBCrtr(deptBCrtr);
-				vo.setCreateDate(createDate);
-				vo.setUpdateDate(updateDate);
-
-				list.add(findvo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
 	// 게시물 번호로 검색
 
 	public com.aura.www.vo.DeptBoardVO selectOne(int deptBNo) {
@@ -315,8 +246,9 @@ public class DeptBoardDAO {
 	    }
 	    return deptName;
 	}
+
 	
-	
+	///////// 공지사항 ///////
 	
 	// 관리자 공지사항 최신 3개 
 	public ArrayList<DeptBoardVO> selectThreeRecentNotice() {
@@ -350,9 +282,6 @@ public class DeptBoardDAO {
 	    }
 	    return list;
 	}
-
-	
-	///////// 공지사항 ///////
 	
 	
 	// 관리자 공지사항 최신 3개 제외 전체 글들  
@@ -542,6 +471,8 @@ public class DeptBoardDAO {
 	    return list;
 	}
 	
+	
+	// 총 게시물 개수 
 	public int getDeptBoardCount(int deptNo, int empNo, boolean isAdmin) {
 	    int totalCount = 0;
 	    sb.setLength(0);

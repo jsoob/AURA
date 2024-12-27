@@ -13,8 +13,8 @@
 <body>
 	<!-- Start Left menu area -->
 	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
-
 	<!-- End Left menu area -->
+
 	<!-- Start Welcome area -->
 	<div class="all-content-wrapper">
 		<jsp:include page="/view/comm/header.jsp"></jsp:include>
@@ -22,8 +22,9 @@
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					<form action="deptboard">
+					<form action="deptboard" method="post">
 						<table class="table">
+							<!-- 제목 입력 -->
 							<tr>
 								<td colspan="2">
 									<div class="col-sm-1">
@@ -31,12 +32,12 @@
 									</div>
 									<div class="col-sm-11">
 										<input type="text" name="deptBTitle" class="form-control"
-											id="" value="${vo.deptBTitle}" required />
-									</div> 
-									
-									
+											value="${vo.deptBTitle}" required />
+									</div>
 								</td>
 							</tr>
+							
+							<!-- 내용 입력 -->
 							<tr>
 								<td colspan="2">
 									<textarea class="summernote6" id="summernote" name="deptBContent" cols="50" rows="10">
@@ -44,17 +45,31 @@
 									</textarea>
 								</td>
 							</tr>
-							<tr>
-								<td colspan="2">공지로 등록 
-									<input type="checkbox" name="deptBNotice" value="1">
-								</td>
-							</tr>
+							
+							<!-- 공지 체크박스 -->
 							<tr>
 								<td colspan="2">
-									<input type="radio" name="deptBPblc" value="1" checked="checked" required> 공개 
-									<input type="radio" name="deptBPblc" value="0"> 비공개
+									공지로 등록 
+									<input type="checkbox" name="deptBNotice" value="1" 
+										${vo.deptBNotice == 1 ? 'checked' : ''} />
 								</td>
-							</tr> 
+							</tr>
+							
+							<!-- 공개/비공개 라디오 버튼 -->
+							<tr>
+								<td colspan="2">
+									<label>
+										<input type="radio" name="deptBPblc" value="1" 
+											${vo.deptBPblc == 1 ? 'checked' : ''} /> 공개
+									</label>
+									<label>
+										<input type="radio" name="deptBPblc" value="0" 
+											${vo.deptBPblc == 0 ? 'checked' : ''} /> 비공개
+									</label>
+								</td>
+							</tr>
+							
+							<!-- 버튼 영역 -->
 							<tr>
 								<td colspan="2">
 									<a href="deptboard?cmd=selectDeptB">
@@ -65,6 +80,8 @@
 								</td>
 							</tr>
 						</table>
+						
+						<!-- 숨겨진 필드 -->
 						<input type="hidden" name="cmd" value="modifyDeptBOk" />
 						<input type="hidden" name="deptBNo" value="${vo.deptBNo}" />
 					</form>
@@ -99,6 +116,6 @@
             $('input[type="radio"]').prop('checked', false);
         });
     });
-</script>
+    </script>
 </body>
 </html>
