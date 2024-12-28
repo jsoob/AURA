@@ -13,6 +13,7 @@
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
+                    
                     <li id="jjj_category">
                         <a class="has-arrow" href="index.html">
 						   <!-- <span class="educate-icon educate-home icon-wrap"></span> -->
@@ -48,7 +49,7 @@
                         </ul>
                     </li>
                     
-                    <!-- <li id="mail_category" class="active"> -->
+                    <%-- <li id="mail_category" class="active"> --%>
                     <c:if test="${ commAt['category'] != null  && commAt['category'] == 'mail' }">
                    		<li id="mail_category"  class="active">
                    	</c:if>

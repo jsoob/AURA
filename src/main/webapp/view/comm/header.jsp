@@ -380,11 +380,11 @@
 	    			<div class="row">
 	    				<form name="myPageForm">
 		    				<div class="col-lg-12 col-sm-12 col-xs-12">
-								<div class="col-lg-12 col-sm-12 col-xs-12 myImageDiv">
-		                        	<div class="col-lg-12 text-center" style="height: 200px;">
+								<div class="col-lg-12 col-sm-12 col-xs-12 myImageDiv text-center">
+		                        	<div class="col-lg-12 mg-bt-10" style="height: 200px;">
 		                        		<img class="myViewImg" name="empImage" alt="사원이미지 없음" src="">
 		                        	</div>
-		                        		<div class="col-lg-12 text-center myImageBtnDiv mg-ht-10">
+		                        		<div class="col-lg-12 myImageBtnDiv mg-bt-10">
 		                            		<label class="btn btn-success" style="line-height: 26px;" for="myChangeImg">
 												<i class="fa fa-exchange" aria-hidden="true"></i> 사진 변경
 											</label>
