@@ -137,7 +137,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="logo-pro">
 
-				<a href="index.html"><img class="main-logo" src="${pageContext.request.contextPath}/img/logo/logo.png" alt="" /></a>
+				<a href="${pageContext.request.contextPath}/main"><img class="main-logo" src="${pageContext.request.contextPath}/img/logo/AURAlogo.png" alt="" style="width: 200px; height: 60px;" /></a>
 			</div>
 		</div>
 	</div>
@@ -150,7 +150,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="header-top-wraper">
                         <div class="row">
-                            <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
                                 <div class="menu-switcher-pro">
                                     <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
 										<i class="fa fa-list"></i>
