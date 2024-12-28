@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import com.aura.www.vo.EmpVO;
 
 public class LoginDAO {
-	// 1. 환경변수
 	String driver = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://192.168.90.65:3306/aura"; // 학원에서 사용시
 	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 집에서 사용시
@@ -20,12 +19,9 @@ public class LoginDAO {
 	ResultSet rs = null;
 	StringBuffer sb = new StringBuffer();
 	
-	// 기본 생성자
 	public LoginDAO() {
-		// 2. 클래스 로딩
 		try {
 			Class.forName(driver);
-			// 3. Connection
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");

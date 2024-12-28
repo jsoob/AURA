@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.aura.www.vo.EmpVO;
 
 public class AdminEmpDAO {
-	// 1. 환경변수
 	String driver = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://192.168.90.65:3306/aura"; // 학원에서 사용시
 	String url = "jdbc:mysql://localhost:3306/aura"; // mysql port -> 집에서 사용시
@@ -23,10 +22,8 @@ public class AdminEmpDAO {
 	
 	// 기본 생성자
 	public AdminEmpDAO() {
-		// 2. 클래스 로딩
 		try {
 			Class.forName(driver);
-			// 3. Connection
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
@@ -69,8 +66,6 @@ public class AdminEmpDAO {
 		}
 		
 		try {
-			// System.out.println("sb");
-			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			rs = pstmt.executeQuery();
@@ -192,14 +187,11 @@ public class AdminEmpDAO {
 		sb.append(" LIMIT ? OFFSET ? ");
 		
 		try {
-			// System.out.println("sb");
-			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
-			// System.out.println("limitNo = " + limitNo); // 9
-			// System.out.println("offsetNo = " + offsetNo); // 1, 9, 17
-			
+			// 9
 			pstmt.setInt(1, limitNo);
+			// 1, 9, 17
 			pstmt.setInt(2, offsetNo);
 			
 			rs = pstmt.executeQuery();
@@ -303,7 +295,6 @@ public class AdminEmpDAO {
 		}
 		
 		try {
-			// System.out.println("getTotalCountSearch = " + sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문
@@ -399,8 +390,6 @@ public class AdminEmpDAO {
 		// sb.append("AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ) ");
 		sb.append(" LIMIT ? OFFSET ? ");
 		try {
-			// System.out.println("sb");
-			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문
@@ -543,8 +532,6 @@ public class AdminEmpDAO {
 		// sb.append("AND ( (QUITDATE IS NULL) OR ( QUITDATE < current_timestamp()) ) ");
 		
 		try {
-			// System.out.println("sb");
-			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// where 문
@@ -815,12 +802,10 @@ public class AdminEmpDAO {
 		
 		sb.append("WHERE EMP_NO = ? " );
 		try {
-			// 5. 문장 객체
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, empNo);
 			pstmt.setInt(2, empNo);
 			
-			// 6. 실행
 			result = pstmt.executeUpdate();
 			System.out.println("disableEmpOne result : " + result);
 		} catch (SQLException e) {
@@ -838,11 +823,9 @@ public class AdminEmpDAO {
 		sb.append(", UPDATE_DATE  = CURRENT_TIMESTAMP() "); // 수정
 		sb.append("WHERE EMP_NO = ? " );
 		try {
-			// 5. 문장 객체
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, empNo);
 			
-			// 6. 실행
 			result = pstmt.executeUpdate();
 			System.out.println("disableEmpOne result : " + result);
 		} catch (SQLException e) {
@@ -853,16 +836,13 @@ public class AdminEmpDAO {
 
 	public int deleteEmpOne(int empNo) {
 		int result = 0;
-		// 4. sql 문장
 		sb.setLength(0);
 		sb.append("DELETE FROM EMP " );
 		sb.append(" WHERE EMP_NO = ? " );
 		try {
-			// 5. 문장 객체
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setInt(1, empNo);
 			
-			// 6. 실행
 			result = pstmt.executeUpdate();
 			System.out.println("deleteOne result : " + result);
 		} catch (SQLException e) {

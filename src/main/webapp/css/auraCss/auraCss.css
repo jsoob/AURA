@@ -64,6 +64,9 @@
 .pd-nn {
 	padding:  0px !important;	
 }
+.pd-lt-nn {
+	padding-left: 0px !important;
+}
 
 
 /* margin 조절 10px */
@@ -131,6 +134,15 @@
 	width: 50px !important;
 }
 
+/* 넓이 조절 퍼센트 */
+.wdps-20 {
+	width: 20% !important;
+}
+
+.wdps-80 {
+	width: 80% !important;
+}
+
 /* 사원이미지 */
 .viewImg {
 	width: 100% !important;
@@ -157,6 +169,10 @@
 .fa-pwLock {
 	font-size: 60px;
     color: #006DF0;
+}
+
+.fa-sz20 {
+	font-size: 20px;
 }
 
 /* 버튼 색깔 css */

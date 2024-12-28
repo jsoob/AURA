@@ -31,10 +31,10 @@
                     </li>
                     
                     <!-- <li id="board_category"> -->
-                   	<c:if test="${ commAt['category'] != null  && commAt['category'] == 'board' }">
+                   	<c:if test="${ commAt['category'] != null  && ( commAt['category'] == 'freeboard' || commAt['category'] == 'deptboard' ) }">
                    		<li id="board_category" class="active">
                    	</c:if>
-                   	<c:if test="${  category != 'board' }">
+                   	<c:if test="${ ( commAt['category'] != 'freeboard' && commAt['category'] != 'deptboard' ) }">
                    		<li id="board_category">
                    	</c:if>
                         <a class="has-arrow" href="all-professors.html" aria-expanded="false">
