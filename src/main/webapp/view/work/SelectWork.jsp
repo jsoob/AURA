@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
@@ -14,44 +14,72 @@
 </head>
 <body>
 
-   <!-- Start Left menu area -->
-   <jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
+	<!-- Start Left menu area -->
+	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
 
-   <!-- End Left menu area -->
-   <!-- Start Welcome area -->
-   <div class="all-content-wrapper">
-      <jsp:include page="/view/comm/header.jsp"></jsp:include>
-      <div class="container-area mg-b-15">
-         <div class="container-fluid">
-            <div class="row">   `
+	<!-- End Left menu area -->
+	<!-- Start Welcome area -->
+	<div class="all-content-wrapper">
+		<jsp:include page="/view/comm/header.jsp"></jsp:include>
+		<div class="container-area mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					`
 
-               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="product-status-wrap aura_content">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
 
-                     <div class="text-right mg-bt-10">
-                         <!-- startWorkBtn : 출근 버튼, endWorkBtn : 퇴근 버튼 -->
-                        <button type="button" id="startWorkBtn" class="btn pd-setting">출근</button>
-                        <button type="button" id="endWorkBtn" class="btn pd-setting">퇴근</button>
-          
-                     </div>
-                     
 
-                     <!--    <div>
+							<%-- 검색 부분 --%>
+							<c:if test="${loginEmp.empNo eq '2024000' }">
+								<div class="text-right mg-bt-10">
+									<div class="form-inline">
+										<div class="form-group">
+											<label for="exampleInputEmail2">사원번호</label> <input
+												type="email" class="form-control mg-wd-10"
+												id="exampleInputEmail2" placeholder="사원번호 7자리">
+										</div>
+										<div class="form-group">
+											<label for="exampleInputName2">사원명</label> <input type="text"
+												class="form-control mg-wd-10" id="exampleInputName2"
+												placeholder="사원 이름">
+										</div>
+										<span class="pd-lt-10">
+											<button type="button" class="btn pd-setting">사원 조회</button>
+											<!-- btn-primary -> pd-setting -->
+										</span>
+									</div>
+
+								</div>
+							</c:if>
+
+
+							<%-- 사용자들이 이용하는 출퇴근 버튼 부분 (관리자는 볼 필요 없음) --%>
+							<c:if test="${loginEmp.empNo ne '2024000' }">
+								<div class="text-right mg-bt-10">
+									<!-- startWorkBtn : 출근 버튼, endWorkBtn : 퇴근 버튼 -->
+									<button type="button" id="startWorkBtn" class="btn pd-setting">출근</button>
+									<button type="button" id="endWorkBtn" class="btn pd-setting">퇴근</button>
+
+								</div>
+							</c:if>
+
+							<!--    <div>
                         <button id="showDateBtn">현재 날짜 및 시간 출력(테스트 대충 만듬)</button>
                      </div> -->
 
-                     <div class="asset-inner">
-                        <table id="table" >
-                           <tr>
-                              <th class="text-center col-sm-2">사원번호</th>
-                              <th class="text-center col-sm-2">사원명</th>
-                              <th class="text-center col-sm-2">부서</th>
-                              <th class="text-center col-sm-2">직급</th>
-                              <th class="text-center col-sm-2">출근시간</th>
-                              <th class="text-center col-sm-2">퇴근시간</th>
-                           </tr>
-                                           
-                              <%-- 
+							<div class="asset-inner">
+								<table id="table">
+									<tr>
+										<th class="text-center col-sm-2">사원번호</th>
+										<th class="text-center col-sm-2">사원명</th>
+										<th class="text-center col-sm-2">부서</th>
+										<th class="text-center col-sm-2">직급</th>
+										<th class="text-center col-sm-2">출근시간</th>
+										<th class="text-center col-sm-2">퇴근시간</th>
+									</tr>
+
+									<%-- 
                            <c:forEach var="vo" items="${list}">
                               <tr>
                                  <td class="text-center col-sm-2">${vo.empNo}</td>
@@ -63,19 +91,19 @@
                               </tr>
                            </c:forEach>
                                --%>
-                        </table>
-                     </div>
+								</table>
+							</div>
 
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <jsp:include page="/view/comm/footer.jsp"></jsp:include>
-   </div>
-   <jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
+	</div>
+	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
-   <script>
+	<script>
       $( ()=> {
             loadWork();
       });

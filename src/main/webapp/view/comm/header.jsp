@@ -43,6 +43,9 @@
 	                                        </li>
 	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/admin?cmd=selectEmp" class="nav-link">사원관리</a>
 	                                        </li>
+	                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/work?cmd=selectWork" class="nav-link">근태관리</a>
+	                                        </li>
+	                                        
 	                                        <!-- <li class="nav-item dropdown res-dis-nn">
 	                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
 	                                            <div role="menu" class="dropdown-menu animated zoomIn">
