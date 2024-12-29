@@ -29,8 +29,6 @@ public class MainController extends HttpServlet {
 	  resp.setContentType("text/html;charset=UTF-8");
 
 	  String cmd = req.getParameter("cmd");
-      System.out.println("cmd = "+cmd);
-      
       
       String url = "";
       if(cmd==null || cmd.equals("main")) {

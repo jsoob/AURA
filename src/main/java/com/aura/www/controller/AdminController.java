@@ -53,7 +53,7 @@ public class AdminController extends HttpServlet {
 		// 2. page 파라미터 값 가져오기
 		String cmd = req.getParameter("cmd");
 		String url = "";
-		System.out.println("cmd = " + cmd);
+//		System.out.println("cmd = " + cmd);
 		
 		// 메인
 		if(cmd==null) {

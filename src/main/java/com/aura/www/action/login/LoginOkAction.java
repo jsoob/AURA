@@ -50,7 +50,7 @@ public class LoginOkAction implements Action {
 //					req.setAttribute("pages", "main");
 					
 					if(session.isNew()) {
-						// System.out.print("Session 생성 후, 로그인 완료");
+						// System.out.println("Session 생성 후, 로그인 완료");
 					} else {
 						System.out.println("로그인을 완료하였습니다.");
 					}

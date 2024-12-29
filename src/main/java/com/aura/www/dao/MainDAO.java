@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.aura.www.vo.AttendanceVO;
 import com.aura.www.vo.DeptBoardVO;
 import com.aura.www.vo.EmpVO;
 import com.aura.www.vo.FreeBoardVO;
@@ -216,6 +217,34 @@ public class MainDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	//
+	public AttendanceVO selectNowWork(int getEmpNo) {
+		sb.setLength(0);
+		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
+		sb.append("FROM ATTENDANCE ");
+		sb.append("WHERE EMP_NO = ? ");
+		sb.append("AND DATE_FORMAT(ATTEN_DATE, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') ");
+		
+		AttendanceVO vo = null;
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, getEmpNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int empNo = rs.getInt("EMP_NO");
+				String attenDate = rs.getString("ATTEN_DATE");
+				String startworkTime = rs.getString("STARTWORK_TIME");
+				String endworkTime = rs.getString("ENDWORK_TIME");
+				
+				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vo;
 	}
 	
 }

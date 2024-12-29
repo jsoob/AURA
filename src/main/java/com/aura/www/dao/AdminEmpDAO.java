@@ -766,7 +766,7 @@ public class AdminEmpDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
-			System.out.println("sb = " + sb.toString());
+//			System.out.println("sb = " + sb.toString());
 			
 			int cnt = 3;
 			
@@ -807,7 +807,7 @@ public class AdminEmpDAO {
 			pstmt.setInt(2, empNo);
 			
 			result = pstmt.executeUpdate();
-			System.out.println("disableEmpOne result : " + result);
+//			System.out.println("disableEmpOne result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -827,7 +827,7 @@ public class AdminEmpDAO {
 			pstmt.setInt(1, empNo);
 			
 			result = pstmt.executeUpdate();
-			System.out.println("disableEmpOne result : " + result);
+//			System.out.println("disableEmpOne result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -844,7 +844,7 @@ public class AdminEmpDAO {
 			pstmt.setInt(1, empNo);
 			
 			result = pstmt.executeUpdate();
-			System.out.println("deleteOne result : " + result);
+//			System.out.println("deleteOne result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

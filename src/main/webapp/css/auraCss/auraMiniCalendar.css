@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+.today {
+	background: #006DF0 !important;
+    border-radius: 50px !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.auraC-calendar td {
+	padding: 10px 5px !important;
+	text-align: center !important;
+}
+
+
+/* ======== Calendar ======== */
 /* 
 html, body {
   box-sizing: border-box;
@@ -11,6 +25,8 @@ html, body {
   box-sizing: inherit;
 }
  */
+
+/* 
 .auraMC-clearfix:after {
   content: '';
   display: block;
@@ -18,9 +34,8 @@ html, body {
   float: none;
 }
 
-/* ======== Calendar ======== */
 .auraMC-my-calendar {
-  /* width: 700px; */
+  width: 700px;
   width: 200px;
   margin: 30px;
   padding: 20px 20px 10px;
@@ -123,3 +138,4 @@ html, body {
   height: 4px;
   background: #FFC107;
 }
+ */

@@ -180,6 +180,10 @@
 	background: #006DF0 !important;
 }
 
+.bg-gray {
+	background: gray !important;	
+}
+
 /* 중간사이즈 모달 css */
 .middleMoalWd {
 	width: 50% !important;
