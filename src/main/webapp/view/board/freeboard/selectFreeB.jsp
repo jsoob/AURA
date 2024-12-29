@@ -13,6 +13,32 @@
 .text-center {
     text-align: center !important;
 }
+
+table th, table td {
+    /*padding: 10px;*/  /* 여백을 추가하여 텍스트와 셀 테두리 간격을 넓힙니다. */
+    text-align: center !important;  /* 텍스트를 중앙 정렬 */
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+    width: 10%;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    width: 45%;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 15%;
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    width: 20%;
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    width: 10%;
+}
+
 </style>
 <script>
 
@@ -31,11 +57,13 @@
 	})
 	
 	// 게시글 목록
-	function loadFreeBList (){
+	function loadFreeBList (cp){
 		
 		let sendData = $("form[name=searchForm]").serialize();
 		
-		let cnt=0;
+		cp = typeof cp !== "undefined" ? cp : "";
+		if(cp != "" ) sendData += "&cp="+ cp;
+		
 		
 		$.ajax({
 			type:"get",
@@ -43,24 +71,27 @@
 			dataType: 'json',
 			data: sendData,
 			success:function(data){
+				let rows = data.freeBoardArray;
+				let pageObject = data.pageObject; 
+				
 				$("#searchWord").val('');
 				 $('.freeBList').empty();
 				 
 				 $('#total').empty();
-				 // $('#total').append(data.length);
+				 
+				 // alert(pageObject.totalCount);
+				 $('#total').append(pageObject.totalCount);
 				 
 				    // 데이터가 없을 경우 처리
-				    if (data.length === 0) {
+				    if (rows.length === 0) {
 				        $(".freeBList").append("<tr><td colspan='5' class='text-center'>게시글이 없습니다.</td></tr>");
 				    }
 				 
-				let obj = data;
-                $.each(obj,(index, freeB)=>{
+                $.each(rows,(index, freeB)=>{ 
                 	let notice;	// 공지
                 	let lock;	// 자물쇠 
-                	let rowHtml='';
                 	
-                	// 공지, 공개여부, 내가쓴 글인지
+                	// 공지 게시글
                 	if(freeB.freeBNotice == 1) notice='[공지]';
                 	else notice='';
                 	
@@ -70,47 +101,37 @@
                 	}
                 	else {lock=''};
                 	
-                	console.log(${loginEmp.getEmpNo()});
-                	
-                	rowHtml += '<tr>';
-                	// 관리자라면 임시저장 제외 다 보이게
-                	if(${loginEmp.getEmpNo()} == '2024000'){
-                		cnt++;
-                		rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
-                	} else {
-                		// 내가 쓴 글 
-                		if(freeB.freeBCrtr == ${loginEmp.getEmpNo()}){
-                			cnt++;
-                			rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
-                		}else{
-                			// 내가 쓴 글 아니고 공개인 게시글
-                			if(freeB.freeBPblc == 1){
-                				cnt++;
-                				rowHtml += '<td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td>';
-                			}
-                		}
-                	}
-                	rowHtml += '</tr>';
-                	
+                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
                 	
                 	$(".freeBList").append(rowHtml);
                 	
+                
+                	})    
+				// 페이징 처리
+               
+				$('#pagingDiv').empty();
+				
+				let appendText = "";
+				appendText = '<div name="freeBListPage">'
+					+ '<div>'
+					+ '<ul class="pagination mg-nn">'
+					+ '<li class="page-item"><a class="page-link" onclick="loadFreeBList('+ pageObject.prevCnt +')">Previous</a></li>';
+				
+					for(let i = pageObject.startPage; i <= pageObject.endPage; i++ ) {
+					appendText += '<li class="page-item">'
+								+ '<a class="page-link" onclick="loadFreeBList('+ i +')">'+i+'</a>'
+							   + '</li>';
+				}	
+				appendText += '<li class="page-item"><a class="page-link" onclick="loadFreeBList('+ pageObject.nextCnt +')">Next</a></li>'
+						 	+"</ul>"
+						 +"</td>"
+					+"</div>";
+					
+				$("#pagingDiv").append(appendText);
+				
                 	
-                	$('#total').empty();
-                	$('#total').append(cnt);
-                    
-                	})      
-			}
-                	
-		});	
-		
-
-   	 // 데이터가 없을 경우 처리
-	    if (cnt === 0) {
-	        $(".freeBList").empty();
-	        $(".freeBList").append("<tr><td colspan='5' class='text-center'>게시글이 없습니다.</td></tr>");
-	    }
-		
+			} // success end    	
+		});	 // ajax end
 	}
 
 	// 정렬 // 이건 작동하지 않음
@@ -196,7 +217,7 @@
 							</div>
 							<table class="table table-striped">
 								<tr>
-									<th>게시판번호</th>
+									<th>번호</th>
 									<th>제목</th>
 									<th>작성자</th>
 									<th>등록일자</th>
@@ -214,8 +235,12 @@
 										<td>${vo.freeBView}</td>
 									</tr>
 								</c:forEach> --%>
-									</tbody>								
+									</tbody>							
 							</table>
+							
+                            <div id="pagingDiv" class="text-center">
+                            	
+                            </div>
 						</div>
 					</div>
 				</div>

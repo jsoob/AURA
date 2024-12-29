@@ -21,8 +21,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/freeboard2")
-public class SearchFreeBoard extends HttpServlet {
+// @WebServlet("/freeboard2")
+public class old_SearchFreeBoard extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,11 +33,11 @@ public class SearchFreeBoard extends HttpServlet {
 
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 
+		// 검색
 		// 검색키워드가져오기
 		String search = req.getParameter("search");
 		String searchWord = req.getParameter("searchWord");
-		
-		// 정렬기준
+
 		String order = req.getParameter("order");
 		
 		
@@ -64,7 +64,7 @@ public class SearchFreeBoard extends HttpServlet {
 
 		
 		int total = dao.getTotalCountSearch(vo);
-		System.out.println("total : " + total);
+		
 		HashMap<String, Object> page = getPage(total, req);
 	      
 	      int limitNo = (int) page.get("limitNo");
@@ -74,26 +74,35 @@ public class SearchFreeBoard extends HttpServlet {
 		// 검색결과 가져오기
 		list = dao.searchFreeBoard(vo,order,limitNo,offsetNo);
 
-		System.out.println(list.size());
+		System.out.println(list);
 		
-		JSONArray freeBoardArray = listmap_to_json(list);
-		JSONObject pageObject = new JSONObject(page);
-		
-		JSONObject obj = new JSONObject();
-	      obj.put("freeBoardArray", freeBoardArray); // 리스트
-	      obj.put("pageObject", pageObject); // 페이징처리
-		
-//		PrintWriter out = resp.getWriter();
-//		out.println(freeBoardArray.toJSONString());
-	      resp.getWriter().print(obj.toJSONString());
-	      resp.setContentType("application/json; charset=UTF-8");
+		JSONArray freeBoardArray = new JSONArray();
+
+		for (FreeBoardVO fbvo : list) {
+			JSONObject freeboardObj = new JSONObject();
+
+			freeboardObj.put("freeBNo", fbvo.getFreeBNo());
+			freeboardObj.put("freeBTitle", fbvo.getFreeBTitle());
+			freeboardObj.put("freeBContent", fbvo.getFreeBContent());
+			freeboardObj.put("freeBView", fbvo.getFreeBView());
+			freeboardObj.put("freeBNotice", fbvo.getFreeBNotice());
+			freeboardObj.put("freeBStatus", fbvo.getFreeBStatus());
+			freeboardObj.put("freeBPblc", fbvo.getFreeBPblc());
+			freeboardObj.put("freeBCrtr", fbvo.getFreeBCrtr());
+			freeboardObj.put("createDate", fbvo.getCreateDate());
+			freeboardObj.put("updateDate", fbvo.getUpdateDate());
+
+			freeBoardArray.add(freeboardObj);
+		}
+		PrintWriter out = resp.getWriter();
+		out.println(freeBoardArray.toJSONString());
 
 	}
 	
-	private JSONArray listmap_to_json(List<FreeBoardVO> list)
+	private JSONArray listmap_to_json(List<EmpVO> list)
     {       
         JSONArray json_arr=new JSONArray();
-        for (FreeBoardVO vo : list) {
+        for (EmpVO vo : list) {
             JSONObject json_obj = new JSONObject();
             
 			Field[] fields = vo.getClass().getDeclaredFields();
@@ -111,6 +120,13 @@ public class SearchFreeBoard extends HttpServlet {
 				}
 				json_obj.put(key,value);
 			}
+			// 상속받은 vo들 변수(필드)값
+			json_obj.put("deptNo", vo.getDeptNo());
+			json_obj.put("deptName", vo.getDeptName());
+			
+			json_obj.put("posNo", vo.getPosNo());
+			json_obj.put("posName", vo.getPosName());
+			
             json_arr.add(json_obj);
         }
         return json_arr;
@@ -120,7 +136,7 @@ public class SearchFreeBoard extends HttpServlet {
 	public HashMap<String, Object> getPage(int totalCount, HttpServletRequest req) {
 	      HashMap<String, Object> page = new HashMap<String, Object>();
 
-	      int recordPerPage = 12; // 한 페이지당 게시물 10
+	      int recordPerPage = 13; // 한 페이지당 게시물 6
 	      // 총 페이지수 301/8 ==> 37 38
 	      int totalPage = (totalCount%recordPerPage == 0) ? 
 	            (totalCount/recordPerPage) : (totalCount/recordPerPage)+1;

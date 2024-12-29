@@ -19,4 +19,6 @@ public class FreeBoardVO {
 	private int freeBCrtr;
 	private String createDate;
 	private String updateDate;
+	
+	private int empNo;
 }

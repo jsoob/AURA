@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.aura.www.action.Action;
 import com.aura.www.action.board.freeboard.DeleteFreeBAction;
 import com.aura.www.action.board.freeboard.DetailFreeBAction;
+import com.aura.www.action.board.freeboard.InsertTempSaveOkAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBAction;
 import com.aura.www.action.board.freeboard.ModifyFreeBOkAction;
 import com.aura.www.action.board.freeboard.SelectFreeBAction;
@@ -55,11 +56,20 @@ public class FreeBoardController extends HttpServlet {
 		} else if (cmd.equals("deleteFreeB")) {
 			Action action = new DeleteFreeBAction();
 			url = action.execute(req, resp);
+		} else if (cmd.equals("insertTempSaveOk")) {
+			Action action = new InsertTempSaveOkAction();
+			url = action.execute(req, resp);
 		}
 
-		RequestDispatcher rd = req.getRequestDispatcher(url);
-		rd.forward(req, resp);
-
+		if(cmd== null) {
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, resp);
+		} else if(cmd.equals("writeFreeBOk")){
+			resp.sendRedirect("freeboard");	
+		} else {
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, resp);
+		}
 	}
 
 }

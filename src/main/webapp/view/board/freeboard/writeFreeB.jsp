@@ -109,7 +109,7 @@ $(()=>{
 		
 		$(".summernote6").summernote('code', content);
 				
-		$('input[name="cmd"]').val("modifyFreeBOk");
+		$('input[name="cmd"]').val("insertTempSaveOk");
 		
 		$("#tempsaveListModal").modal('hide');
 

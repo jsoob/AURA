@@ -177,7 +177,7 @@ $(()=>{
 		                let commentHtml = 
 		                    '<div class="panel panel-default"> <div class="panel-heading"> <strong> NO\. <span class="txt">'+comment.cmntNo+'</span> / 작성자 : '+ comment.userId+'</strong> <span class="text-muted pull-right">'+comment.createDate+'</span></div><div class="panel-body"><span class="comment-content">'+comment.content+'</span><div class="panel-body"><span class="text-muted pull-right">';
 		                    
-		                    if(${loginEmp.getEmpNo()} == comment.userId){
+		                    if(${loginEmp.getEmpNo() == comment.userId || loginEmp.getEmpNo() == 2024000}){
 		                    commentHtml += '<button class="modifyBtn"  > 수정 </button> <button class="deleteBtn"> 삭제 </button>';
 		                    commentHtml += '</span></div></div></div>';
 		                    }
@@ -232,7 +232,7 @@ $(()=>{
 								<tr>
 									<td colspan="6"><a href="freeboard?cmd=selectFreeB"
 										class="btn btn-outline-primary">목록</a>
-										<c:if test="${loginEmp.getEmpNo() == vo.freeBCrtr}">
+										<c:if test="${loginEmp.getEmpNo() == vo.freeBCrtr || loginEmp.getEmpNo() == 2024000}">
 											<a href="freeboard?cmd=modifyFreeB&freeBNo=${vo.freeBNo}" class="btn btn-outline-warning">수정</a>
 											<a href="freeboard?cmd=deleteFreeB&freeBNo=${vo.freeBNo}" class="btn btn-outline-danger">삭제</a>
 										</c:if>
