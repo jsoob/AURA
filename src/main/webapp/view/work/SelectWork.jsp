@@ -31,27 +31,30 @@
 
 
 							<%-- 검색 부분 --%>
+						<form action="selectWork" method="get">
 							<c:if test="${loginEmp.empNo eq '2024000' }">
 								<div class="text-right mg-bt-10">
 									<div class="form-inline">
 										<div class="form-group">
-											<label for="exampleInputEmail2">사원번호</label> <input
-												type="email" class="form-control mg-wd-10"
-												id="exampleInputEmail2" placeholder="사원번호 7자리">
+											<label for="exampleInputEmail2">사원번호</label> <input type="email" class="form-control mg-wd-10" id="exampleInputEmail2" placeholder="사원번호 7자리">
 										</div>
 										<div class="form-group">
-											<label for="exampleInputName2">사원명</label> <input type="text"
-												class="form-control mg-wd-10" id="exampleInputName2"
-												placeholder="사원 이름">
+											<label for="exampleInputName2">사원명</label> <input type="text" class="form-control mg-wd-10" id="exampleInputName2" placeholder="사원 이름">
 										</div>
+										<div class="form-group">
+										  	<label>등록일자</label>
+	                                        <%-- <input type="text" name="hiredate" value="" /> --%>
+	                                        <input type="date" name="attenDate" class="form-control mg-wd-10" required pattern="\d{4}-\d{2}-\d{2}" />
+										  </div>
 										<span class="pd-lt-10">
-											<button type="button" class="btn pd-setting">사원 조회</button>
+											<button type="button" class="btn pd-setting" id="loadBtn">조회</button>
 											<!-- btn-primary -> pd-setting -->
 										</span>
 									</div>
 
 								</div>
 							</c:if>
+						</form>
 
 
 							<%-- 사용자들이 이용하는 출퇴근 버튼 부분 (관리자는 볼 필요 없음) --%>
@@ -104,11 +107,43 @@
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>
 
 	<script>
+     
       $( ()=> {
-            loadWork();
-      });
+    	    // 페이지 로딩 시, loadWork() 실행 (자동으로 페이지가 보여짐)
+    	    loadWork();
+
+    	    // 조회 버튼 클릭 시, loadWork() 실행 : 조회 버튼 클릭 시 실행하려면 클릭 이벤트 리스너 안에 넣어야 함
+    	    $("#loadBtn").on("click", ()=> {
+    	        loadWork(); // 조회 버튼 클릭 시, loadWork() 실행
+    	    });
+    	});
       
       function loadWork(){
+    	  
+    	  let empNo = $("#empNo").val();			// 입력한 사원번호
+    	  let empName = $("#empName").val();		// 입력한 사원명
+    	  let attenDate = $("#attenDate").val();	// 입력한 등록일자
+    	  
+    	$.ajax({
+    		url: "workasync",						// 서버 url
+    		type: "POST",
+    		data: {
+    			cmd: "selectWorkAsync",				// 서버로 보낼 데이터 (조회 조건)
+    			empNo: empNo,
+    			empName: empName,
+    			attenDate: attenDate
+    		},
+    		dataType: 'json',						// JSON 형식으로 응답 받기
+    		success: (data) => {
+    			console.log("date = ", data);
+    			let workList = data.workList;
+
+    	            // 테이블 초기화
+    	            $("tr[name='workList']").remove(); // 기존의 데이터 지우기 .empty();
+/* 
+	
+    	});
+ 	  
         $.ajax({
             url:"workasync", 
             type: "post",
@@ -118,7 +153,7 @@
             	  console.log("data = ", data);
                  let workList = data.workList;
               
-                 $("tr[name='workList']").remove(); // .empty();
+                 $("tr[name='workList']").remove(); // .empty(); */
               
 	             $.each(workList, (idx, row) => {
 	            	 console.log("workList = ", workList);
@@ -146,6 +181,8 @@
           });
         
      } // end loadWork
+     
+
    
       // 출근 버튼 클릭 시 출근 시간 조회
       $("#startWorkBtn").on("click", function() {
@@ -194,6 +231,8 @@
             }
          });
       });
+      
+      
    </script>
 
 </body>

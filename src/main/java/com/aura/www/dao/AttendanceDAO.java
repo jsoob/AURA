@@ -63,15 +63,24 @@ public class AttendanceDAO {
 		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
 		sb.append("LEFT OUTER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
 		sb.append("LEFT OUTER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
-		sb.append("WHERE E.EMP_NO = ? ");
+		// sb.append("WHERE E.EMP_NO = ? ");
 		
+		// 관리자와 일반 사용자 구분이 필요
+		if (vo.getEmpNo() == 2024000) {				// 관리자 계정(2024000)일 경우
+			sb.append("WHERE 1=1");					// 조건 없음 (모든 데이터를 조회)
+		} else {									// 일반 사용자일 경우 (2024001부터 시작되는 모든 사원번호)
+			sb.append("WHERE E.EMP_NO = ? ");		// 본인 데이터만 조회
+		}
 		
 		//	5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			System.out.println(sb.toString());
-			pstmt.setInt(1, vo.getEmpNo());
-		
+			
+			if(vo.getEmpNo() != 2024000) {			// 관리자 계정이 아닌 경우만 바인딩(고정)
+				pstmt.setInt(1, vo.getEmpNo());
+			}
+			
 			rs = pstmt.executeQuery();
 			//	6. 실행 (SELECT ==> ResultSet 객체 )
 			while(rs.next()) {
@@ -142,38 +151,44 @@ public class AttendanceDAO {
 	}
 		
 	
-	//////////////////////////////////// 특정 조건을 검색 (날짜 범위 및 직원 번호 검색) ////////////////////////////////////
+	//////////////////////////////////// 특정 조건을 검색 (사원번호, 사원명, 등록일자 (날짜) 검색) ////////////////////////////////////
 	
-	public ArrayList<AttendanceVO> AttendanceSearch (String startDate, String endDate, Integer empNo){
+	public ArrayList<AttendanceVO> AttendanceSearch (int empNo, String empName, String attenDate){
 		ArrayList<AttendanceVO> list = new ArrayList<AttendanceVO>();
 		
 		StringBuilder sb = new StringBuilder();
 		
 		//		4. SQL문 작성
-		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
-		sb.append("FROM ATTENDANCE ");
+		sb.append("SELECT");
+		sb.append("E.EMP_NO, P.POS_NO, D.DEPT_NO, ATTEN_DATE, STARTWORK_TIME, ENDWORK_TIME, ");
+		sb.append("POS_NAME, DEPT_NAME, EMP_NAME ");
+		sb.append("FROM ATTENDANCE A ");
+		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
+		sb.append("LEFT OUTER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
+		sb.append("LEFT OUTER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
 		sb.append("WHERE 1=1 ");		// 조건이 없을 경우에도 WHERE 절을 유지할 수 있도록 1=1을 추가
 										// WHERE 1=1 : 처음부터 조건을 추가할 수 있는 조건 값
 										//			   조건이 없더라도 쿼리가 동작할 수 있게끔 설정 (항상 '참'인 설정)
 		
-		// 조건 추가 (날짜 범위, 직원 번호)
+		
+		// 조건 추가 (사원번호, 사원명, 날짜)
 			// 모든 기록을 다 가져오는 것이 아님
 			// 특정 조건에 맞는 기록만 조회가 가능하게끔 설정
 		
 		// 특정 날짜 범위에 대한 조건 검색	
-		if (empNo != null) {								// empNo()가 null이 아니라면?
+		if (empNo != 0) {								// empNo()가 null이 아니라면?
 			sb.append("AND EMP_NO = ? ");					// 사용자가 사원번호를 입력(?)하면, 해당하는 사원번호의 근태 기록을 조회하는 조건 추가
 			// 사용자가 직원번호를 입력했을 때 조건을 수행
 		}
 		
-		if (startDate != null && !startDate.isEmpty()) {	// startDate()가 null이 아니면서, 공백이 아니어야 함
+		if (empName != null && !empName.isEmpty()) {	// empName()가 null이 아니면서, 공백이 아니어야 함
 			// 이 조건이 만족되어져 수행된다면 아래의 쿼리를 실행
-			sb.append("AND ATTEN_DATE >= ? ");				// 내가 선택한 날짜(?) 이후에 나오는 근태 기록 조회
+			sb.append("AND EMP_NAME LIKE ? ");				
 		} 
 		
-		if (endDate != null && !endDate.isEmpty()) {		// endDate()가 null이 아니면서, 공백이 아니라면
+		if (attenDate != null && !attenDate.isEmpty()) {		// attenDate()가 null이 아니면서, 공백이 아니라면
 			// 이 조건이 만족되어져 수행된다면 아래의 쿼리를 실행
-			sb.append("AND ATTEN_DATE <= ? ");				// 내가 선택한 날짜(?) 이후에 나오는 근태 기록 조회
+			sb.append("AND ATTEN_DATE = ? ");				
 		}
 		
 		
@@ -181,26 +196,24 @@ public class AttendanceDAO {
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			
-			int paramIndex = 1;
+			int Index = 1;
 			  
-	        // 파라미터 설정
-				// paramIndex++ 방식 : 파라미터의 순서대로 값을 세팅
 			
-	        if (startDate != null && !startDate.isEmpty()) {
-	            pstmt.setString(paramIndex++, startDate);
+	        if (empNo != 0) {
+	            pstmt.setInt(Index++, empNo);
 	        }
-	        if (endDate != null && !endDate.isEmpty()) {
-	            pstmt.setString(paramIndex++, endDate);
+	        if (empName != null && !empName.isEmpty()) {
+	            pstmt.setString(Index++, empName);
 	        }
-	        if (empNo != null) {
-	            pstmt.setInt(paramIndex++, empNo);
+	        if (attenDate != null && !attenDate.isEmpty()) {
+	            pstmt.setString(Index++, attenDate);
 	        }
 	        
 	        rs = pstmt.executeQuery();
 	        
 	        //		6. 실행 (SELECT ==> ResultSet 객체 )
 	        while(rs.next()) {
-	        	String attenDate = rs.getString("ATTEN_DATE");
+	        	// String attenDate = rs.getString("ATTEN_DATE");
 	        	int empNumber = rs.getInt("EMP_NO");
 	        	String startworkTime = rs.getString("STARTWORK_TIME");
 	        	String endworkTime = rs.getString("ENDWORK_TIME");

@@ -24,7 +24,7 @@
 	});
 	
 	function loadBtn(cp){
-		let sendData = $("form[name=empForm]").serialize();
+		let sendData = $("form[name=empForm]").serialize();	// 입력된 폼 데이터 직렬화
 		
 		cp = typeof cp !== "undefined" ? cp : "";
 		if(cp != "" ) sendData += "&cp="+ cp;
