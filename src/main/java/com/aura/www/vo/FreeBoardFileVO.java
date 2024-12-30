@@ -13,4 +13,5 @@ public class FreeBoardFileVO {
 	private String fileName;
 	private String fileRoute;
 	private int freeBNo;
+	
 }

@@ -117,7 +117,6 @@ public class FreeBoardCommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// 댓글 삭제

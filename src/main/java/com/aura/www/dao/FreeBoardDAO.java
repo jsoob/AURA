@@ -37,8 +37,7 @@ public class FreeBoardDAO {
 	public ArrayList<FreeBoardVO> selectAll() {
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 		sb.setLength(0);
-		sb.append(
-				"SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
+		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
 		sb.append("FROM FREEBOARD ");
 		sb.append("ORDER BY CREATE_DATE DESC ");
 

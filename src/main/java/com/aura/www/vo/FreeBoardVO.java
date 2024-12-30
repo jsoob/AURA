@@ -20,6 +20,7 @@ public class FreeBoardVO {
 	private String createDate;
 	private String updateDate;
 	
+	
 	private int empNo;
 	private String empName;
 	private String deptName;

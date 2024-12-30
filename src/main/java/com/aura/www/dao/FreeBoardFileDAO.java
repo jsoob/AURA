@@ -138,7 +138,6 @@ public class FreeBoardFileDAO {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-//
 //	}
 	
 	// 특정 첨부파일만 삭제할 때
