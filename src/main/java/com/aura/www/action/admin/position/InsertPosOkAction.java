@@ -7,6 +7,7 @@ import com.aura.www.vo.PositionVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 public class InsertPosOkAction implements Action {
 
 	@Override

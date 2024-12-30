@@ -46,6 +46,7 @@ public class AdminController extends HttpServlet {
 		
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		// 1. 한글처리
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");

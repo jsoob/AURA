@@ -37,7 +37,7 @@ public class InsertEmpOkAction implements Action {
 			    if (hiredate != null && !hiredate.isEmpty()) vo.setHiredate(hiredate);
 			    
 		        dao.insertEmp(vo);
-		    }
+		    } 
 	    }
 	    // 처리 후 부서 조회 화면으로 이동
 	    return "admin?cmd=selectEmp";

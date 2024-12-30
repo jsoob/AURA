@@ -12,12 +12,10 @@ public class DeleteDeptAction implements Action{
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String deptno = req.getParameter("deptNo"); 
 		
-		
 		if (deptno != null) {
 			int deptNo = Integer.parseInt(deptno);
 			AdminDeptDAO dao = new AdminDeptDAO();
 			dao.deleteDept(deptNo);
-			
 		}
 		
 		return "admin?cmd=selectDept";

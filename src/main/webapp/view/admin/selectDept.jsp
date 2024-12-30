@@ -8,6 +8,7 @@
 <title>${commAt["title"]}</title>
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+
 <style>
 .modal-body {
 	height: 100px;

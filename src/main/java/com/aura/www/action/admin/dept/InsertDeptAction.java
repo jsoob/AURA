@@ -21,7 +21,7 @@ public class InsertDeptAction implements Action {
 		   map.put("categoryName", "부서 등록 페이지"); // 사용자에게 보여주는 카테고리명
 		   map.put("pages", "insertDept"); // 페이지명
 		   map.put("pagesName", "부서 등록"); // 사용자에게 보여주는 페이지명
-			
+		
 		   req.setAttribute("commAt", map);
 		
 		return "view/admin/selectDept.jsp";

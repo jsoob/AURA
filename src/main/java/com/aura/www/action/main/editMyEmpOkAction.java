@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 public class editMyEmpOkAction implements Action {
+	
 	// 파일 저장경로
 	private static final String UPLOAD_DIRECTORY = "upload\\emp"; 
 	private static final String UPLOAD_PATH = "upload/emp"; 

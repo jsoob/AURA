@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class LoginOkActionAsync implements Action {
+	
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		LoginDAO dao = new LoginDAO();

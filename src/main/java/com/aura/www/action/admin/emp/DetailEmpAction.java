@@ -36,9 +36,9 @@ public class DetailEmpAction implements Action{
 			AdminEmpDAO dao = new AdminEmpDAO();
 			
 			EmpVO vo = dao.selectEmpOne(empNo);
-			System.out.println("img = " + vo.getEmpImage());
+			
 			req.setAttribute("empVo", vo);
-		}
+		} 
 		return url;
 	}
 

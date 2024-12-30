@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 		maxRequestSize = 1024*1024*60 // 최대 요청 사이즈
  )
 public class UploadImage extends HttpServlet{
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	

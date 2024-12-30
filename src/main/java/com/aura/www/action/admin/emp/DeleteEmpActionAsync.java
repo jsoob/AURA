@@ -12,7 +12,7 @@ public class DeleteEmpActionAsync implements Action {
 	@SuppressWarnings("unchecked")
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		String result = "0";
+		String result = "0"; 
 		EmpVO vo = new EmpVO();
 		
 		// select 조건문

@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/loginasync")
 public class LoginAsyncController extends HttpServlet {
+	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");

@@ -19,7 +19,6 @@ public class ModifyDeptAction implements Action {
 			AdminDeptDAO dao = new AdminDeptDAO();
 			DeptVO vo = dao.selecDeptOne(deptNo);
 			req.setAttribute("vo", vo);
-
 		}
 
 		HashMap<String, String> map = new HashMap<String, String>();

@@ -37,6 +37,7 @@ public class ModifyEmpAction implements Action{
 			EmpVO vo = dao.selectEmpOne(empNo);
 			req.setAttribute("empVo", vo);
 		}
+		
 		return url;
 	}
 

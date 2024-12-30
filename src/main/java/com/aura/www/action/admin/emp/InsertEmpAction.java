@@ -24,7 +24,7 @@ public class InsertEmpAction implements Action{
 		   map.put("pagesName", "사원 등록"); // 사용자에게 보여주는 페이지명
 			
 		   req.setAttribute("commAt", map);
-		
+		 
 		return "view/admin/insertEmp.jsp";
 	}
 

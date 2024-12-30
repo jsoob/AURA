@@ -23,6 +23,7 @@ public class ResetPwEmpAction implements Action {
 	        
 	        cnt = dao.resetEmpPwOne(empNo);
 	    }
+	    
 	    JSONObject obj = new JSONObject();
 		obj.put("resetPwStatus", cnt); // jsonobject에 넣고
 		

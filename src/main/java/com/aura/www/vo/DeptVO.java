@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeptVO extends PositionVO {
-	
 	private int deptNo;					// 부서번호
 	private String deptName;			// 부서명
 

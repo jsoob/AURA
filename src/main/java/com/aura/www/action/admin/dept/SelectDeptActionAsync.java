@@ -28,7 +28,7 @@ public class SelectDeptActionAsync implements Action {
 		JSONArray jArr = listmap_to_json(list);
 		
 		return jArr.toJSONString(); // JSON -> Array
-	}
+	} 
 	
 	// vo key value 자동으로 찾아서 json array로 해줌.. 근데 상속으로 받았던 필드들은 찾지 못해서
 	// 나머지는 직접 가져오자..

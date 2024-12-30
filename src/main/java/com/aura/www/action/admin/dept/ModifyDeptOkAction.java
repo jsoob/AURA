@@ -12,7 +12,7 @@ public class ModifyDeptOkAction implements Action{
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		
-		String deptno = req.getParameter("deptNo");
+		String deptno = req.getParameter("deptNo"); 
 		
 		if (deptno!= null) {
 			int deptNo = Integer.parseInt(deptno);

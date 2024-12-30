@@ -6,6 +6,7 @@ import com.aura.www.dao.AdminPositionDAO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 public class DeletePosAction implements Action {
 
 	@Override

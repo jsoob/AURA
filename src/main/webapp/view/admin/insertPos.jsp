@@ -11,6 +11,7 @@
 </head>
 <body>
 
+
 	<!-- Start Left menu area -->
 	<jsp:include page="/view/comm/sidebar.jsp"></jsp:include>
 

@@ -30,7 +30,6 @@ public class EmpVO extends DeptVO {
 	private int posNo;					// 직급번호
 	private int deptNo;					// 부서번호
 	private String createDate;			// 등록일자
-	private String updateDate;			// 수정일자
-	
+	private String updateDate;			// 수정일자	
 
 }

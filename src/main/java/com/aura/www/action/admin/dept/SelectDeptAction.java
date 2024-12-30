@@ -30,6 +30,6 @@ public class SelectDeptAction implements Action {
 		req.setAttribute("list", list);
 
 		return "view/admin/selectDept.jsp";
-	}
+	} 
 
 }

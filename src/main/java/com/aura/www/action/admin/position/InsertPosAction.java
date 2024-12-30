@@ -9,6 +9,7 @@ import com.aura.www.vo.PositionVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 /////////////모달로 변경해서 필요없어짐/////////////
 public class InsertPosAction implements Action {
 

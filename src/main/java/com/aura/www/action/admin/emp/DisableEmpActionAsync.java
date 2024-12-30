@@ -26,7 +26,7 @@ public class DisableEmpActionAsync implements Action {
 		
 		JSONObject obj = new JSONObject();
 		obj.put("deleteStatus", cnt); // jsonobject에 넣고
-		
+		 
 		return obj.toJSONString(); // 문자로 return
 	}
 	

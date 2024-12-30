@@ -16,7 +16,6 @@ public class InsertDeptOkAction implements Action {
 
 	    System.out.println(deptName);
 	    
-	    
 	    if (deptName != null && !deptName.isEmpty()) {
 	        AdminDeptDAO dao = new AdminDeptDAO();
 	        DeptVO vo = new DeptVO();

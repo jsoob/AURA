@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminasync")
 public class AdminAsyncController extends HttpServlet {
+	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");

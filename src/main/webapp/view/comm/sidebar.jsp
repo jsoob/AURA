@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>    
 
+
 <!-- Start Left menu area -->
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+
 public class AdminLoadAction implements Action {
 	   @Override
 	   public String execute(HttpServletRequest req, HttpServletResponse resp) {

@@ -18,6 +18,7 @@ public class MainAction implements Action {
 	
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		
 		String url = "";
 		
 		HashMap<String, String> map = new HashMap<String, String>();

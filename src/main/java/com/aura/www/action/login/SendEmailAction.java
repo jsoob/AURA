@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class SendEmailAction implements Action {
+	
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		String empNo = req.getParameter("empNo");
