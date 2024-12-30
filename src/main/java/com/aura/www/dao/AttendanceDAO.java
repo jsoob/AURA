@@ -199,7 +199,7 @@ public class AttendanceDAO {
 		return vo;
 		}
 	
-	//////////////////////////////////// 특정 조건을 검색 (사원번호, 사원명, 등록일자 (날짜) 검색) ////////////////////////////////////
+	//////////////////////////////////// 특정 조건을 검색 (사원번호, 사원명, 등록일자 (날짜) 검색) : 필요 없음 안해도 됨 ////////////////////////////////////
 	
 	public ArrayList<AttendanceVO> AttendanceSearch (int empNo, String empName, String attenDate){
 		ArrayList<AttendanceVO> list = new ArrayList<AttendanceVO>();

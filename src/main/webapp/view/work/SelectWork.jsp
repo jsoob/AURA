@@ -130,7 +130,7 @@
     	  
     	$.ajax({
     		url: "workasync",						// 서버 url
-    		type: "GET",
+    		type: "GET",							// 조회할때는 쿼리스트링이 보여져도 괜찮기 때문에 GET을 사용 
     		data: {
     			cmd: "selectWorkAsync",				// 서버로 보낼 데이터 (조회 조건)
     			empNo: empNo,
