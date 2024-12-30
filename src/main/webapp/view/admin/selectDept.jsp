@@ -31,7 +31,7 @@
 				<div class="row">
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="product-status-wrap">
+						<div class="product-status-wrap aura_content">
 
 							<!-- <div class="text-right mg-bt-10">
 								<a href="admin?cmd=insertDept"> <input type="button"
@@ -40,13 +40,14 @@
 							</div> -->
 
 							<!--  부서 등록 모달 버튼  -->
-							<button type="button" id="deptAdd"
-								class="btn btn-custon-four btn-success" data-toggle="modal"
-								data-target=".search-dept-modal"
-								style="width: 18%; margin-left: 2%; line-height: 26px;">
-								<i class="fa fa-check edu-checked-pro" aria-hidden="true"></i>부서
-							</button>
-
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right mg-bt-10">
+								<button type="button" id="deptAdd"
+									class="btn btn-custon-four pd-setting text-right" data-toggle="modal"
+									data-target=".search-dept-modal"
+									style="line-height: 26px;">
+									부서 등록
+								</button>
+							</div>
 							<div class="asset-inner">
 								<table>
 									<tr>
