@@ -64,7 +64,7 @@
 							
 							
 							
-							<label>작성자 : ${loginEmp.getEmpNo()}</label>
+							<label>작성자 : ${vo.deptBCrtr}</label>
 							
 							
 							

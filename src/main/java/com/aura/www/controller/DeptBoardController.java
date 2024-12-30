@@ -7,6 +7,7 @@ import com.aura.www.action.board.deptboard.DeleteDeptBAction;
 import com.aura.www.action.board.deptboard.DetailDeptBAction;
 import com.aura.www.action.board.deptboard.ModifyDeptBAction;
 import com.aura.www.action.board.deptboard.ModifyDeptBOkAction;
+import com.aura.www.action.board.deptboard.SearchDeptBoardAction;
 import com.aura.www.action.board.deptboard.SelectDeptBAction;
 import com.aura.www.action.board.deptboard.WriteDeptBFormAction;
 import com.aura.www.action.board.deptboard.WriteDeptBOkAction;
@@ -51,7 +52,11 @@ public class DeptBoardController extends HttpServlet {
 			System.out.println("inside deptBoardcontroller");
 			com.aura.www.action.Action action = new SelectDeptBAction(userDeptNo);
 			url = action.execute(req, resp); 
-		} else if(cmd.equals("detailDeptB")) {
+		}else if ("searchDeptBoard".equals(cmd)) {
+            com.aura.www.action.Action action = new SearchDeptBoardAction();
+            url = action.execute(req, resp);
+            return; // 검색은 JSON 응답으로 JSP로 포워딩하지 않음
+        } else if(cmd.equals("detailDeptB")) {
 			com.aura.www.action.Action action = new DetailDeptBAction();
 			url = action.execute(req, resp);
 		} else if(cmd.equals("writeDeptBForm")) {
