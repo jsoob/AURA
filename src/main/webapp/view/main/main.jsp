@@ -11,6 +11,7 @@
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
 <script>
+$(()=>{
      // 출근 버튼 클릭 시 출근 시간 조회
      $("#mainStartBtn").on("click", function() {
         $.ajax({
@@ -52,6 +53,7 @@
            }
         });
      });
+});
 </script>
 
 </head>
