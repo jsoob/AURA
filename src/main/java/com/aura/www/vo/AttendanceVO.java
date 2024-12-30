@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceVO extends EmpVO {
+public class AttendanceVO extends EmpVO { 
 
 	private String attenDate;			// 날짜
 	private int empNo;					// 사원번호
