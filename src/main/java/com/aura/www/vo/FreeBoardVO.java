@@ -21,4 +21,7 @@ public class FreeBoardVO {
 	private String updateDate;
 	
 	private int empNo;
+	private String empName;
+	private String deptName;
+	private String posName;
 }

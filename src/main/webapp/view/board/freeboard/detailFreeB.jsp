@@ -57,26 +57,24 @@ $(()=>{
 			alert("내용을 입력하세요");
 			
 		}else {
-		$.ajax({
-			type:"get", // GET, POST
-			async:true, // 비동기화 true, 동기화 false
-			url : "/aura/comment", // 찾아갈 url
-			data:{
-                postId: postId,
-                userId: userId,
-                comment: comment,
-                cmd:"insertCmnt",
-            },
-			success:function(data){
-				alert('댓글이 등록되었습니다!');
-                $('#commentArea').val(''); // 입력창 초기화
-                loadComment();
-			}
-		});
-	}})
-	
-	
-	
+			$.ajax({
+				type:"get", // GET, POST
+				async:true, // 비동기화 true, 동기화 false
+				url : "/aura/comment", // 찾아갈 url
+				data:{
+	                postId: postId,
+	                userId: userId,
+	                comment: comment,
+	                cmd:"insertCmnt",
+	            },
+				success:function(data){
+					alert('댓글이 등록되었습니다!');
+	                $('#commentArea').val(''); // 입력창 초기화
+	                loadComment();
+					}
+			});
+		}
+	})
 })
 
 
@@ -177,7 +175,8 @@ $(()=>{
 		                let commentHtml = 
 		                    '<div class="panel panel-default"> <div class="panel-heading"> <strong> NO\. <span class="txt">'+comment.cmntNo+'</span> / 작성자 : '+ comment.userId+'</strong> <span class="text-muted pull-right">'+comment.createDate+'</span></div><div class="panel-body"><span class="comment-content">'+comment.content+'</span><div class="panel-body"><span class="text-muted pull-right">';
 		                    
-		                    if(${loginEmp.getEmpNo() == comment.userId || loginEmp.getEmpNo() == 2024000}){
+		                    // 본인이 쓴 댓글이거나 관리자일 경우 수정, 삭제 버튼 보이게
+		                    if(${loginEmp.getEmpNo()} == comment.userId || ${loginEmp.getEmpNo()} == 2024000){
 		                    commentHtml += '<button class="modifyBtn"  > 수정 </button> <button class="deleteBtn"> 삭제 </button>';
 		                    commentHtml += '</span></div></div></div>';
 		                    }
@@ -210,7 +209,7 @@ $(()=>{
 							<table class="table">
 								<tr>
 									<th>작성자</th>
-									<td>${vo.freeBCrtr}</td>
+									<td>${vo.deptName} ${vo.empName} ${vo.posName}</td>
 
 									<th>작성일시</th>
 									<td>${vo.createDate}</td>
@@ -223,10 +222,15 @@ $(()=>{
 									<th>제목</th>
 									<td colspan="5">${vo.freeBTitle}</td>
 								</tr>
-
+								<tr>
+									<th colspan="6">첨부파일</th>
+								</tr>
+									<c:forEach var="fileVo" items="${FBfileList}">
+									<tr><td></td><td colspan="5"><a href="/aura/downloadFBFile?no=${fileVo.fileNo}">${fileVo.fileName}</a></td></tr>
+									</c:forEach>
 								<tr>
 									<th>내용</th>
-									<td colspan="5">${vo.freeBContent}</td>
+									<td colspan="5" style="min-height: 200px; height: 200px;">${vo.freeBContent}</td>
 								</tr>
 
 								<tr>
@@ -259,15 +263,13 @@ $(()=>{
 							
 							<!-- 여기에 댓글이 추가되게 해야함 -->
 							
+							</div>
 						</div>
-						
 					</div>
-					
-				</div>
 				</div>
 			</div>
+		</div>
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
-		
 	</div>
 
 	<jsp:include page="/view/comm/footerJs.jsp"></jsp:include>

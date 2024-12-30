@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.aura.www.vo.FreeBoardFileVO;
+import com.aura.www.vo.FreeBoardVO;
 
 public class FreeBoardFileDAO {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -64,26 +65,82 @@ public class FreeBoardFileDAO {
 		}
 		return list;
 	}
+	// 파일번호로 하나의 파일 가져오기
+	public FreeBoardFileVO selectFileOne(int fileNo){
+		FreeBoardFileVO vo = new FreeBoardFileVO();
+		sb.setLength(0);
+		sb.append("SELECT FILE_NO, FILE_NAME, FILE_ROUTE, FREEB_NO ");
+		sb.append("FROM FBFILE ");
+		sb.append("WHERE FILE_NO = ? ");
+		
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, fileNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String fileName = rs.getString("FILE_NAME");
+				String fileRoute = rs.getString("FILE_ROUTE");
+				int freeBNo = rs.getInt("FREEB_NO");
+				
+				vo.setFileNo(fileNo);
+				vo.setFileName(fileName);
+				vo.setFileRoute(fileRoute);
+				vo.setFreeBNo(freeBNo);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
 
+	
 	// 첨부파일 DB에 저장
 	public void insertFile(FreeBoardFileVO vo) {
 		sb.setLength(0);
 		sb.append("INSERT INTO FBFILE ");
-		sb.append("VALUES(NULL, ?, ?, (SELECT MAX(FREEB_NO) FROM FREEBOARD))");
+		if(vo.getFreeBNo() != 0) {
+			sb.append("VALUES(NULL, ?, ?, ? )");
+		} else {
+			sb.append("VALUES(NULL, ?, ?, (SELECT MAX(FREEB_NO) FROM FREEBOARD))");
+		}
 
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setString(1, vo.getFileName());
 			pstmt.setString(2, vo.getFileRoute());
-			//pstmt.setInt(3, vo.getFreeBNo());
-
+			if(vo.getFreeBNo() != 0) {
+				pstmt.setInt(3, vo.getFreeBNo());
+			}
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	// 추가로 insert
+//	public void addOne(FreeBoardFileVO vo) {
+//
+//		sb.setLength(0);
+//		sb.append("INSERT INTO FBFILE ");
+//		sb.append("VALUES(NULL, ?, ?, ? )");
+//
+//		try {
+//			pstmt = conn.prepareStatement(sb.toString());
+//			pstmt.setString(1, vo.getFileName());
+//			pstmt.setString(2, vo.getFileRoute());
+//			pstmt.setInt(3, vo.getFreeBNo());
+//
+//			pstmt.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
+	
 	// 특정 첨부파일만 삭제할 때
 	public void deleteFileOne(int fileNo) {
 		sb.setLength(0);

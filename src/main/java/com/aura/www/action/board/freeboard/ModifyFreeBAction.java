@@ -1,9 +1,12 @@
 package com.aura.www.action.board.freeboard;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.aura.www.action.Action;
 import com.aura.www.dao.FreeBoardDAO;
+import com.aura.www.dao.FreeBoardFileDAO;
+import com.aura.www.vo.FreeBoardFileVO;
 import com.aura.www.vo.FreeBoardVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +25,10 @@ public class ModifyFreeBAction implements Action {
 			FreeBoardDAO dao = new FreeBoardDAO();
 			FreeBoardVO vo = dao.selectOne(freeBNo);
 			req.setAttribute("vo", vo);
+			
+			FreeBoardFileDAO FBfileDao = new FreeBoardFileDAO();
+			ArrayList<FreeBoardFileVO> FBfileList = FBfileDao.selectFileList(freeBNo);
+			req.setAttribute("FBfileList", FBfileList);
 			
 		}
 		

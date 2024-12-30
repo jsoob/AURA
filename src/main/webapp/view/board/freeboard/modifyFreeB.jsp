@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,27 @@
 <title>${commAt["title"]}</title>
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+<script>
+$(()=>{
+	$(".delete-file").on("click",function(){
+		const fileNo = $(this).closest("tr").find(".fileNo").text().trim();
+		//console.log($(this).closest("tr").find(".fileNo").text().trim());
+		const $row = $(this).closest("tr");
+		$.ajax({
+			type:"get", // GET, POST
+			async:true, // 비동기화 true, 동기화 false
+			url : "/aura/deleteFBFile", // 찾아갈 url
+			data:{
+				no: fileNo,
+            },
+			success:function(data){
+				$row.remove();
+				alert('파일이 삭제되었습니다!');
+				}
+		});
+	})
+})
+</script>
 </head>
 <body>
 	<!-- Start Left menu area -->
@@ -20,7 +42,7 @@
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					<form action="freeboard">
+					<form action="freeboard" method="post" enctype="multipart/form-data">
 						<table class="table">
 							<tr>
 								<td colspan="2">
@@ -35,8 +57,18 @@
 								</td>
 								<input type="hidden" name="freeBNo" value="${vo.freeBNo}" />
 								<input type="hidden" name="cmd" value="modifyFreeBOk" />
+								<input type="hidden" name="file" value="insert">
 
-
+							</tr>
+							<tr>
+								<th colspan="2">첨부파일</th>
+							</tr>
+								<c:forEach var="fileVo" items="${FBfileList}">
+								<tr><td colspan="5"><span class="fileNo">${fileVo.fileNo}</span> ${fileVo.fileName} <button type="button" class="btn btn-link delete-file"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td></tr>
+								</c:forEach>
+								
+							<tr>
+								<td colspan="2"><input type="file" name="filename" id="" multiple="multiple" /></td>
 							</tr>
 							<tr>
 								<td colspan="2"><textarea class="summernote6" id=summernote

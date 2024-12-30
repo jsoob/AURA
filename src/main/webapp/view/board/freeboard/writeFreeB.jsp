@@ -73,7 +73,7 @@ $(()=>{
 				$("tr[name='tempsaveList']").empty();
 				$.each(data, function(idx, list) {
 					let appendText = "";
-					console.log(list.freeBNo);
+/* 					console.log(list.freeBNo);
 					console.log(list.freeBTitle);
 					console.log(list.freeBContent);
 					console.log(list.freeBView);
@@ -82,7 +82,7 @@ $(()=>{
 					console.log(list.freeBPblc);
 					console.log(list.freeBCrtr);
 					console.log(list.createDate);
-					console.log(list.updateDate);
+					console.log(list.updateDate); */
 						
 
 					appendText = '<tr name="tempsaveList">';
@@ -110,6 +110,7 @@ $(()=>{
 		$(".summernote6").summernote('code', content);
 				
 		$('input[name="cmd"]').val("insertTempSaveOk");
+		// $('input[name="file"]').val("modify"); // 임시등록 불러온거면 val을 바꿔서 
 		
 		$("#tempsaveListModal").modal('hide');
 
@@ -144,7 +145,9 @@ $(()=>{
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
-					<form action="freeboard">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
+					<form action="freeboard" method="post" enctype="multipart/form-data">
 
 						<table class="table">
 							<tr>
@@ -165,6 +168,10 @@ $(()=>{
 								<td colspan="2">
 									<button type="button" class="btn" id="tempsaveBtn" data-toggle="modal" data-target=".tempsaveList-modal" >임시저장 목록</button>
 								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="file" name="filename" id="" multiple="multiple" /></td>
+								<input type="hidden" name="file" value="insert">
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -211,6 +218,8 @@ $(()=>{
 				});
 		</script>
 
+	</div>
+	</div>
 		<jsp:include page="/view/comm/footer.jsp"></jsp:include>
 	</div>
 	

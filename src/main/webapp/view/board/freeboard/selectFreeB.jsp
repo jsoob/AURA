@@ -15,7 +15,6 @@
 }
 
 table th, table td {
-    /*padding: 10px;*/  /* 여백을 추가하여 텍스트와 셀 테두리 간격을 넓힙니다. */
     text-align: center !important;  /* 텍스트를 중앙 정렬 */
 }
 
@@ -100,8 +99,14 @@ table th:nth-child(5), table td:nth-child(5) {
                 		lock='<i class="fa fa-lock" aria-hidden="true"></i>';
                 	}
                 	else {lock=''};
+                	if(freeB.deptName == null){
+                		freeB.deptName = '';
+                	}
+                	if(freeB.posName == null){
+                		freeB.posName = '';
+                	}
                 	
-                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+freeB.freeBCrtr+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
+                	let rowHtml = '<tr><td>'+freeB.freeBNo+'</td><td>'+lock+notice+'<span id=lock></span>' +'<a href="freeboard?cmd=detailFreeB&freeBNo='+freeB.freeBNo+'">'+freeB.freeBTitle+'</a></td><td>'+/* freeB.freeBCrtr */ freeB.deptName +' '+ freeB.empName+ ' '+freeB.posName+'</td><td>'+freeB.createDate+'</td><td>'+freeB.freeBView+'</td></tr>';
                 	
                 	$(".freeBList").append(rowHtml);
                 	

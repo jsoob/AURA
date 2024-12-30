@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.aura.www.vo.FreeBoardEmpVO;
 import com.aura.www.vo.FreeBoardVO;
 
 public class FreeBoardDAO {
@@ -169,14 +170,16 @@ public class FreeBoardDAO {
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 		sb.setLength(0);
 		
-		sb.append("SELECT t.FREEB_NO, t.FREEB_TITLE, t.FREEB_CONTENT, t.FREEB_VIEW, t.FREEB_NOTICE, t.FREEB_STATUS, t.FREEB_PBLC, t.FREEB_CRTR, t.CREATE_DATE, t.UPDATE_DATE, t.PRIORITY ");
+		sb.append("SELECT t.FREEB_NO, t.FREEB_TITLE, t.FREEB_CONTENT, t.FREEB_VIEW, t.FREEB_NOTICE, t.FREEB_STATUS, t.FREEB_PBLC, t.FREEB_CRTR, t.CREATE_DATE, t.UPDATE_DATE, t.PRIORITY, EMP_NAME, DEPT_NAME, POS_NAME ");
 		sb.append("from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE, 1 AS PRIORITY FROM FREEBOARD WHERE FREEB_STATUS !=0 AND FREEB_NOTICE=1 AND FREEB_PBLC=1 ");
 		sb.append("ORDER BY CREATE_DATE DESC ");
 		sb.append("LIMIT 3 ) t ");
-		
+		sb.append("inner join EMP e on t.FREEB_CRTR = e.EMP_NO ");
+		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
+		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
 		sb.append(" UNION ALL ");
 		
-		sb.append(" select s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY ");
+		sb.append(" select s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY, EMP_NAME, DEPT_NAME, POS_NAME ");
 		sb.append(" from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE, 2 AS PRIORITY FROM FREEBOARD WHERE FREEB_STATUS !=0 ");
 		
 //		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
@@ -192,6 +195,11 @@ public class FreeBoardDAO {
 		if (vo.getFreeBCrtr() != 0)
 			sb.append("AND FREEB_CRTR = ? ");
 		sb.append(") s ");
+		
+		sb.append("inner join emp e on s.FREEB_CRTR = e.emp_no ");
+		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
+		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
+		
 		sb.append("ORDER BY PRIORITY ASC");
 		if (order == null || (order!=null && order.equals("recent")))
 			sb.append(", CREATE_DATE DESC ");
@@ -237,6 +245,9 @@ public class FreeBoardDAO {
 				int freeBCrtr = rs.getInt("FREEB_CRTR");
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
+				String empName = rs.getString("EMP_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String posName = rs.getString("POS_NAME");
 				
 				FreeBoardVO fbvo = new FreeBoardVO();
 				
@@ -250,6 +261,9 @@ public class FreeBoardDAO {
 				fbvo.setFreeBCrtr(freeBCrtr);
 				fbvo.setCreateDate(createDate);
 				fbvo.setUpdateDate(updateDate);
+				fbvo.setEmpName(empName);
+				fbvo.setDeptName(deptName);
+				fbvo.setPosName(posName);
 				
 				list.add(fbvo);
 			}
@@ -297,6 +311,7 @@ public class FreeBoardDAO {
 				fvo.setFreeBCrtr(freeBCrtr);
 				fvo.setCreateDate(createDate);
 				fvo.setUpdateDate(updateDate);
+				
 
 				list.add(fvo);
 			}
@@ -309,9 +324,14 @@ public class FreeBoardDAO {
 	// 게시물번호로 검색
 	public FreeBoardVO selectOne(int freeBNo) {
 		sb.setLength(0);
-		sb.append(
-				"SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
-		sb.append("FROM FREEBOARD ");
+	
+		
+		sb.append("SELECT EMP_NAME, DEPT_NAME, POS_NAME, FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE ");
+		sb.append("FROM FREEBOARD f INNER JOIN EMP e ");
+		sb.append("on f.FREEB_CRTR = e.EMP_NO left outer join DEPT d ");
+		sb.append("on e.DEPT_NO = d.DEPT_NO left outer join POSITION p ");
+		sb.append("on e.POS_NO = p.POS_NO ");
+		
 		sb.append("WHERE FREEB_NO = ? ");
 
 		FreeBoardVO vo = null;
@@ -330,7 +350,10 @@ public class FreeBoardDAO {
 				int freeBCrtr = rs.getInt("FREEB_CRTR");
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
-
+				String empName = rs.getString("EMP_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String posName = rs.getString("POS_NAME");
+		
 				vo = new FreeBoardVO();
 
 				vo.setFreeBNo(freeBNo);
@@ -343,6 +366,9 @@ public class FreeBoardDAO {
 				vo.setFreeBCrtr(freeBCrtr);
 				vo.setCreateDate(createDate);
 				vo.setUpdateDate(updateDate);
+				vo.setEmpName(empName);
+				vo.setDeptName(deptName);
+				vo.setPosName(posName);
 
 			}
 
@@ -520,7 +546,46 @@ public class FreeBoardDAO {
 		}
 		return cnt;
 	}
+	// 사원번호로 사원명, 부서명, 직급명 가져오기
+//	select e.EMP_NAME,d.DEPT_NAME, p.POS_NAME
+//	from EMP e left outer join DEPT d
+//	on e.DEPT_NO=d.DEPT_NO left outer join POSITION p
+//	on e.POS_NO = p.POS_NO
+//	where EMP_NO= 2024001 ;
+	public FreeBoardEmpVO selectEmpOne(int empNo) {
+		sb.setLength(0);
+		sb.append("SELECT e.EMP_NAME,d.DEPT_NAME, p.POS_NAME ");
+		sb.append("FROM EMP e left outer join DEPT d on e.DEPT_NO=d.DEPT_NO ");
+		sb.append("FROM left outer join POSITION p on e.POS_NO = p.POS_NO ");
+		sb.append("WHERE EMP_NO = ? ");
 
+		FreeBoardEmpVO vo = null;
+		try {
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setInt(1, empNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String empName = rs.getString("EMP_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String posName = rs.getString("POS_NAME");
+
+				vo = new FreeBoardEmpVO();
+				
+				vo.setEmpName(empName);
+				vo.setDeptName(deptName);
+				vo.setPosName(posName);
+				
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vo;
+	}
+	
 	// 자원반납
 	public void close() {
 		try {
