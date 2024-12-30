@@ -10,27 +10,6 @@
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
 
 <script>
-     $( ()=> {
-    	 // loadWork();
-     });
-     
-     function loadWork(){
-    	 return; 
-         $.ajax({
-             url:"mainasync", 
-             type: "post",
-            data: {cmd:"selectWork"}, // json 방식으로 서블릿에 보낼 데이터
-            dataType: 'json',  //json파일 형식으로 값 받기 (JSON.parse(data))
-               success: (data) => {
- 	           
-               },
-               error:function(request, err) {
-                  console.log("error");
-               }
-           });
-         
-      } // end loadWork
-     
      // 출근 버튼 클릭 시 출근 시간 조회
      $("#mainStartBtn").on("click", function() {
         $.ajax({
@@ -41,9 +20,7 @@
            success: function(response) {
               // 서버로부터 받은 출근 시간 표시
               if (response.status) {
-                 location.reload(true); 
-                 // alert('출근 시간이 등록되었습니다: ');
-                 // loadWork();
+                 location.reload(true);
               } else {
                  alert('출근 처리가 되어있는 상태입니다.');
               }
@@ -64,9 +41,7 @@
            success: function(response) {
               // 응답 처리 후 퇴근 시간 표시
               if (response.status) {
-                  location.reload(true); 
-                  // alert('퇴근 시간이 등록되었습니다: ');
-                  // loadWork();
+                  location.reload(true);
               } else {
                  alert('퇴근 처리가 되어있는 상태입니다.');
               }
