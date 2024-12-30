@@ -30,16 +30,28 @@ public class SelectWorkActionAsync implements Action {
 	    // 임의의 AttendanceVO 객체 생성 (필요하다면 특정 값으로 초기화 가능)
 		// 기본값 설정을 위한 임시 vo 객체
 	    AttendanceVO tempVO = new AttendanceVO(); 
+	    String empNo = req.getParameter("empNo");
+	    String empName = req.getParameter("empName");
+	    String attenDate = req.getParameter("attenDate");
 	    
+	    tempVO.setSearchEmpNo(empNo);
+	    tempVO.setEmpName(empName);
+	    tempVO.setAttenDate(attenDate);
+	    
+	    // 숫자로 형변환 
+	    //if(empNo != null )
+	    	
 	    HttpSession session = req.getSession();
 //		// 세션에서 EmpVO 객체 가져오기 (강제 형변환)
 	    EmpVO loginEmp = (EmpVO)session.getAttribute("loginEmp");
 //	    
 	    tempVO.setEmpNo(loginEmp.getEmpNo());
+	    // 매개변수로 전달한 사번 
+	    
 	    
 	    // selectAll() 호출 시 tempVO 전달
 	    // DAO의 selectAll 메서드 호출
-	    ArrayList<AttendanceVO> list = dao.selectAll(tempVO);
+	    ArrayList<AttendanceVO> list = dao.selectAll(tempVO);// 검색조건에 맞는 사원정보를 가져오기 
 	    
 	    // dao.selectAll() 오류가 나서 위 tempVO 객체를 따로 생성하여 선언
 		// ArrayList<AttendanceVO> list = dao.selectAll();

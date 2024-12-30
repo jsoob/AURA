@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AttendanceAsyncController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// 1. 한글처리
 		req.setCharacterEncoding("UTF-8");

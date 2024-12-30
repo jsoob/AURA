@@ -63,27 +63,76 @@ public class AttendanceDAO {
 		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
 		sb.append("LEFT OUTER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
 		sb.append("LEFT OUTER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
+		sb.append("WHERE 1=1 ");	
+		
 		// sb.append("WHERE E.EMP_NO = ? ");
 		
 		// 관리자와 일반 사용자 구분이 필요
 		if (vo.getEmpNo() == 2024000) {				// 관리자 계정(2024000)일 경우
-			sb.append("WHERE 1=1");					// 조건 없음 (모든 데이터를 조회)
-		} else {									// 일반 사용자일 경우 (2024001부터 시작되는 모든 사원번호)
-			sb.append("WHERE E.EMP_NO = ? ");		// 본인 데이터만 조회
+						// 조건 없음 (모든 데이터를 조회)
+													// 조건이 없을 경우에도 WHERE 절을 유지할 수 있도록 1=1을 추가
+													// WHERE 1=1 : 처음부터 조건을 추가할 수 있는 조건 값
+													//			   조건이 없더라도 쿼리가 동작할 수 있게끔 설정 (항상 '참'인 설정)		
+													// 일반 사용자일 경우 (2024001부터 시작되는 모든 사원번호)
+													// 본인 데이터만 조회
+			// 만약, 사원번호 or 사원명 or 등록일자를 입력해서 조회버튼을 클릭한다면?
+		if (vo.getSearchEmpNo() != null && !vo.getSearchEmpNo().isEmpty()) {		// 사원번호가 입력되었을 경우
+				sb.append("AND E.EMP_NO LIKE ? ");
+				System.out.println("empNo : " + vo.getSearchEmpNo());
+			}
+		if (vo.getEmpName() != null && !vo.getEmpName().isEmpty()) {				// 사원명이 입력되었을 경우
+				sb.append("AND E.EMP_NAME LIKE ? ");
+			}
+		if (vo.getAttenDate() != null && !vo.getAttenDate().isEmpty()) {			// 날짜가 입력되었을 경우
+				sb.append("AND DATE_FORMAT(A.ATTEN_DATE, '%Y-%m-%d') = ? ");
+				System.out.println("attenDate 가 제대로 출력? : " + vo.getAttenDate());
+			}
+		} else {
+			sb.append("AND E.EMP_NO = ? ");
 		}
+		
+		// System.out.println("실행될 SQL 쿼리: " + sb.toString()); // 제대로 실행되고 있음
 		
 		//	5. 문장 객체 생성
 		try {
 			pstmt = conn.prepareStatement(sb.toString());
 			System.out.println(sb.toString());
 			
-			if(vo.getEmpNo() != 2024000) {			// 관리자 계정이 아닌 경우만 바인딩(고정)
+			
+			// 사원번호 바인딩 (사원번호가 입력되었을 경우)
+			if (vo.getEmpNo() != 2024000) {
 				pstmt.setInt(1, vo.getEmpNo());
+			}	
+
+			// 관리자가 조건 검색하는 부분
+			int paramIndex = 1;			// 바인딩할 파라미터 인덱스 초기화
+
+			if(vo.getSearchEmpNo() != null && !vo.getSearchEmpNo().isEmpty()) {			// 관리자 계정이 아닌 경우만 바인딩(고정) : 본인 데이터만 조회
+				// System.out.println("searchEmpNo 잘 나옴 : " + vo.getSearchEmpNo());
+				pstmt.setString(paramIndex++, "%" + vo.getSearchEmpNo() + "%");
 			}
+	
+			
+			// 사원명 바인딩 (사원명이 입력되었을 경우)
+			if (vo.getEmpName() != null && !vo.getEmpName().isEmpty()) {
+				pstmt.setString(paramIndex++, "%" + vo.getEmpName() + "%");		// LIKE 연산자 사용 (LIKE %를 통해서 값 가져오기)
+			}
+			
+			// 날짜 바인딩 (등록일자에 날짜가 입력되었을 경우)
+			if (vo.getAttenDate() != null && !vo.getAttenDate().isEmpty()) {
+				pstmt.setString(paramIndex++, vo.getAttenDate());
+			}
+			
 			
 			rs = pstmt.executeQuery();
 			//	6. 실행 (SELECT ==> ResultSet 객체 )
 			while(rs.next()) {
+				
+				 // 디버깅을 위해 각 데이터를 출력 (정상적으로 불러와지고 있음을 확인)
+//			    System.out.println("ATTEN_DATE: " + rs.getString("ATTEN_DATE"));
+//			    System.out.println("EMP_NO: " + rs.getInt("EMP_NO"));  
+			    
+    		    
 				String attenDate = rs.getString("ATTEN_DATE");
 				int empNo = rs.getInt("EMP_NO");
 				String startworkTime = rs.getString("STARTWORK_TIME");
@@ -109,6 +158,7 @@ public class AttendanceDAO {
 				vo.setPosName(posName);
 				vo.setDeptNo(deptNo);
 				vo.setDeptName(deptName);
+				
 				list.add(vo);	// 생성된 객체(vo)를 리스트에 추가
 			}
 		} catch (SQLException e) {
@@ -118,11 +168,10 @@ public class AttendanceDAO {
 	return list;
 	}	// selectAll() end
 	
-	
 	///////////////////////////////////////////// 1건 조회 /////////////////////////////////////////////
-	
-	public AttendanceVO selectOne(int empNo) {
 		
+	public AttendanceVO selectOne(int empNo) {
+	
 		//		4. SQL문 작성
 		sb.setLength(0);
 		sb.append("SELECT ATTEN_DATE, EMP_NO, STARTWORK_TIME, ENDWORK_TIME ");
@@ -133,23 +182,22 @@ public class AttendanceDAO {
 		
 		//		5. 문장 객체 생성
 		try {
-			pstmt = conn.prepareStatement(sb.toString());
-			pstmt.setInt(1, empNo);
-			rs = pstmt.executeQuery();
-			//		6. 실행 (SELECT ==> ResultSet 객체 )
-			while(rs.next()) {
-				String attenDate = rs.getString("ATTEN_DATE");
-				String startworkTime = rs.getString("STARTWORK_TIME");
-				String endworkTime = rs.getString("ENDWORK_TIME");
-				
-				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
-			}
+		pstmt = conn.prepareStatement(sb.toString());
+		pstmt.setInt(1, empNo);
+		rs = pstmt.executeQuery();
+		//		6. 실행 (SELECT ==> ResultSet 객체 )
+		while(rs.next()) {
+		String attenDate = rs.getString("ATTEN_DATE");
+		String startworkTime = rs.getString("STARTWORK_TIME");
+		String endworkTime = rs.getString("ENDWORK_TIME");
+		
+		vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null, null);
+		}
 		} catch (SQLException e) {
-			e.printStackTrace();
+		e.printStackTrace();
 		}
 		return vo;
-	}
-		
+		}
 	
 	//////////////////////////////////// 특정 조건을 검색 (사원번호, 사원명, 등록일자 (날짜) 검색) ////////////////////////////////////
 	
@@ -166,9 +214,7 @@ public class AttendanceDAO {
 		sb.append("INNER JOIN EMP E ON A.EMP_NO = E.EMP_NO ");
 		sb.append("LEFT OUTER JOIN DEPT D ON E.DEPT_NO = D.DEPT_NO ");
 		sb.append("LEFT OUTER JOIN POSITION P ON E.POS_NO = P.POS_NO ");
-		sb.append("WHERE 1=1 ");		// 조건이 없을 경우에도 WHERE 절을 유지할 수 있도록 1=1을 추가
-										// WHERE 1=1 : 처음부터 조건을 추가할 수 있는 조건 값
-										//			   조건이 없더라도 쿼리가 동작할 수 있게끔 설정 (항상 '참'인 설정)
+		sb.append("WHERE 1=1 ");		
 		
 		
 		// 조건 추가 (사원번호, 사원명, 날짜)
@@ -218,7 +264,7 @@ public class AttendanceDAO {
 	        	String startworkTime = rs.getString("STARTWORK_TIME");
 	        	String endworkTime = rs.getString("ENDWORK_TIME");
 	        	
-	        	AttendanceVO vo = new AttendanceVO(attenDate, empNumber, startworkTime, endworkTime, null);
+	        	AttendanceVO vo = new AttendanceVO(attenDate, empNumber, startworkTime, endworkTime, null, null);
 	        	
 	        	list.add(vo);
 	        }

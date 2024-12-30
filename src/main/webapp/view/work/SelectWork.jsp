@@ -36,15 +36,15 @@
 								<div class="text-right mg-bt-10">
 									<div class="form-inline">
 										<div class="form-group">
-											<label for="exampleInputEmail2">사원번호</label> <input type="email" class="form-control mg-wd-10" id="exampleInputEmail2" placeholder="사원번호 7자리">
+											<label for="exampleInputEmail2">사원번호</label> <input type="email" class="form-control mg-wd-10" id="empNo" placeholder="사원번호 7자리">
 										</div>
 										<div class="form-group">
-											<label for="exampleInputName2">사원명</label> <input type="text" class="form-control mg-wd-10" id="exampleInputName2" placeholder="사원 이름">
+											<label for="exampleInputName2">사원명</label> <input type="text" class="form-control mg-wd-10" id="empName" placeholder="사원 이름">
 										</div>
 										<div class="form-group">
-										  	<label>등록일자</label>
+										  	<label>날짜</label>
 	                                        <%-- <input type="text" name="hiredate" value="" /> --%>
-	                                        <input type="date" name="attenDate" class="form-control mg-wd-10" required pattern="\d{4}-\d{2}-\d{2}" />
+	                                        <input type="date" name="attenDate" class="form-control mg-wd-10" id="attenDate" required pattern="\d{4}-\d{2}-\d{2}" />
 										  </div>
 										<span class="pd-lt-10">
 											<button type="button" class="btn pd-setting" id="loadBtn">조회</button>
@@ -123,10 +123,14 @@
     	  let empNo = $("#empNo").val();			// 입력한 사원번호
     	  let empName = $("#empName").val();		// 입력한 사원명
     	  let attenDate = $("#attenDate").val();	// 입력한 등록일자
+    	 
+    	  console.log("empNo : " + empNo);
+    	  console.log("empName : " + empName);
+    	  console.log("attenDate : " + attenDate);
     	  
     	$.ajax({
     		url: "workasync",						// 서버 url
-    		type: "POST",
+    		type: "GET",
     		data: {
     			cmd: "selectWorkAsync",				// 서버로 보낼 데이터 (조회 조건)
     			empNo: empNo,
@@ -135,7 +139,7 @@
     		},
     		dataType: 'json',						// JSON 형식으로 응답 받기
     		success: (data) => {
-    			console.log("date = ", data);
+    			console.log("data = ", data);
     			let workList = data.workList;
 
     	            // 테이블 초기화
