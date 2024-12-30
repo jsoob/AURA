@@ -170,11 +170,11 @@ public class FreeBoardDAO {
 		sb.setLength(0);
 		
 		sb.append("SELECT t.FREEB_NO, t.FREEB_TITLE, t.FREEB_CONTENT, t.FREEB_VIEW, t.FREEB_NOTICE, t.FREEB_STATUS, t.FREEB_PBLC, t.FREEB_CRTR, t.CREATE_DATE, t.UPDATE_DATE, t.PRIORITY, t.EMP_NAME, t.DEPT_NAME, t.POS_NAME ");
-		sb.append("from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE, 1 AS PRIORITY, e.EMP_NAME, d.DEPT_NAME, p.POS_NAME ");
+		sb.append("FROM (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE, 1 AS PRIORITY, e.EMP_NAME, d.DEPT_NAME, p.POS_NAME ");
 		sb.append("FROM FREEBOARD f "); 
-		sb.append("inner join EMP e on f.FREEB_CRTR = e.EMP_NO ");
-		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
-		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
+		sb.append("INNER JOIN EMP e ON f.FREEB_CRTR = e.EMP_NO ");
+		sb.append("LEFT OUTER JOIN DEPT d ON e.DEPT_NO = d.DEPT_NO "); 
+		sb.append("LEFT OUTER JOIN POSITION p ON e.POS_NO = p.POS_NO "); 
 		
 		sb.append("WHERE FREEB_STATUS !=0 AND FREEB_NOTICE=1 AND FREEB_PBLC=1 ");
 		sb.append("ORDER BY CREATE_DATE DESC ");
@@ -182,12 +182,12 @@ public class FreeBoardDAO {
 		
 		sb.append(" UNION ALL ");
 		
-		sb.append(" select s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY, s.EMP_NAME, s.DEPT_NAME, s.POS_NAME ");
+		sb.append(" SELECT s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY, s.EMP_NAME, s.DEPT_NAME, s.POS_NAME ");
 		sb.append(" from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE, 2 AS PRIORITY, e.EMP_NAME, d.DEPT_NAME, p.POS_NAME ");
 		sb.append("FROM FREEBOARD f ");
-		sb.append("inner join emp e on f.FREEB_CRTR = e.emp_no ");
-		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
-		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
+		sb.append("INNER JOIN EMP e ON f.FREEB_CRTR = e.EMP_NO ");
+		sb.append("LEFT OUTER JOIN DEPT d ON e.DEPT_NO = d.DEPT_NO "); 
+		sb.append("LEFT OUTER JOIN POSITION p ON e.POS_NO = p.POS_NO "); 
 
 		sb.append("WHERE FREEB_STATUS !=0 ");
 		
