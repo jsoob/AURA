@@ -49,7 +49,7 @@ public class SelectDeptBAction implements Action {
         
         
         
-        System.out.println("ddddddd = "+list.get(0).toString());
+
         // 총 게시글 수 가져오기
         int totalCount = dao.getDeptBoardCount(userDeptNo, empNo, isAdmin);
         int totalPage = (int) Math.ceil((double) totalCount / recordPerPage); 
