@@ -34,6 +34,9 @@ public class SelectCommentAction implements Action {
 			comment.put("userId",vo.getEmpNo());
 			comment.put("cmntNo",vo.getFBCmntNo());
 			comment.put("createDate",vo.getCreateDate());
+			comment.put("empName",vo.getEmpName());
+			comment.put("deptName",vo.getDeptName());
+			comment.put("posName",vo.getPosName());
 			commentArray.add(comment);
 			
 		}

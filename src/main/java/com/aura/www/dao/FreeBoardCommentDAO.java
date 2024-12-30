@@ -37,8 +37,11 @@ public class FreeBoardCommentDAO {
 	public ArrayList<FreeBoardCommentVO> selectCommentAll(int freeBNo) {
 		ArrayList<FreeBoardCommentVO> list = new ArrayList<FreeBoardCommentVO>();
 		sb.setLength(0);
-		sb.append("SELECT FBCMNT_NO, FBCMNT_CONTENT, CREATE_DATE, UPDATE_DATE, EMP_NO, FREEB_NO ");
-		sb.append("FROM FREEBCOMMENT ");
+		sb.append("SELECT EMP_NAME, DEPT_NAME, POS_NAME, FBCMNT_NO, FBCMNT_CONTENT, f.CREATE_DATE, f.UPDATE_DATE, e.EMP_NO, FREEB_NO ");
+		sb.append("FROM FREEBCOMMENT f INNER JOIN EMP e ");
+		sb.append("on f.EMP_NO = e.EMP_NO left outer join DEPT d ");
+		sb.append("on e.DEPT_NO = d.DEPT_NO left outer join POSITION p ");
+		sb.append("on e.POS_NO = p.POS_NO ");
 		sb.append("WHERE FREEB_NO = ? ");
 		sb.append("ORDER BY CREATE_DATE DESC");
 
@@ -53,9 +56,22 @@ public class FreeBoardCommentDAO {
 				String createDate = rs.getString("CREATE_DATE");
 				String updateDate = rs.getString("UPDATE_DATE");
 				int empNo = rs.getInt("EMP_NO");
-
-				FreeBoardCommentVO vo = new FreeBoardCommentVO(fBCmntNo, fBCmntContent, createDate, updateDate, empNo,
-						freeBNo);
+				String empName = rs.getString("EMP_NAME");
+				String deptName = rs.getString("DEPT_NAME");
+				String posName = rs.getString("POS_NAME");
+				
+				FreeBoardCommentVO vo = new FreeBoardCommentVO();
+				
+				vo.setFBCmntNo(fBCmntNo);
+				vo.setFBCmntContent(fBCmntContent);
+				vo.setCreateDate(createDate);
+				vo.setUpdateDate(updateDate);
+				vo.setEmpNo(empNo);
+				vo.setFreeBNo(freeBNo);
+				vo.setEmpName(empName);
+				vo.setDeptName(deptName);
+				vo.setPosName(posName);
+				
 				list.add(vo);
 			}
 		} catch (SQLException e) {

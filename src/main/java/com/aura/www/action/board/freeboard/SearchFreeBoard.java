@@ -51,7 +51,7 @@ public class SearchFreeBoard extends HttpServlet {
 		} else if (searchWord != null && search.equals("content")) {
 			vo.setFreeBContent(searchWord);
 		} else if (searchWord != null && search.equals("writer")) {
-			vo.setFreeBCrtr(Integer.parseInt(searchWord));
+			vo.setEmpName(searchWord);
 		}
 
 

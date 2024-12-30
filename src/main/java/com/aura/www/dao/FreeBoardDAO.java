@@ -170,21 +170,31 @@ public class FreeBoardDAO {
 		ArrayList<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 		sb.setLength(0);
 		
-		sb.append("SELECT t.FREEB_NO, t.FREEB_TITLE, t.FREEB_CONTENT, t.FREEB_VIEW, t.FREEB_NOTICE, t.FREEB_STATUS, t.FREEB_PBLC, t.FREEB_CRTR, t.CREATE_DATE, t.UPDATE_DATE, t.PRIORITY, EMP_NAME, DEPT_NAME, POS_NAME ");
-		sb.append("from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE, 1 AS PRIORITY FROM FREEBOARD WHERE FREEB_STATUS !=0 AND FREEB_NOTICE=1 AND FREEB_PBLC=1 ");
-		sb.append("ORDER BY CREATE_DATE DESC ");
-		sb.append("LIMIT 3 ) t ");
-		sb.append("inner join EMP e on t.FREEB_CRTR = e.EMP_NO ");
+		sb.append("SELECT t.FREEB_NO, t.FREEB_TITLE, t.FREEB_CONTENT, t.FREEB_VIEW, t.FREEB_NOTICE, t.FREEB_STATUS, t.FREEB_PBLC, t.FREEB_CRTR, t.CREATE_DATE, t.UPDATE_DATE, t.PRIORITY, t.EMP_NAME, t.DEPT_NAME, t.POS_NAME ");
+		sb.append("from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE, 1 AS PRIORITY, e.EMP_NAME, d.DEPT_NAME, p.POS_NAME ");
+		sb.append("FROM FREEBOARD f "); 
+		sb.append("inner join EMP e on f.FREEB_CRTR = e.EMP_NO ");
 		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
 		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
+		
+		sb.append("WHERE FREEB_STATUS !=0 AND FREEB_NOTICE=1 AND FREEB_PBLC=1 ");
+		sb.append("ORDER BY CREATE_DATE DESC ");
+		sb.append("LIMIT 3 ) t ");
+		
 		sb.append(" UNION ALL ");
 		
-		sb.append(" select s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY, EMP_NAME, DEPT_NAME, POS_NAME ");
-		sb.append(" from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE, 2 AS PRIORITY FROM FREEBOARD WHERE FREEB_STATUS !=0 ");
+		sb.append(" select s.FREEB_NO, s.FREEB_TITLE, s.FREEB_CONTENT, s.FREEB_VIEW, s.FREEB_NOTICE, s.FREEB_STATUS, s.FREEB_PBLC, s.FREEB_CRTR, s.CREATE_DATE, s.UPDATE_DATE, s.PRIORITY, s.EMP_NAME, s.DEPT_NAME, s.POS_NAME ");
+		sb.append(" from (SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, f.CREATE_DATE, f.UPDATE_DATE, 2 AS PRIORITY, e.EMP_NAME, d.DEPT_NAME, p.POS_NAME ");
+		sb.append("FROM FREEBOARD f ");
+		sb.append("inner join emp e on f.FREEB_CRTR = e.emp_no ");
+		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
+		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
+
+		sb.append("WHERE FREEB_STATUS !=0 ");
 		
-//		sb.append("SELECT FREEB_NO, FREEB_TITLE, FREEB_CONTENT, FREEB_VIEW, FREEB_NOTICE, FREEB_STATUS, FREEB_PBLC, FREEB_CRTR, CREATE_DATE, UPDATE_DATE ");
-//		sb.append("FROM FREEBOARD ");
-//		sb.append("WHERE FREEB_STATUS !=0 "); // 임시저장이 아닌 것
+
+		//sb.append("WHERE 1=1 ");
+		
 		if(vo.getEmpNo() != 2024000) {
 			sb.append(" AND (FREEB_CRTR= ? OR FREEB_PBLC = 1) ");	
 		}
@@ -192,14 +202,13 @@ public class FreeBoardDAO {
 			sb.append("AND FREEB_TITLE LIKE ? ");
 		if (vo.getFreeBContent() != null && !vo.getFreeBContent().equals(""))
 			sb.append("AND FREEB_CONTENT LIKE ? ");
-		if (vo.getFreeBCrtr() != 0)
-			sb.append("AND FREEB_CRTR = ? ");
+//		if (vo.getFreeBCrtr() != 0)
+//			sb.append("AND FREEB_CRTR = ? ");
+		if(vo.getEmpName() != null && !vo.getEmpName().equals("")) {
+			sb.append("AND EMP_NAME LIKE ? ");
+		}
+		
 		sb.append(") s ");
-		
-		sb.append("inner join emp e on s.FREEB_CRTR = e.emp_no ");
-		sb.append("left outer join dept d on e.dept_no = d.dept_no "); 
-		sb.append("left outer join position p on e.pos_no = p.pos_no "); 
-		
 		sb.append("ORDER BY PRIORITY ASC");
 		if (order == null || (order!=null && order.equals("recent")))
 			sb.append(", CREATE_DATE DESC ");
@@ -225,8 +234,11 @@ public class FreeBoardDAO {
 			if (vo.getFreeBContent() != null && !vo.getFreeBContent().equals("")) {
 				pstmt.setString(++cnt, "%" + vo.getFreeBContent() + "%");
 			}
-			if (vo.getFreeBCrtr() != 0) {
-				pstmt.setInt(++cnt, vo.getFreeBCrtr());
+//			if (vo.getFreeBCrtr() != 0) {
+//				pstmt.setInt(++cnt, vo.getFreeBCrtr());
+//			}
+			if(vo.getEmpName() != null && !vo.getEmpName().equals("")) {
+				pstmt.setString(++cnt, "%" + vo.getEmpName() + "%");
 			}
 			pstmt.setInt(++cnt, limitNo);
 			pstmt.setInt(++cnt, offsetNo);
@@ -331,7 +343,6 @@ public class FreeBoardDAO {
 		sb.append("on f.FREEB_CRTR = e.EMP_NO left outer join DEPT d ");
 		sb.append("on e.DEPT_NO = d.DEPT_NO left outer join POSITION p ");
 		sb.append("on e.POS_NO = p.POS_NO ");
-		
 		sb.append("WHERE FREEB_NO = ? ");
 
 		FreeBoardVO vo = null;
@@ -507,7 +518,9 @@ public class FreeBoardDAO {
 		
 		sb.setLength(0);
 		sb.append("SELECT COUNT(*) CNT ");
-		sb.append("FROM FREEBOARD ");
+		sb.append("FROM FREEBOARD f ");
+		sb.append("INNER JOIN EMP e ");
+		sb.append("ON f.FREEB_CRTR = e.EMP_NO ");
 		sb.append("WHERE FREEB_STATUS !=0 "); // 임시저장이 아닌 것
 		if(vo.getEmpNo() != 2024000) { // 관리자가 아니라면
 			 sb.append(" AND (FREEB_CRTR= ? OR FREEB_PBLC = 1) ");
@@ -516,9 +529,12 @@ public class FreeBoardDAO {
 			sb.append("AND FREEB_TITLE LIKE ? ");
 		if (vo.getFreeBContent() != null && !vo.getFreeBContent().equals(""))
 			sb.append("AND FREEB_CONTENT LIKE ? ");
-		if (vo.getFreeBCrtr() != 0)
-			sb.append("AND FREEB_CRTR = ? ");
-
+//		if (vo.getFreeBCrtr() != 0)
+//			sb.append("AND FREEB_CRTR = ? ");
+		if(vo.getEmpName() != null && !vo.getEmpName().equals("")) {
+			sb.append("AND EMP_NAME LIKE ? ");
+		}
+		
 		try {
 			// System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
@@ -533,8 +549,11 @@ public class FreeBoardDAO {
 			if (vo.getFreeBContent() != null && !vo.getFreeBContent().equals("")) {
 				pstmt.setString(++cnt, "%" + vo.getFreeBContent() + "%");
 			}
-			if (vo.getFreeBCrtr() != 0) {
-				pstmt.setInt(++cnt, vo.getFreeBCrtr());
+//			if (vo.getFreeBCrtr() != 0) {
+//				pstmt.setInt(++cnt, vo.getFreeBCrtr());
+//			}
+			if(vo.getEmpName() != null && !vo.getEmpName().equals("")) {
+				pstmt.setString(++cnt, "%" + vo.getEmpName() + "%");
 			}
 
 			rs = pstmt.executeQuery();

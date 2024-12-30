@@ -25,7 +25,8 @@ public class DetailFreeBAction implements Action {
 			dao.raiseView(freeBNo);
 			FreeBoardVO vo = dao.selectOne(freeBNo);
 			req.setAttribute("vo", vo);
-			System.out.println(vo.toString());
+			// System.out.println(vo.toString());
+			
 			FreeBoardFileDAO FBfileDao = new FreeBoardFileDAO();
 			ArrayList<FreeBoardFileVO> FBfileList = FBfileDao.selectFileList(freeBNo);
 			req.setAttribute("FBfileList", FBfileList);

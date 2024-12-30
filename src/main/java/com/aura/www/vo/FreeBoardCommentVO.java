@@ -15,4 +15,8 @@ public class FreeBoardCommentVO {
 	private String updateDate;
 	private int empNo;
 	private int freeBNo;
+	
+	private String empName;
+	private String deptName;
+	private String posName;
 }

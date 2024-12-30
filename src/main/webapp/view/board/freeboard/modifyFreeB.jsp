@@ -8,12 +8,19 @@
 <title>${commAt["title"]}</title>
 <!-- header 영역에서 첨부된 css 파일+js -->
 <jsp:include page="/view/comm/headCss.jsp"></jsp:include>
+<style>
+.container-area .container-fluid {
+    height: auto;
+}
+</style>
 <script>
 $(()=>{
 	$(".delete-file").on("click",function(){
 		const fileNo = $(this).closest("tr").find(".fileNo").text().trim();
 		//console.log($(this).closest("tr").find(".fileNo").text().trim());
 		const $row = $(this).closest("tr");
+		
+		if (confirm("정말 삭제하시겠습니까?")) {
 		$.ajax({
 			type:"get", // GET, POST
 			async:true, // 비동기화 true, 동기화 false
@@ -26,6 +33,7 @@ $(()=>{
 				alert('파일이 삭제되었습니다!');
 				}
 		});
+		}
 	})
 })
 </script>
@@ -42,6 +50,9 @@ $(()=>{
 		<div class="container-area mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
+				
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap aura_content">
 					<form action="freeboard" method="post" enctype="multipart/form-data">
 						<table class="table">
 							<tr>
@@ -98,6 +109,8 @@ $(()=>{
 
 				</div>
 			</div>
+		</div>
+		</div>
 		</div>
 				<script>
 				// 다시 쓰기 누르면 reset

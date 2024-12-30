@@ -40,6 +40,10 @@
 	height: 100%;
 	width:100%;
 }
+
+.container-area .container-fluid {
+    height: auto;
+}
 </style>
 <script>
 
@@ -150,7 +154,8 @@ $(()=>{
 			alert("댓글이 삭제되었습니다.");
 			loadComment();
 		}
-	}) }
+	}) 
+	}
 })
 	
 	// 댓글 목록 출력
@@ -172,8 +177,14 @@ $(()=>{
 		            $('#totalCmnt').html("댓글(" + commentList.length+")");
 		            
 		            commentList.forEach((comment) => {
+		            	if(comment.deptName == null){
+		            		comment.deptName ='';
+		            	}
+		            	if(comment.posName == null){
+		            		comment.posName='';
+		            	}
 		                let commentHtml = 
-		                    '<div class="panel panel-default"> <div class="panel-heading"> <strong> NO\. <span class="txt">'+comment.cmntNo+'</span> / 작성자 : '+ comment.userId+'</strong> <span class="text-muted pull-right">'+comment.createDate+'</span></div><div class="panel-body"><span class="comment-content">'+comment.content+'</span><div class="panel-body"><span class="text-muted pull-right">';
+		                    '<div class="panel panel-default"> <div class="panel-heading"> <strong> NO\. <span class="txt">'+comment.cmntNo+'</span> / 작성자 : '+ comment.deptName + ' ' +comment.empName + ' ' +comment.posName +'</strong> <span class="text-muted pull-right">'+comment.createDate+'</span></div><div class="panel-body"><span class="comment-content">'+comment.content+'</span><div class="panel-body"><span class="text-muted pull-right">';
 		                    
 		                    // 본인이 쓴 댓글이거나 관리자일 경우 수정, 삭제 버튼 보이게
 		                    if(${loginEmp.getEmpNo()} == comment.userId || ${loginEmp.getEmpNo()} == 2024000){
@@ -209,8 +220,11 @@ $(()=>{
 							<table class="table">
 								<tr>
 									<th>작성자</th>
-									<td>${vo.deptName} ${vo.empName} ${vo.posName}</td>
-
+									<td>
+									
+									 ${vo.deptName} ${vo.empName} ${vo.posName}
+									
+									</td>
 									<th>작성일시</th>
 									<td>${vo.createDate}</td>
 
@@ -251,7 +265,7 @@ $(()=>{
 							
 							
 							
-							<label>작성자 : ${loginEmp.getEmpNo()}</label>
+							<label>작성자 : ${loginEmp.getEmpName()}</label>
 							<textarea id="commentArea" placeholder="댓글을 입력하세요" required></textarea>
 							<div class="text-right">
 							    <input type="button" class="btn" value="댓글달기" id="submitComment" />
