@@ -1,0 +1,44 @@
+package com.aura.www.controller;
+
+import java.io.IOException;
+
+import com.aura.www.action.Action;
+import com.aura.www.action.board.freeboard.DeleteCommentAction;
+import com.aura.www.action.board.freeboard.InsertCommentAction;
+import com.aura.www.action.board.freeboard.ModifyCommentAction;
+import com.aura.www.action.board.freeboard.SelectCommentAction;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/comment")
+public class CommentController extends HttpServlet {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String cmd = req.getParameter("cmd");
+		String url = "";
+
+		// 3. page==null or SelectFreeB 라면
+		if (cmd == null || cmd.equals("insertCmnt")) {
+			Action action = new InsertCommentAction();
+			action.execute(req, resp);
+		} else if(cmd.equals("selectCmnt")) {
+			Action action = new SelectCommentAction();
+			url = action.execute(req, resp);
+		} else if(cmd.equals("modifyCmnt")) {
+			Action action = new ModifyCommentAction();
+			action.execute(req, resp);
+		} else if(cmd.equals("deleteCmnt")) {
+			Action action = new DeleteCommentAction();
+			action.execute(req, resp);
+		}
+		
+//		if(cmd!=null) {
+//			resp.setContentType("application/json; charset=UTF-8");
+//			resp.getWriter().print(url); // 값 보내기
+//		}
+	}
+}
