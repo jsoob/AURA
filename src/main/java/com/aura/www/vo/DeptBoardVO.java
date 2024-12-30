@@ -23,5 +23,6 @@ public class DeptBoardVO {
     private String updateDate;
 
     private String empName;      // 작성자 이름 (추가)
+    
     // private int empNo;      // 작성자 이름 (추가)
 }

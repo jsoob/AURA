@@ -19,7 +19,9 @@ public class DeleteDeptBAction implements Action {
 			DeptBoardDAO dao = new DeptBoardDAO();
 			dao.deleteOne(deptNo);
 		}
-		return "deptboard?cmd=selectDeptB";
+		return "deptboard?cmd=selectDeptB"; 
+		
+		
 	}
 
 }
