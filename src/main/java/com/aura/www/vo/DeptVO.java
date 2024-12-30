@@ -1,3 +1,4 @@
+
 package com.aura.www.vo;
 
 import lombok.AllArgsConstructor;
@@ -13,3 +14,4 @@ public class DeptVO extends PositionVO {
 	private String deptName;			// 부서명
 
 }
+

@@ -240,7 +240,7 @@ public class MainDAO {
 				String startworkTime = rs.getString("STARTWORK_TIME");
 				String endworkTime = rs.getString("ENDWORK_TIME");
 				
-				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null);
+				vo = new AttendanceVO(attenDate, empNo, startworkTime, endworkTime, null, null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
