@@ -130,16 +130,16 @@ body {}
 	margin-bottom:30px;
 }
 .bg-green {
-    background: #006DF0;
-}
-.bg-red {
-    background: #933EC5;
-}
-.bg-blue {
     background: #65b12d;
 }
-.bg-purple {
+.bg-red {
     background: #D80027;
+}
+.bg-blue {
+    background: #006DF0;
+}
+.bg-purple {
+    background: #933EC5;
 }
 /*----------------------------------------*/
 /*  3. All Nested Class
@@ -514,6 +514,7 @@ body {}
 }
 .header-right-info .nav>li>a>img{
 	width: 26px;
+	height: 26px;
     border-radius: 50%;
 }
 .header-right-info .author-project-icon{
@@ -2377,6 +2378,13 @@ ul.two-part-sp li{
 .product-status-wrap img {
     width: 60px;
 }
+
+/* aura 사원 list 이미지 */
+.product-status-wrap img.empListImg {
+	width: 50px !important;
+	height: 50px !important;
+}
+
 .product-status-wrap .pd-setting {
     border: none;
     color: #fff;
