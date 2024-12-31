@@ -91,7 +91,7 @@
 	        <i></i>
 	        <i></i>
 	        <div class="login">
-	            <div class="logo"><img src="https://logowik.com/content/uploads/images/aura-digital-safety4284.logowik.com.webp" alt="" /></div>
+	            <div class="logo"><img src="/aura/img/logo/AURAlogo.png" /></div>
 	            <form name="loginForm">
 	            	<div class="input-box">
 	            		<%-- <input type="hidden" name="cmd" value="loginOk" /> --%>
