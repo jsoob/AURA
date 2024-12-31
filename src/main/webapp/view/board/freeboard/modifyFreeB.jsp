@@ -52,7 +52,7 @@ $(()=>{
 				<div class="row">
 				
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="product-status-wrap aura_content">
+						<div class="product-status-wrap aura_content" style="height: auto !important;">
 					<form action="freeboard" method="post" enctype="multipart/form-data">
 						<table class="table">
 							<tr>

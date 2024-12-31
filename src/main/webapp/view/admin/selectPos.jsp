@@ -161,7 +161,7 @@ $(()=>{
 									<tr>
 										<th class="text-center col-sm-2">직급번호</th>
 										<td>
-											<input type="number" name="posNo" id="posNo" class="form-control" required />
+											<input type="number" name="posNo" id="posNo" class="form-control" required readonly />
 											<input type="hidden" name="cmd" value="modifyPosOk" />
 										</td>
 									</tr>

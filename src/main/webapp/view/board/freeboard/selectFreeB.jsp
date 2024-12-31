@@ -73,7 +73,7 @@ table th:nth-child(5), table td:nth-child(5) {
 				let rows = data.freeBoardArray;
 				let pageObject = data.pageObject; 
 				
-				$("#searchWord").val('');
+				//$("#searchWord").val('');
 				 $('.freeBList').empty();
 				 
 				 $('#total').empty();
