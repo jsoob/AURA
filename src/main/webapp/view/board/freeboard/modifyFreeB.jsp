@@ -86,9 +86,12 @@ $(()=>{
 										name="freeBContent" id="" cols="50" rows="10">${vo.freeBContent}</textarea></td>
 							</tr>
 							<tr>
+								<!-- 로그인한 사람이 관리자라면 공지 등록 버튼이 보임 -->
+								<c:if test="${loginEmp.getEmpNo() == 2024000}">
 								<td colspan="2">공지로 등록 <input type="checkbox"
 									name="freeBNotice" value="1">
 								</td>
+								</c:if>
 							</tr>
 							<tr>
 								<td colpsan="2"><input type="radio" name="freeBPblc"
