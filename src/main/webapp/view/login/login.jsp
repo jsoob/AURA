@@ -95,10 +95,10 @@
 	            <form name="loginForm">
 	            	<div class="input-box">
 	            		<%-- <input type="hidden" name="cmd" value="loginOk" /> --%>
-		            	<input type="text" id="empNo" name="empNo" class="form-input" value="2024000" placeholder="사원번호" maxlength="10" onkeyup="enterkey()" > <!--  placeholder="사원번호" -->
+		            	<input type="text" id="empNo" name="empNo" class="form-input" value="" placeholder="사원번호" maxlength="10" onkeyup="enterkey()" > <!--  placeholder="사원번호" -->
 		            </div>
 		            <div class="input-box">
-		                <input type="password" id="psswd" name="psswd" class="form-input" value="2024000" placeholder="비밀번호" maxlength="15" onkeyup="enterkey()" > <!-- placeholder="비밀번호" -->
+		                <input type="password" id="psswd" name="psswd" class="form-input" value="" placeholder="비밀번호" maxlength="15" onkeyup="enterkey()" > <!-- placeholder="비밀번호" -->
 		            </div>
 		            
 		            <div class="input-box">
